@@ -17,17 +17,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<div class="title"><h2>更新图书</h2></div>
-<form action="${ctx}/admin/updCourse.action" method="post" name="myform" id="myform">
+<div class="title"><h2>更新用户信息</h2></div>
+<form action="${ctx}/admin/updateUser.action" method="post" name="myform" id="myform">
 <div class="main">
 	<p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>图书编号：</label>
-        <input type="text" name="bookid" id="bookid" maxlength="10" value="${book.bookid }" readonly="readonly"/>
+    	<label><span style="color:red">*</span>用户编号：</label>
+        <input type="text" name="userId" id="userId" maxlength="10" value="${user.userId }" readonly="readonly"/>
     </p>
     <p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>图书名称：</label>
-        <input type="text" name="bookname" id="bookname" maxlength="100" value="${book.bookname }"/>
+    	<label><span style="color:red">*</span>用户昵称：</label>
+        <input type="text" name="userName" id="userName" maxlength="100" value="${user.userName }"/>
     </p>
+    <div class="short-input select ue-clear">
+    	<label><span style="color:red">*</span>账号类型：</label>
+    	<c:forEach items="${bookType}" var="cs">
+    		<input name="typeid" type="radio" value="${cs.typeId}" 
+				<c:if test="${book.bookType.typeId eq cs.typeId }">checked</c:if>/>${cs.typeName}
+		</c:forEach>
+    </div>
+    <input type="hidden" name="typeId" id="typeId">
 	<p class="short-input ue-clear">
     	<label><span style="color:red">*</span>作者：</label>
         <input type="text" name="author" id="author" maxlength="10" value="${book.author }"/>

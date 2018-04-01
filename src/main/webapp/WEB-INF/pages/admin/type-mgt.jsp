@@ -48,9 +48,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</td>
 					<td>${o.remark}</td>
 					<td class="operate">
-						<a href="${ctx}/toUpdBookTypePage.action?id=${o.typeId}" class="del">修改</a>
+						<a href="${ctx}/admin/toUpdBookTypePage.action?id=${o.typeId}" class="del">修改</a>
 						<a class="del" onclick="delCateById(${o.typeId})">删除</a>
-						<a href="${ctx}/toQryBookTypePage.action?id=${o.typeId}" class="edit">查看</a>
+						<a href="${ctx}/admin/toQryBookTypePage.action?id=${o.typeId}" class="edit">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -78,7 +78,7 @@ $(".select-list").on("click","li",function(){
 $('.pagination').pagination(${pageInfo.total},10,{
 	callback: function(page){
 		$.ajax({
-			url:"${ctx}/qryBookTypeByPage.action",
+			url:"${ctx}/admin/qryBookTypeByPage.action",
 			method:"post",
 			dataType: "json",
 			data:{page:page+1},
@@ -107,9 +107,9 @@ $('.pagination').pagination(${pageInfo.total},10,{
 						html += "<td><font color='red'>作废</font></td>";
 					}
 					html += "<td>"+data[dataList].remark+"</td>";
-					html += "<td class='operate'><a href='${ctx}/toUpdBookTypePage.action?id=${o.typeId}'>修改</a>&nbsp;";
+					html += "<td class='operate'><a href='${ctx}/admin/toUpdBookTypePage.action?id=${o.typeId}'>修改</a>&nbsp;";
 					html += "<td class='operate'><a class='del' onclick='delCateById(${o.typeId})'>删除</a>&nbsp;";
-					html += "<a href='${ctx}/toQryBookTypePage.action?id=${o.typeId}' class='del'>查看</a></td>";
+					html += "<a href='${ctx}/admin/toQryBookTypePage.action?id=${o.typeId}' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
@@ -131,7 +131,7 @@ function delCateById(id){
 	}
 	$.post("${ctx}/admin/delType.action", { typeId:id},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toBookTypePage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toBookTypePage.action"; 
 		$("form").submit();
 	},"json");
 }
@@ -154,14 +154,14 @@ function delCategory(){
 
 	$.post("${ctx}/admin/delType.action", { typeId:ids},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toBookTypePage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toBookTypePage.action"; 
 		$("form").submit();
 	},"json");
 }
 
 //跳转到添加分类页面
 function addCategory(){
-	document.myform.attributes["action"].value = "${ctx}/toAddBookTypePage.action"; 
+	document.myform.attributes["action"].value = "${ctx}/admin/toAddBookTypePage.action"; 
 	$("form").submit();
 }
 

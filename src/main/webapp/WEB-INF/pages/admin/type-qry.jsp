@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body>
 <div class="title"><h2>分类详情</h2></div>
-<form action="${ctx}/updCourse.action" method="post" name="myform" id="myform">
+<form action="${ctx}/admin/updCourse.action" method="post" name="myform" id="myform">
 <div class="main">
 	<p class="short-input ue-clear">
     	<label><span style="color:red">*</span>分类编号：</label>
@@ -39,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 </form>
 <div class="btn ue-clear">
-    <a href="${ctx}/toBookTypePage.action" class="confirm">返回</a>
+    <a href="${ctx}/admin/toBookTypePage.action" class="confirm">返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>

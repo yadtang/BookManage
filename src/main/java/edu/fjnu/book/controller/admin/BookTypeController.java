@@ -28,7 +28,7 @@ public class BookTypeController extends BaseController {
 	BookTypeService bookTypeService;
 	
 	//获取所有的图书分类信息
-	@RequestMapping("/toBookTypePage.action")
+	@RequestMapping("/admin/toBookTypePage.action")
 	public String getAllBookTypeInfo(@RequestParam(value="page", defaultValue="1") int page,
 			BookType bookType, Model model, HttpSession session){
 		PageInfo<BookType> pageInfo = bookTypeService.findByPage(bookType, page, 10);
@@ -38,7 +38,7 @@ public class BookTypeController extends BaseController {
 		return "/admin/type-mgt.jsp";			
 	}
 	
-	@RequestMapping("/qryBookTypeByPage.action")
+	@RequestMapping("/admin/qryBookTypeByPage.action")
 	@ResponseBody
 	public List<BookType> qryBookTypeByPage(@RequestParam(value="page", defaultValue="1") int page,
 			BookType bookType,Model model, HttpSession session){
@@ -56,7 +56,7 @@ public class BookTypeController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toQryBookTypePage.action")
+	@RequestMapping("/admin/toQryBookTypePage.action")
 	public String toQryBookTypePage(int id,Model model, HttpSession session){
 		BookType bookType = bookTypeService.get(id);
 		model.addAttribute("bookType", bookType);
@@ -70,7 +70,7 @@ public class BookTypeController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toUpdBookTypePage.action")
+	@RequestMapping("/admin/toUpdBookTypePage.action")
 	public String toUpdBookTypePage(int id,Model model, HttpSession session){
 		BookType bookType = bookTypeService.get(id);
 		model.addAttribute("bookType", bookType);
@@ -84,7 +84,7 @@ public class BookTypeController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toAddBookTypePage.action")
+	@RequestMapping("/admin/toAddBookTypePage.action")
 	public String toAddBookTypePage(Model model, HttpSession session){
 		return "/admin/type-reg.jsp";			
 	}

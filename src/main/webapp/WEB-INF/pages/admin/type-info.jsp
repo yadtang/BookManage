@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body>
 <div class="title"><h2>分类详情</h2></div>
-<form action="${ctx}/addType.action" method="post" name="myform" id="myform">
+<form action="${ctx}/admin/addType.action" method="post" name="myform" id="myform">
 <div class="main">
     <p class="short-input ue-clear">
     	<label><span style="color:red">*</span>名称：</label>
@@ -59,13 +59,13 @@ $(".select-list").on("click","li",function(){
 
 //注册
 function addType(){
-	document.myform.attributes["action"].value = "${ctx}/addType.action"; 
+	document.myform.attributes["action"].value = "${ctx}/admin/addType.action"; 
 	$("form").submit();
 }
 
 //情况所有
 function returnList(){
-	document.myform.attributes["action"].value = "${ctx}/toTypePage.action"; 
+	document.myform.attributes["action"].value = "${ctx}/admin/toTypePage.action"; 
 	$("form").submit();
 }
 

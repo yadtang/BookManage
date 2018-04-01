@@ -48,9 +48,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</td>
 					<td>${o.remark}</td>
 					<td class="operate">
-						<a href="${ctx}/toUpdCategoryPage.action?id=${o.id}" class="del">修改</a>
+						<a href="${ctx}/admin/toUpdCategoryPage.action?id=${o.id}" class="del">修改</a>
 						<a class="del" onclick="delCateById(${o.id})">删除</a>
-						<a href="${ctx}/toQryCategoryPage.action?id=${o.id}" class="edit">查看</a>
+						<a href="${ctx}/admin/toQryCategoryPage.action?id=${o.id}" class="edit">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -78,7 +78,7 @@ $(".select-list").on("click","li",function(){
 $('.pagination').pagination(${pageInfo.total},{
 	callback: function(page){
 		$.ajax({
-			url:"${ctx}/qryAllGrade.action",
+			url:"${ctx}/admin/qryAllGrade.action",
 			method:"post",
 			dataType: "json",
 			data:{page:page+1},
@@ -99,8 +99,8 @@ $('.pagination').pagination(${pageInfo.total},{
 					html += "<td>"+data[dataList].gradeId+"</td>";
 					html += "<td>"+data[dataList].gradeName+"</td>";
 					html += "<td>"+data[dataList].courseId+"</td>";
-					html += "<td class='operate'><a href='${ctx}/deleteGrade.action?gradeId="+data[dataList].gradeId+"' class='del'>删除</a>&nbsp;";
-					html += "<a href='${ctx}/toUpdGrade.action?gradeId="+data[dataList].gradeId+"' class='del'>查看</a></td>";
+					html += "<td class='operate'><a href='${ctx}/admin/deleteGrade.action?gradeId="+data[dataList].gradeId+"' class='del'>删除</a>&nbsp;";
+					html += "<a href='${ctx}/admin/toUpdGrade.action?gradeId="+data[dataList].gradeId+"' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
@@ -122,7 +122,7 @@ function delCateById(id){
 	}
 	$.post("${ctx}/admin/delCate.action", { cateId:id},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toCategoryPage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toCategoryPage.action"; 
 		$("form").submit();
 	},"json");
 }

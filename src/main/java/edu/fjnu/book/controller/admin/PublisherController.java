@@ -28,7 +28,7 @@ public class PublisherController extends BaseController {
 	PublisherService publisherService;
 	
 	//获取所有的图书分类信息
-	@RequestMapping("/toPublisherPage.action")
+	@RequestMapping("/admin/toPublisherPage.action")
 	public String getAllPublisherInfo(@RequestParam(value="page", defaultValue="1") int page,
 			Publisher publisher, Model model, HttpSession session){
 		PageInfo<Publisher> pageInfo = publisherService.findByPage(publisher, page, 10);
@@ -38,7 +38,7 @@ public class PublisherController extends BaseController {
 		return "/admin/pub-mgt.jsp";			
 	}
 	
-	@RequestMapping("/qryPublisherByPage.action")
+	@RequestMapping("/admin/qryPublisherByPage.action")
 	@ResponseBody
 	public List<Publisher> qryPublisherByPage(@RequestParam(value="page", defaultValue="1") int page,
 			Publisher publisher,Model model, HttpSession session){
@@ -56,7 +56,7 @@ public class PublisherController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toQryPublisherPage.action")
+	@RequestMapping("/admin/toQryPublisherPage.action")
 	public String toQryPublisherPage(int id,Model model, HttpSession session){
 		Publisher publisher = publisherService.get(id);
 		model.addAttribute("publisher", publisher);
@@ -70,7 +70,7 @@ public class PublisherController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toUpdPublisherPage.action")
+	@RequestMapping("/admin/toUpdPublisherPage.action")
 	public String toUpdPublisherPage(int id,Model model, HttpSession session){
 		Publisher publisher = publisherService.get(id);
 		model.addAttribute("publisher", publisher);
@@ -84,7 +84,7 @@ public class PublisherController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toAddPublisherPage.action")
+	@RequestMapping("/admin/toAddPublisherPage.action")
 	public String toAddPublisherPage(Model model, HttpSession session){
 		return "/admin/pub-reg.jsp";			
 	}

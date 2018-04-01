@@ -16,44 +16,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<div class="title"><h2>图书详情</h2></div>
+<div class="title"><h2>用户详情</h2></div>
 <div class="main">
 	<p class="short-input ue-clear newstyle">
-    	<label>图书编号：</label>${book.bookid }
+    	<label>用户编号：</label>${user.userId }
     </p>
     <p class="short-input ue-clear newstyle">
-    	<label>图书名称：</label>${book.bookname }
+    	<label>用户昵称：</label>${user.userName }
     </p>
     <p class="long-input ue-clear newstyle">
-    	<label>作者：</label>${book.author }
+    	<label>账号类型：</label>
+    	<c:if test="${user.userType==1}"><font color="blue">普通用户</font></c:if>
+		<c:if test="${user.userType==2}"><font color="red">管理员</font></c:if>
     </p>
     <p class="long-input ue-clear newstyle">
-    	<label>出版社：</label>${book.publisher.name }
+    	<label>账号状态：</label>
+    	<c:if test="${user.userState==1}"><font color="red">待激活</font></c:if>
+		<c:if test="${user.userState==2}"><font color="blue">正常</font></c:if>
+		<c:if test="${user.userState==3}"><font color="red">冻结</font></c:if>
     </p>
     <p class="long-input ue-clear newstyle">
-    	<label>所属分类：</label>${book.bookType.typeName }
+    	<label>注册邮箱：</label>${user.email }
     </p>
     <p class="short-input ue-clear newstyle">
-    	<label>价格：</label>${book.price }
+    	<label>联系电话：</label>${user.telephone }
     </p>   
     <p class="short-input ue-clear newstyle">
-    	<label>评分：</label>4.8
+    	<label>联系地址：</label>${user.address }
     </p>
     <p class="short-input ue-clear newstyle">
-    	<label>图书评价：</label>${book.bookname }
+    	<label>备注：</label>${user.remark }
     </p>
     <p class="short-input ue-clear newstyle">
-    	<label>简介：</label>${book.content }
-    </p>
-    <p class="short-input ue-clear newstyle">
-    	<label>关键词：</label>${book.keyword }
-    </p>
-    <p class="short-input ue-clear newstyle">
-    	<label>图书封面：</label><img src="${ctx}/${book.imageUrl}"  width="150" height="150" />
+    	<label>爱好：</label>${user.hobby }
     </p>
 </div>
 <div class="btn ue-clear">
-	<a href="${ctx}/admin/toBookPage.action" class="confirm">返回</a>
+	<a href="${ctx}/admin/getAllUser.action" class="confirm">返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>
@@ -68,21 +67,6 @@ $(".select-list").on("click","li",function(){
 	var txt = $(this).text();
 	$(".select-title").find("span").text(txt);
 });
-
-function checkPhone(){
-	
-}
-
-//注册
-function addUser(){
-	$("form").submit();
-}
-
-//情况所有
-function clearAll(){
-	alert("清空所有内容");
-}
-
 showRemind('input[type=text], textarea','placeholder');
 </script>
 </html>

@@ -41,7 +41,7 @@ public class BookController extends BaseController {
 	PublisherService publisherService;
 	
 	//获取所有的图书分类信息
-	@RequestMapping("/toBookPage.action")
+	@RequestMapping("/admin/toBookPage.action")
 	public String getAllBookInfo(@RequestParam(value="page", defaultValue="1") int page,
 			Book book, Model model, HttpSession session){
 		PageInfo<Book> pageInfo = bookService.findByPage(book, page, 5);
@@ -51,7 +51,7 @@ public class BookController extends BaseController {
 		return "/admin/book-mgt.jsp";			
 	}
 	
-	@RequestMapping("/qryBookByPage.action")
+	@RequestMapping("/admin/qryBookByPage.action")
 	@ResponseBody
 	public List<Book> qryBookByPage(@RequestParam(value="page", defaultValue="1") int page,
 			Book book,Model model, HttpSession session){
@@ -69,7 +69,7 @@ public class BookController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toQryBookPage.action")
+	@RequestMapping("/admin/toQryBookPage.action")
 	public String toQryBookPage(int id,Model model, HttpSession session){
 		Book book = bookService.get(id);
 		model.addAttribute("book", book);
@@ -83,7 +83,7 @@ public class BookController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toUpdBookPage.action")
+	@RequestMapping("/admin/toUpdBookPage.action")
 	public String toUpdBookTypePage(int id,Model model, HttpSession session){
 		Book book = bookService.get(String.valueOf(id));
 		model.addAttribute("book", book);
@@ -101,7 +101,7 @@ public class BookController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toAddBookPage.action")
+	@RequestMapping("/admin/toAddBookPage.action")
 	public String toAddBookPage(Model model, HttpSession session){
 		List<BookType> bookType = bookTypeService.find(new BookType());
 		List<Publisher> publisher = publisherService.find(new Publisher());

@@ -29,7 +29,7 @@ public class CategoryController extends BaseController {
 	CategoryService categoryService;
 	
 	//获取所有的书架分类信息
-	@RequestMapping("/toCategoryPage.action")
+	@RequestMapping("/admin/toCategoryPage.action")
 	public String getAllUserInfo(@RequestParam(value="page", defaultValue="1") int page,
 			Category category, Model model, HttpSession session){
 		PageInfo<Category> pageInfo = categoryService.findByPage(category, page, 10);
@@ -46,7 +46,7 @@ public class CategoryController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toQryCategoryPage.action")
+	@RequestMapping("/admin/toQryCategoryPage.action")
 	public String toQryCategoryPage(int id,Model model, HttpSession session){
 		Category category = categoryService.get(id);
 		model.addAttribute("category", category);
@@ -60,7 +60,7 @@ public class CategoryController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toUpdCategoryPage.action")
+	@RequestMapping("/admin/toUpdCategoryPage.action")
 	public String toUpdCategoryPage(int id,Model model, HttpSession session){
 		Category category = categoryService.get(id);
 		model.addAttribute("category", category);
@@ -74,7 +74,7 @@ public class CategoryController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/toAddCategoryPage.action")
+	@RequestMapping("/admin/toAddCategoryPage.action")
 	public String toAddCategoryPage(Model model, HttpSession session){
 		return "/admin/cate-reg.jsp";			
 	}

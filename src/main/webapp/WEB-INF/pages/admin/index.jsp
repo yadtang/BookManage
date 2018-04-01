@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="konwledge">
 						<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>图书管理</span><i class="icon"></i></a></div>
 						<ul class="subnav">
-                        	<li><a href="#" onclick="formSubmit('${ctx}/toBookPage.action','mframe');this.blur();">图书管理</a></li>
+                        	<li><a href="#" onclick="formSubmit('${ctx}/admin/toBookPage.action','mframe');this.blur();">图书管理</a></li>
                         </ul>
 					</li>
                     <li class="agency">
@@ -62,9 +62,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="system">
 						<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>基础管理</span><i class="icon"></i></a></div>
 						<ul class="subnav">
-                        	<li><a href="javascript:;" onclick="formSubmit('${ctx}/toCategoryPage.action','mframe');this.blur();">书架分类</a></li>
-                            <li><a href="javascript:;" onclick="formSubmit('${ctx}/toBookTypePage.action','mframe');this.blur();">图书分类</a></li>
-                            <li><a href="javascript:;" onclick="formSubmit('${ctx}/toPublisherPage.action','mframe');this.blur();">出版社管理</a></li>
+                        	<li><a href="javascript:;" onclick="formSubmit('${ctx}/admin/toCategoryPage.action','mframe');this.blur();">书架分类</a></li>
+                            <li><a href="javascript:;" onclick="formSubmit('${ctx}/admin/toBookTypePage.action','mframe');this.blur();">图书分类</a></li>
+                            <li><a href="javascript:;" onclick="formSubmit('${ctx}/admin/toPublisherPage.action','mframe');this.blur();">出版社管理</a></li>
                         </ul>
 					</li>
                 </ul>

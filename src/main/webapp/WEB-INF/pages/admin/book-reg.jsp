@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </form>
 <div class="btn ue-clear">
 	<a href="javascript:;" class="confirm" onclick="addUser()">确定</a>
-    <a href="${ctx}/toBookPage.action" class="clear" >返回</a>
+    <a href="${ctx}/admin/toBookPage.action" class="clear" >返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>
@@ -149,7 +149,7 @@ function addUser(){
         contentType : false,
         success: function (result) {
         	alert(result.errorInfo);
-			document.myform.attributes["action"].value = "${ctx}/toBookPage.action"; 
+			document.myform.attributes["action"].value = "${ctx}/admin/toBookPage.action"; 
 			$("form").submit();
         }
       });

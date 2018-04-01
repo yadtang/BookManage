@@ -48,9 +48,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</td>
 					<td>${o.remark}</td>
 					<td class="operate">
-						<a href="${ctx}/toUpdPublisherPage.action?id=${o.id}" class="del">修改</a>
+						<a href="${ctx}/admin/toUpdPublisherPage.action?id=${o.id}" class="del">修改</a>
 						<a class="del" onclick="delCateById(${o.id})">删除</a>
-						<a href="${ctx}/toQryPublisherPage.action?id=${o.id}" class="edit">查看</a>
+						<a href="${ctx}/admin/toQryPublisherPage.action?id=${o.id}" class="edit">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -78,7 +78,7 @@ $(".select-list").on("click","li",function(){
 $('.pagination').pagination(${pageInfo.total},10,{
 	callback: function(page){
 		$.ajax({
-			url:"${ctx}/qryPublisherByPage.action",
+			url:"${ctx}/admin/qryPublisherByPage.action",
 			method:"post",
 			dataType: "json",
 			data:{page:page+1},
@@ -107,9 +107,9 @@ $('.pagination').pagination(${pageInfo.total},10,{
 						html += "<td class='process'><font color='red'>作废</font></td>";
 					}
 					html += "<td class='process'>"+data[dataList].remark+" "+"</td>";
-					html += "<td class='operate'><a href='${ctx}/toUpdPublisherPage.action?id="+data[dataList].id+"'>修改</a>&nbsp;";
+					html += "<td class='operate'><a href='${ctx}/admin/toUpdPublisherPage.action?id="+data[dataList].id+"'>修改</a>&nbsp;";
 					html += "<a class='del' onclick='delCateById("+data[dataList].id+")'>删除</a>&nbsp;";
-					html += "<a href='${ctx}/toQryPublisherPage.action?id="+data[dataList].id+"' class='del'>查看</a></td>";
+					html += "<a href='${ctx}/admin/toQryPublisherPage.action?id="+data[dataList].id+"' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
@@ -131,7 +131,7 @@ function delCateById(id){
 	}
 	$.post("${ctx}/admin/delPub.action", { id:id},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toPublisherPage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toPublisherPage.action"; 
 		$("form").submit();
 	},"json");
 }
@@ -154,14 +154,14 @@ function delCategory(){
 
 	$.post("${ctx}/admin/delPub.action", { id:ids},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toPublisherPage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toPublisherPage.action"; 
 		$("form").submit();
 	},"json");
 }
 
 //跳转到添加分类页面
 function addCategory(){
-	document.myform.attributes["action"].value = "${ctx}/toAddPublisherPage.action"; 
+	document.myform.attributes["action"].value = "${ctx}/admin/toAddPublisherPage.action"; 
 	$("form").submit();
 }
 

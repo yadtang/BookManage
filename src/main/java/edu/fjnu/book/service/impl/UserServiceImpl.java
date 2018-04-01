@@ -80,7 +80,6 @@ public class UserServiceImpl implements UserService {
 	    pageSize = pageSize == null?10:pageSize;
 	    PageHelper.startPage(pageNo, pageSize);
 	    List<User> list = userDao.find(user);
-	    System.out.println(list.toString());
 	    //用PageInfo对结果进行包装
 	    PageInfo<User> page = new PageInfo<User>(list);
 	    return page;
@@ -92,7 +91,6 @@ public class UserServiceImpl implements UserService {
 	    pageSize = pageSize == null?10:pageSize;
 	    PageHelper.startPage(pageNo, pageSize);
 	    List<User> list = userDao.findPending(user);
-	    System.out.println(list.toString());
 	    //用PageInfo对结果进行包装
 	    PageInfo<User> page = new PageInfo<User>(list);
 	    return page;

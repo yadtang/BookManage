@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body>
 <div class="title"><h2>更新分类</h2></div>
-<form action="${ctx}/updCourse.action" method="post" name="myform" id="myform">
+<form action="${ctx}/admin/updCourse.action" method="post" name="myform" id="myform">
 <div class="main">
 	<p class="short-input ue-clear">
     	<label><span style="color:red">*</span>分类编号：</label>
@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </form>
 <div class="btn ue-clear">
 	<a href="javascript:;" class="confirm" onclick="addType()">确定</a>
-    <a href="${ctx}/toBookTypePage.action" class="clear">返回</a>
+    <a href="${ctx}/admin/toBookTypePage.action" class="clear">返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>
@@ -71,7 +71,7 @@ function addType(){
 	var remark = $("#remark").val();
 	$.post("${ctx}/admin/updateType.action", { typeId:typeId, typeName:typeName,status:status, remark:remark},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toBookTypePage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toBookTypePage.action"; 
 		$("form").submit();
 	},"json");
 }

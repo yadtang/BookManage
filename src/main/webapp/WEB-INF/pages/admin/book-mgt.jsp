@@ -46,9 +46,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>${o.publisher.name}</td>
 					<td><img src="${ctx}/${o.imageUrl}"  width="80" height="80" /></td>
 					<td class="operate">
-						<a href="${ctx}/toUpdBookPage.action?id=${o.bookid}" class="del">修改</a>
+						<a href="${ctx}/admin/toUpdBookPage.action?id=${o.bookid}" class="del">修改</a>
 						<a class="del" onclick="delCateById(${o.bookid})">删除</a>
-						<a href="${ctx}/toQryBookPage.action?id=${o.bookid}" class="edit">查看</a>
+						<a href="${ctx}/admin/toQryBookPage.action?id=${o.bookid}" class="edit">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -76,7 +76,7 @@ $(".select-list").on("click","li",function(){
 $('.pagination').pagination(${pageInfo.total},5,{
 	callback: function(page){
 		$.ajax({
-			url:"${ctx}/qryBookByPage.action",
+			url:"${ctx}/admin/qryBookByPage.action",
 			method:"post",
 			dataType: "json",
 			data:{page:page+1},
@@ -98,9 +98,9 @@ $('.pagination').pagination(${pageInfo.total},5,{
 					html += "<td>"+data[dataList].author+"</td>";
 					html += "<td>"+data[dataList].publisher.name+"</td>";
 					html += "<td><img src='${ctx}/"+data[dataList].imageUrl+"'  width='80' height='80' /></td>";
-					html += "<td class='operate'><a href='${ctx}/toUpdBookPage.action?id="+data[dataList].bookid+"'>修改</a>&nbsp;";
+					html += "<td class='operate'><a href='${ctx}/admin/toUpdBookPage.action?id="+data[dataList].bookid+"'>修改</a>&nbsp;";
 					html += "<a class='del' onclick='delCateById("+data[dataList].bookid+")'>删除</a>&nbsp;";
-					html += "<a href='${ctx}/toQryBookPage.action?id="+data[dataList].bookid+"' class='del'>查看</a></td>";
+					html += "<a href='${ctx}/admin/toQryBookPage.action?id="+data[dataList].bookid+"' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
@@ -122,7 +122,7 @@ function delCateById(id){
 	}
 	$.post("${ctx}/admin/delBook.action", { bookid:id},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toBookPage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toBookPage.action"; 
 		$("form").submit();
 	},"json");
 }
@@ -144,14 +144,14 @@ function delCategory(){
 	}
 	$.post("${ctx}/admin/delBook.action", { bookid:ids},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toBookPage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toBookPage.action"; 
 		$("form").submit();
 	},"json");
 }
 
 //跳转到添加分类页面
 function addCategory(){
-	document.myform.attributes["action"].value = "${ctx}/toAddBookPage.action"; 
+	document.myform.attributes["action"].value = "${ctx}/admin/toAddBookPage.action"; 
 	$("form").submit();
 }
 

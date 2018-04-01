@@ -109,7 +109,6 @@ public class UserController extends BaseController{
 	//跳转到用户管理页面
 	@RequestMapping(value="/admin/toUserManage.action",method=RequestMethod.POST)
 	public String toUserManage(Model model, HttpSession session){
-		
 		return "/admin/user-mgt.jsp";			
 	}
 	
@@ -130,7 +129,6 @@ public class UserController extends BaseController{
 	@ResponseBody
 	public List<User> qryAllUser(@RequestParam(value="page", defaultValue="1") int page,
 			User user, Model model, HttpSession session){
-//			List<User> dataList = userService.find(user);
 		PageInfo<User> pageInfo = userService.findByPage(user, page, 10);
 		List<User> dataList = pageInfo.getList();
 		model.addAttribute("dataList", dataList);
@@ -138,20 +136,6 @@ public class UserController extends BaseController{
 		return dataList;			
 	}
 	
-	/**
-	 * 跳转到添加用户信息页面
-	 * @param user
-	 * @param model
-	 * @param session
-	 * @return
-	 */
-	/*@RequestMapping("/admin/toAddUser.action")
-	public String toAddUserInfo(User user, Model model, HttpSession session){
-		List<User> dataList = userService.find(user);
-		model.addAttribute("grade", gradeService.find(new Grade()));
-		model.addAttribute("dataList", dataList);
-		return "/admin/info-reg.jsp";			
-	}*/
 	
 	/**
 	 * 添加用户信息
@@ -194,37 +178,7 @@ public class UserController extends BaseController{
 	} 
 	
 	/**
-	 * 获取所有待审核信息
-	 * @param user
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("/admin/getFindPending.action")
-	public String findPending(@RequestParam(value="page", defaultValue="1") int page,User user, Model model){
-		PageInfo<User> pageInfo = userService.findPendingByPage(user, page, 5);
-		List<User> dataList = pageInfo.getList();
-		model.addAttribute("dataList", dataList);
-		model.addAttribute("pageInfo", pageInfo);
-		return "/admin/info-deal.jsp";
-	}
-	
-	//获取所有的用户信息
-	@RequestMapping("/admin/qryFindPending.action")
-	@ResponseBody
-	public List<User> qryFindPending(@RequestParam(value="page", defaultValue="1") int page,
-			User user, Model model, HttpSession session){
-//				List<User> dataList = userService.find(user);
-		PageInfo<User> pageInfo = userService.findPendingByPage(user, page, 10);
-		List<User> dataList = pageInfo.getList();
-		model.addAttribute("dataList", dataList);
-		model.addAttribute("pageInfo", pageInfo);
-		return dataList;			
-	}
-	
-	
-	
-	/**
-	 * 跳转到添加用户信息页面
+	 * 跳转到更新用户信息页面
 	 * @param user
 	 * @param model
 	 * @param session
@@ -235,14 +189,74 @@ public class UserController extends BaseController{
 		String userId = user.getUserId().trim();
 		User userInfo = userService.get(userId);
 		model.addAttribute("user", userInfo);
-		return "/admin/info-upd.jsp";			
+		return "/admin/user-upd.jsp";			
 	}
 	
+	/**
+	 * 跳转到用户详情页面
+	 * @param user
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/admin/toQryUser.action")
+	public String toQryUser(User user, Model model, HttpSession session){
+		String userId = user.getUserId().trim();
+		User userInfo = userService.get(userId);
+		model.addAttribute("user", userInfo);
+		return "/admin/user-qry.jsp";			
+	}
 	
+	/**
+	 * 更新用户信息
+	 * @param user
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/admin/updateUser.action")
-	public String updateUser(User user, Model model){
-		userService.update(user);
-		return "redirect:/admin/getAllUser.action";			
+	@ResponseBody
+	public MsgItem updateUser(User user, Model model){
+		MsgItem item = new MsgItem();
+		try {
+			if(user != null){
+				userService.update(user);
+				item.setErrorNo("0");
+				item.setErrorInfo("更新成功!");
+			}else{
+				item.setErrorNo("1");
+				item.setErrorInfo("更新失败!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			item.setErrorNo("1");
+			item.setErrorInfo("更新失败!");
+		}
+		
+		return item;
 	}
+	
+	/**
+	 * 用户解冻
+	 * @param userId	
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/admin/thawUserById.action")
+	@ResponseBody
+	public MsgItem thawUserById(User user, Model model){
+		MsgItem item = new MsgItem();
+		user.setUserState("2");
+		try {
+			userService.update(user);
+			item.setErrorNo("0");
+			item.setErrorInfo("解冻成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			item.setErrorNo("1");
+			item.setErrorInfo("解冻失败!");
+		}
+		
+		return item;
+	} 
 	
 }

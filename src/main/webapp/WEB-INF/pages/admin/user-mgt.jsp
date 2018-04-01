@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body>
 <div class="title"><h2>用户管理</h2></div>
-<form action="${ctx}/deleteCourse.action" method="post" name="myform" id="myform">
+<form action="${ctx}/admin/deleteCourse.action" method="post" name="myform" id="myform">
 <div class="table-operate ue-clear">
 	<a href="#" class="add" onclick="addType()">重置</a>
     <a href="javascript:;" class="del" onclick="deleteUser()">注销</a>
@@ -54,13 +54,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>${o.email}</td>
 					<td class="operate">
 						<c:if test="${o.userState==2}">
-							<a href="${ctx}/toUpdCourse.action?userId=${o.userId}" class="edit">编辑</a>
+							<a href="${ctx}/admin/toUpdCourse.action?userId=${o.userId}" class="edit">编辑</a>
 							<a onclick="delUserById('${o.userId}')" class="del">注销</a>
 						</c:if>
 						<c:if test="${o.userState==3}">
 							<a onclick="thawUserById('${o.userId}')" class="del">解冻</a>
 						</c:if>
-						<a href="${ctx}/toUpdCourse.action?userId=${o.userId}" class="edit">查看</a>
+						<a href="${ctx}/admin/toQryUser.action?userId=${o.userId}" class="edit">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -126,13 +126,13 @@ $('.pagination').pagination(${pageInfo.total},10,{
 					
 					html += "<td class='operate'>";
 					if(data[dataList].userState == 2){
-						html += "<a href='${ctx}/delCourse.action?courseId="+data[dataList].courseId+"' class='del'>编辑</a>&nbsp;";
-						html += "<a class='del' onclick='delCateById("+data[dataList].id+")'>注销</a>&nbsp;";
+						html += "<a href='${ctx}/admin/delCourse.action?userId="+data[dataList].userId+"' class='del'>编辑</a>&nbsp;";
+						html += "<a class='del' onclick='delCateById("+data[dataList].userId+")'>注销</a>&nbsp;";
 					}
-					if(data[dataList].userState == 1){
-						html += "<a class='del' onclick='thawUserById("+data[dataList].id+")'>解冻</a>&nbsp;";
+					if(data[dataList].userState == 3){
+						html += "<a class='del' onclick='thawUserById("+data[dataList].userId+")'>解冻</a>&nbsp;";
 					}
-					html += "<a href='${ctx}/toUpdCourse.action?courseId="+data[dataList].courseId+"' class='del'>查看</a></td>";
+					html += "<a href='${ctx}/admin/toQryUser.action?userId="+data[dataList].userId+"' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
@@ -164,7 +164,7 @@ function thawUserById(id){
 		alert("请选择要解冻的用户记录！");
 		return;
 	}
-	$.post("${ctx}/admin/enableUser.action", { userId:id},function(data){
+	$.post("${ctx}/admin/thawUserById.action", { userId:id},function(data){
 		alert(data.errorInfo);
 		document.myform.attributes["action"].value = "${ctx}/admin/getAllUser.action"; 
 		$("form").submit();
@@ -193,7 +193,7 @@ function deleteUser(){
 }
 
 function addType(){
-	document.myform.attributes["action"].value = "${ctx}/toAddCourse.action"; 
+	document.myform.attributes["action"].value = "${ctx}/admin/toAddCourse.action"; 
 	$("form").submit();
 }
 
