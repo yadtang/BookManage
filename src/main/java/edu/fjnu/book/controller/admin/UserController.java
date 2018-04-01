@@ -18,6 +18,7 @@ import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.MsgItem;
 import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.UserService;
+import edu.fjnu.book.util.MD5Util;
 /**
  * 用户管理
  * @author hspcadmin
@@ -254,6 +255,38 @@ public class UserController extends BaseController{
 			e.printStackTrace();
 			item.setErrorNo("1");
 			item.setErrorInfo("解冻失败!");
+		}
+		
+		return item;
+	} 
+	
+	/**
+	 * 用户解冻
+	 * @param userId	
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/admin/reSetPwd.action")
+	@ResponseBody
+	public MsgItem reSetPwd(String userId, Model model){
+		MsgItem item = new MsgItem();
+		try {
+			if(userId != null && !"".equals(userId.trim())){
+				String pwd = MD5Util.getData("123456");
+				String ids[] = userId.split(",");
+				for(int i=0;i<ids.length;i++){
+					User user = new User();
+					user.setUserId(ids[i]);
+					user.setUserPwd(pwd);
+					userService.update(user);
+				}
+			}
+			item.setErrorNo("0");
+			item.setErrorInfo("密码重置成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			item.setErrorNo("1");
+			item.setErrorInfo("密码重置成功!");
 		}
 		
 		return item;

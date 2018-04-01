@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="title"><h2>用户管理</h2></div>
 <form action="${ctx}/admin/deleteCourse.action" method="post" name="myform" id="myform">
 <div class="table-operate ue-clear">
-	<a href="#" class="add" onclick="addType()">重置</a>
+	<a href="#" class="add" onclick="reSetPwd()">重置</a>
     <a href="javascript:;" class="del" onclick="deleteUser()">注销</a>
 </div>
 <div class="table-box" id="myDiv">
@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>${o.email}</td>
 					<td class="operate">
 						<c:if test="${o.userState==2}">
-							<a href="${ctx}/admin/toUpdCourse.action?userId=${o.userId}" class="edit">编辑</a>
+							<a href="${ctx}/admin/toUpdateUser.action?userId=${o.userId}" class="edit">编辑</a>
 							<a onclick="delUserById('${o.userId}')" class="del">注销</a>
 						</c:if>
 						<c:if test="${o.userState==3}">
@@ -126,11 +126,11 @@ $('.pagination').pagination(${pageInfo.total},10,{
 					
 					html += "<td class='operate'>";
 					if(data[dataList].userState == 2){
-						html += "<a href='${ctx}/admin/delCourse.action?userId="+data[dataList].userId+"' class='del'>编辑</a>&nbsp;";
-						html += "<a class='del' onclick='delCateById("+data[dataList].userId+")'>注销</a>&nbsp;";
+						html += "<a href='${ctx}/admin/toUpdateUser.action?userId="+data[dataList].userId+"' class='del'>编辑</a>&nbsp;";
+						html += "<a class='del' onclick='delUserById("+data[dataList].userId+")'>注销</a>&nbsp;";
 					}
 					if(data[dataList].userState == 3){
-						html += "<a class='del' onclick='thawUserById("+data[dataList].userId+")'>解冻</a>&nbsp;";
+						html += "<a class='del' onclick='thawUserById('+data[dataList].userId+')'>解冻</a>&nbsp;";
 					}
 					html += "<a href='${ctx}/admin/toQryUser.action?userId="+data[dataList].userId+"' class='del'>查看</a></td>";
 					html += "</tr>";
@@ -192,9 +192,27 @@ function deleteUser(){
 	},"json");
 }
 
-function addType(){
-	document.myform.attributes["action"].value = "${ctx}/admin/toAddCourse.action"; 
-	$("form").submit();
+//密码重置
+function reSetPwd(){
+	var ids = "";
+	$("input:checkbox[name='userId']:checked").each(function() {
+		ids += $(this).val() + ",";
+    });
+	
+	//判断最后一个字符是否为逗号，若是截取
+	var id = ids.substring(ids.length -1, ids.length);
+	if(id == ","){
+		ids = ids.substring(0, ids.length-1);
+	}
+	if(ids == ""){
+		alert("请选择要重置的记录！");
+		return;
+	}
+	$.post("${ctx}/admin/reSetPwd.action", { userId:ids},function(data){
+		alert(data.errorInfo);
+		document.myform.attributes["action"].value = "${ctx}/admin/getAllUser.action"; 
+		$("form").submit();
+	},"json");
 }
 
 $("tbody").find("tr:odd").css("backgroundColor","#eff6fa");

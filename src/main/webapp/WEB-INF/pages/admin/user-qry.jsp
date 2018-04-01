@@ -25,6 +25,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>用户昵称：</label>${user.userName }
     </p>
     <p class="long-input ue-clear newstyle">
+    	<label>注册邮箱：</label>${user.email }
+    </p>
+    <p class="long-input ue-clear newstyle">
     	<label>账号类型：</label>
     	<c:if test="${user.userType==1}"><font color="blue">普通用户</font></c:if>
 		<c:if test="${user.userType==2}"><font color="red">管理员</font></c:if>
@@ -34,9 +37,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<c:if test="${user.userState==1}"><font color="red">待激活</font></c:if>
 		<c:if test="${user.userState==2}"><font color="blue">正常</font></c:if>
 		<c:if test="${user.userState==3}"><font color="red">冻结</font></c:if>
-    </p>
-    <p class="long-input ue-clear newstyle">
-    	<label>注册邮箱：</label>${user.email }
     </p>
     <p class="short-input ue-clear newstyle">
     	<label>联系电话：</label>${user.telephone }
