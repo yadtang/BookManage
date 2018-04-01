@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>${o.publisher.name}</td>
 					<td><img src="${ctx}/${o.imageUrl}"  width="80" height="80" /></td>
 					<td class="operate">
-						<a href="${ctx}/toUpdBookTypePage.action?bookid=${o.bookid}" class="del">修改</a>
+						<a href="${ctx}/toUpdBookPage.action?id=${o.bookid}" class="del">修改</a>
 						<a class="del" onclick="delCateById(${o.bookid})">删除</a>
 						<a href="${ctx}/toQryBookPage.action?id=${o.bookid}" class="edit">查看</a>
 					</td>
@@ -86,28 +86,21 @@ $('.pagination').pagination(${pageInfo.total},5,{
 				html += "<table border='1' cellspacing='1'>";
 				html += "<thead>";
 				html += "<th class='num'></th>";
-				html += "<th class='name'>年级编号</th><th class='name'>分类名称</th>";
-				html += "<th class='process'>分类状态</th><th class='process'>备注</th><th class='operate'>操作</th>";
+				html += "<th class='name'>图书编号</th><th class='name'>图书名称</th>";
+				html += "<th class='process'>作者</th><th class='process'>出版社</th><th class='process'>封面</th><th class='operate'>操作</th>";
 				html += "</thead>";
 				html += "<tbody align='center'>";
-				
-				
 				for(dataList in data){
 					html += "<tr align='center'>";
-					html += "<td><input type='checkbox' name='typeId' value='"+data[dataList].typeId+"'/></td>";
-					html += "<td>"+data[dataList].typeId+"</td>";
-					html += "<td>"+data[dataList].typeName+"</td>";
-					if(data[dataList].status == 0){
-						html += "<td><font color='blue'>未启用</font></td>";
-					}else if(data[dataList].status == 1){
-						html += "<B>在用</B></td>";
-					}else if(data[dataList].status == 2){
-						html += "<td><font color='red'>作废</font></td>";
-					}
-					html += "<td>"+data[dataList].remark+"</td>";
-					html += "<td class='operate'><a href='${ctx}/toUpdBookTypePage.action?id=${o.typeId}'>修改</a>&nbsp;";
-					html += "<td class='operate'><a class='del' onclick='delCateById(${o.typeId})'>删除</a>&nbsp;";
-					html += "<a href='${ctx}/toQryBookTypePage.action?id=${o.typeId}' class='del'>查看</a></td>";
+					html += "<td><input type='checkbox' name='bookid' value='"+data[dataList].bookid+"'/></td>";
+					html += "<td>"+data[dataList].bookid+"</td>";
+					html += "<td>"+data[dataList].bookname+"</td>";
+					html += "<td>"+data[dataList].author+"</td>";
+					html += "<td>"+data[dataList].publisher.name+"</td>";
+					html += "<td><img src='${ctx}/"+data[dataList].imageUrl+"'  width='80' height='80' /></td>";
+					html += "<td class='operate'><a href='${ctx}/toUpdBookPage.action?id="+data[dataList].bookid+"'>修改</a>&nbsp;";
+					html += "<a class='del' onclick='delCateById("+data[dataList].bookid+")'>删除</a>&nbsp;";
+					html += "<a href='${ctx}/toQryBookPage.action?id="+data[dataList].bookid+"' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
@@ -136,7 +129,7 @@ function delCateById(id){
 
 function delCategory(){
 	var ids = "";
-	$("input:checkbox[name='typeId']:checked").each(function() {
+	$("input:checkbox[name='bookid']:checked").each(function() {
 		ids += $(this).val() + ",";
     });
 	
@@ -149,10 +142,9 @@ function delCategory(){
 		alert("请选择要删除的记录！");
 		return;
 	}
-
-	$.post("${ctx}/admin/delType.action", { typeId:ids},function(data){
+	$.post("${ctx}/admin/delBook.action", { bookid:ids},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toBookTypePage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/toBookPage.action"; 
 		$("form").submit();
 	},"json");
 }

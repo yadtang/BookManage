@@ -48,10 +48,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="author!=null">
 				author=#{author},
 			</if>
-			<if test="press!=null">
-				press=#{press},
+			<if test="publisher.id !=null">
+				press=#{publisher.id},
 			</if>
-			<if test="typeid!=null">
+			<if test="bookType.typeId !=null">
 				typeid=#{bookType.typeId},
 			</if>
 			<if test="price!=null">

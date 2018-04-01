@@ -85,8 +85,12 @@ public class BookController extends BaseController {
 	 */
 	@RequestMapping("/toUpdBookPage.action")
 	public String toUpdBookTypePage(int id,Model model, HttpSession session){
-		Book book = bookService.get(id);
+		Book book = bookService.get(String.valueOf(id));
 		model.addAttribute("book", book);
+		List<BookType> bookType = bookTypeService.find(new BookType());
+		List<Publisher> publisher = publisherService.find(new Publisher());
+		model.addAttribute("bookType", bookType);
+		model.addAttribute("publisher", publisher);
 		return "/admin/book-upd.jsp";			
 	}
 	
@@ -114,13 +118,43 @@ public class BookController extends BaseController {
 	 */
 	@RequestMapping("/admin/updateBook.action")
 	@ResponseBody
-	public MsgItem updateBook(Book book, Model model){
+	public MsgItem updateBook(Book book, String press,String typeId,Model model,MultipartFile file,HttpServletRequest request){
 		MsgItem item = new MsgItem();
 		try {
+			String filename =file.getOriginalFilename();
+			if(filename != null && !"".equals(filename.trim())){
+				//原始文件名称
+		    	
+		    	//性名称
+		    	String newFileName=UUID.randomUUID().toString()+filename.substring(filename.lastIndexOf("."));
+		    	String contexPath= request.getSession().getServletContext().getRealPath("/")+"book\\"+newFileName;
+		    	System.out.println(contexPath);
+		    	//上传图片
+		    	File uploadPic=new File(contexPath);
+		    	if(!uploadPic.exists()){
+		    		uploadPic.mkdirs();
+		    	}
+		    	//向磁盘写入文件
+		    	file.transferTo(uploadPic);
+		    	//将图片的路径保存到user对象中
+		    	book.setImageUrl("book/"+newFileName);
+			}else{
+				Book book1 = bookService.get(book.getBookid());
+				book.setImageUrl(book1.getImageUrl());
+			}
+			//出版社
+	    	Publisher publisher = new Publisher();
+	    	publisher.setId(press);
+	    	book.setPublisher(publisher);
+	    	//图书分类
+	    	BookType bookType = new BookType();
+	    	bookType.setTypeId(Integer.parseInt(typeId));
+	    	book.setBookType(bookType);
 			bookService.update(book);
 			item.setErrorNo("0");
 			item.setErrorInfo("分类信息修改成功!");
 		} catch (Exception e) {
+			e.printStackTrace();
 			item.setErrorNo("1");
 			item.setErrorInfo("分类信息修改失败!");
 		}

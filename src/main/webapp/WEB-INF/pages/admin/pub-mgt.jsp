@@ -107,9 +107,9 @@ $('.pagination').pagination(${pageInfo.total},10,{
 						html += "<td class='process'><font color='red'>作废</font></td>";
 					}
 					html += "<td class='process'>"+data[dataList].remark+" "+"</td>";
-					html += "<td class='operate'><a href='${ctx}/toUpdPublisherPage.action?id=data[dataList].id'>修改</a>&nbsp;";
-					html += "<a class='del' onclick='delCateById(data[dataList].id)'>删除</a>&nbsp;";
-					html += "<a href='${ctx}/toQryPublisherPage.action?id=data[dataList].id' class='del'>查看</a></td>";
+					html += "<td class='operate'><a href='${ctx}/toUpdPublisherPage.action?id="+data[dataList].id+"'>修改</a>&nbsp;";
+					html += "<a class='del' onclick='delCateById("+data[dataList].id+")'>删除</a>&nbsp;";
+					html += "<a href='${ctx}/toQryPublisherPage.action?id="+data[dataList].id+"' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
