@@ -82,8 +82,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 删除一条记录 -->
 	<delete id="delete" parameterType="string">
-		delete from t_user
-		where userid=#{id}
+		<!-- delete from t_user
+		where userid=#{id} -->
+		update t_user set userstate = '3' where userid=#{id}
 	</delete>
 	
 	<!-- 查询一个录 -->

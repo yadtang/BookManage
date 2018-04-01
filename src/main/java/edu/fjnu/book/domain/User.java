@@ -4,7 +4,9 @@ public class User {
 	private String userId;
 	private String userName;
 	private String userPwd;
+	//1:普通用户	2：管理员
 	private String userType;
+	//1:未激活	2：正常	3：注销
 	private String userState;
 	private String email;
 	private String telephone;

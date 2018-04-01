@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<div class="title"><h2>分类管理</h2></div>
+<div class="title"><h2>书架分类管理</h2></div>
 <form action="${ctx}/admin/delCate.action" method="post" name="myform" id="myform">
 <div class="table-operate ue-clear">
 	<a href="#" class="add" onclick="addCategory()">添加</a>

@@ -64,7 +64,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<ul class="subnav">
                         	<li><a href="javascript:;" onclick="formSubmit('${ctx}/toCategoryPage.action','mframe');this.blur();">书架分类</a></li>
                             <li><a href="javascript:;" onclick="formSubmit('${ctx}/toBookTypePage.action','mframe');this.blur();">图书分类</a></li>
-                            <li><a href="javascript:;" onclick="formSubmit('${ctx}/toCoursePage.action','mframe');this.blur();">书架管理</a></li>
                             <li><a href="javascript:;" onclick="formSubmit('${ctx}/toPublisherPage.action','mframe');this.blur();">出版社管理</a></li>
                         </ul>
 					</li>

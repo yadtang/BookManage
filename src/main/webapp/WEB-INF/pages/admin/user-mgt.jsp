@@ -17,11 +17,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<div class="title"><h2>课程管理</h2></div>
+<div class="title"><h2>用户管理</h2></div>
 <form action="${ctx}/deleteCourse.action" method="post" name="myform" id="myform">
 <div class="table-operate ue-clear">
 	<a href="#" class="add" onclick="addType()">重置</a>
-    <a href="javascript:;" class="del" onclick="deleteUser()">删除</a>
+    <a href="javascript:;" class="del" onclick="deleteUser()">注销</a>
 </div>
 <div class="table-box" id="myDiv">
 	<table border="1" cellspacing="1">
@@ -47,14 +47,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<c:if test="${o.userType==2}"><font color="red">管理员</font></c:if>
 					</td>
 					<td>
-						<c:if test="${o.userState==1}"><font color="blue">待激活</font></c:if>
-						<c:if test="${o.userState==2}"><font color="red">正常</font></c:if>
-						<c:if test="${o.userState==3}"><font color="red">作废</font></c:if>
+						<c:if test="${o.userState==1}"><font color="red">待激活</font></c:if>
+						<c:if test="${o.userState==2}"><font color="blue">正常</font></c:if>
+						<c:if test="${o.userState==3}"><font color="red">冻结</font></c:if>
 					</td>
 					<td>${o.email}</td>
 					<td class="operate">
-						<a href="${ctx}/delCourse.action?userId=${o.userId}" class="del">删除</a>
-						<a href="${ctx}/toUpdCourse.action?userId=${o.userId}" class="edit">编辑</a>
+						<c:if test="${o.userState==2}">
+							<a href="${ctx}/toUpdCourse.action?userId=${o.userId}" class="edit">编辑</a>
+							<a onclick="delUserById('${o.userId}')" class="del">注销</a>
+						</c:if>
+						<c:if test="${o.userState==3}">
+							<a onclick="thawUserById('${o.userId}')" class="del">解冻</a>
+						</c:if>
 						<a href="${ctx}/toUpdCourse.action?userId=${o.userId}" class="edit">查看</a>
 					</td>
 				</tr>
@@ -80,10 +85,10 @@ $(".select-list").on("click","li",function(){
 	$(this).parent($(".select-list")).siblings($(".select-title")).find("span").text(txt);
 })
 
-$('.pagination').pagination(${pageInfo.total},{
+$('.pagination').pagination(${pageInfo.total},10,{
 	callback: function(page){
 		$.ajax({
-			url:"${ctx}/qryCoursePage.action",
+			url:"${ctx}/admin/qryAllUser.action",
 			method:"post",
 			dataType: "json",
 			data:{page:page+1},
@@ -93,19 +98,41 @@ $('.pagination').pagination(${pageInfo.total},{
 				html += "<table border='1' cellspacing='1'>";
 				html += "<thead>";
 				html += "<th class='num'></th>";
-				html += "<th class='name'>课程编号</th><th class='operate'>课程名称</th>";
-				html += "<th class='time'>课程状态</th><th class='operate'>操作</th>";
+				html += "<th class='name'>用户编号</th><th class='name'>用户昵称</th><th class='process'>账号类型</th>";
+				html += "<th class='process'>账户状态</th><th class='process'>电子邮箱</th><th class='operate'>操作</th>";
 				html += "</thead>";
 				html += "<tbody align='center'>";
 				
 				for(dataList in data){
 					html += "<tr align='center'>";
-					html += "<td><input type='checkbox' name='courseId' value='"+data[dataList].courseId+"'/></td>";
-					html += "<td>"+data[dataList].courseId+"</td>";
-					html += "<td>"+data[dataList].courseName+"</td>";
-					html += "<td>"+data[dataList].courseState+"</td>";
-					html += "<td class='operate'><a href='${ctx}/delCourse.action?courseId="+data[dataList].courseId+"' class='del'>删除</a>&nbsp;";
-					html += "<a href='${ctx}/toUpdCourse.action?courseId="+data[dataList].courseId+"' class='del'>编辑</a></td>";
+					html += "<td><input type='checkbox' name='userId' value='"+data[dataList].userId+"'/></td>";
+					html += "<td>"+data[dataList].userId+"</td>";
+					html += "<td>"+data[dataList].userName+"</td>";
+					
+					if(data[dataList].userType == 1){
+						html += "<td><font color='blue'>普通用户</font></td>";
+					}else if(data[dataList].userType == 2){
+						html += "<td><font color='red'>管理员</font></td>";
+					}
+					
+					if(data[dataList].userState == 1){
+						html += "<td><font color='red'>待激活</font></td>";
+					}else if(data[dataList].userState == 2){
+						html += "<td><font color='blue'>正常</font></td>";
+					}else if(data[dataList].userState == 3){
+						html += "<td><font color='red'>冻结</font></td>";
+					}
+					html += "<td>"+data[dataList].email+"</td>";
+					
+					html += "<td class='operate'>";
+					if(data[dataList].userState == 2){
+						html += "<a href='${ctx}/delCourse.action?courseId="+data[dataList].courseId+"' class='del'>编辑</a>&nbsp;";
+						html += "<a class='del' onclick='delCateById("+data[dataList].id+")'>注销</a>&nbsp;";
+					}
+					if(data[dataList].userState == 1){
+						html += "<a class='del' onclick='thawUserById("+data[dataList].id+")'>解冻</a>&nbsp;";
+					}
+					html += "<a href='${ctx}/toUpdCourse.action?courseId="+data[dataList].courseId+"' class='del'>查看</a></td>";
 					html += "</tr>";
 				}
 				html += "</tbody>"; 
@@ -120,9 +147,33 @@ $('.pagination').pagination(${pageInfo.total},{
 	setPageNo: false
 });
 
+function delUserById(id){
+	if(id == "" || id ==null){
+		alert("请选择要删除的记录！");
+		return;
+	}
+	$.post("${ctx}/admin/deleteUser.action", { userId:id},function(data){
+		alert(data.errorInfo);
+		document.myform.attributes["action"].value = "${ctx}/admin/getAllUser.action"; 
+		$("form").submit();
+	},"json");
+}
+
+function thawUserById(id){
+	if(id == "" || id ==null){
+		alert("请选择要解冻的用户记录！");
+		return;
+	}
+	$.post("${ctx}/admin/enableUser.action", { userId:id},function(data){
+		alert(data.errorInfo);
+		document.myform.attributes["action"].value = "${ctx}/admin/getAllUser.action"; 
+		$("form").submit();
+	},"json");
+}
+
 function deleteUser(){
 	var ids = "";
-	$("input:checkbox[name='courseId']:checked").each(function() {
+	$("input:checkbox[name='userId']:checked").each(function() {
 		ids += $(this).val() + ",";
     });
 	//判断最后一个字符是否为逗号，若是截取
@@ -134,7 +185,11 @@ function deleteUser(){
 		alert("请选择要删除的记录！");
 		return;
 	}
-	$("form").submit();
+	$.post("${ctx}/admin/deleteUser.action", { userId:ids},function(data){
+		alert(data.errorInfo);
+		document.myform.attributes["action"].value = "${ctx}/admin/getAllUser.action"; 
+		$("form").submit();
+	},"json");
 }
 
 function addType(){

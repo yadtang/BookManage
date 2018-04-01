@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </form>
 <div class="btn ue-clear">
 	<a href="javascript:;" class="confirm" onclick="addUser()">确定</a>
-    <a href="${ctx}/admin/getAllUser.action" class="clear" >返回</a>
+    <a href="${ctx}/toBookPage.action" class="clear" >返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>

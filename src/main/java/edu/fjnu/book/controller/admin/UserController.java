@@ -166,20 +166,31 @@ public class UserController extends BaseController{
 	}
 	
 	/**
-	 * 删除用户信息
+	 * 注销用户信息
 	 * @param userId	用户账号，删除多个是，id用逗号分隔开
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/admin/deleteUser.action")
-	public String deleteUser(String userId, Model model){
-		if(userId != null){
-			String ids[] = userId.split(",");
-			for(int i=0;i<ids.length;i++){
-				userService.delete(ids[i]);
+	@ResponseBody
+	public MsgItem deleteUser(String userId, Model model){
+		MsgItem item = new MsgItem();
+		try {
+			if(userId != null && !"".equals(userId.trim())){
+				String ids[] = userId.split(",");
+				for(int i=0;i<ids.length;i++){
+					userService.delete(ids[i]);
+				}
 			}
+			item.setErrorNo("0");
+			item.setErrorInfo("注销成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			item.setErrorNo("1");
+			item.setErrorInfo("注销失败!");
 		}
-		return "redirect:/admin/getAllUser.action";
+		
+		return item;
 	} 
 	
 	/**
@@ -203,52 +214,14 @@ public class UserController extends BaseController{
 	public List<User> qryFindPending(@RequestParam(value="page", defaultValue="1") int page,
 			User user, Model model, HttpSession session){
 //				List<User> dataList = userService.find(user);
-		PageInfo<User> pageInfo = userService.findPendingByPage(user, page, 5);
+		PageInfo<User> pageInfo = userService.findPendingByPage(user, page, 10);
 		List<User> dataList = pageInfo.getList();
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("pageInfo", pageInfo);
 		return dataList;			
 	}
 	
-	/**
-	 * 用户身份信息审核(通过)
-	 * @param user
-	 * @param model
-	 * @return
-	 */
-	/*@RequestMapping("/admin/passinfo.action")
-	public String passUserInfo(User user, Model model){
-		User us = new User();
-		if(user != null){
-			String ids[] = user.getUserId().split(",");
-			for(int i=0;i<ids.length;i++){
-				us.setUserId(ids[i]);
-				us.setUserState(1);
-				userService.update(us);
-			}
-		}
-		return "redirect:/admin/getFindPending.action";
-	}*/
 	
-	/**
-	 * 用户身份信息审核(不通过)
-	 * @param user
-	 * @param model
-	 * @return
-	 */
-	/*@RequestMapping("/admin/failinfo.action")
-	public String failUserInfo(User user, Model model){
-		User us = new User();
-		if(user != null){
-			String ids[] = user.getUserId().split(",");
-			for(int i=0;i<ids.length;i++){
-				us.setUserId(ids[i]);
-				us.setUserState(2);
-				userService.update(us);
-			}
-		}
-		return "redirect:/admin/getFindPending.action";
-	}*/
 	
 	/**
 	 * 跳转到添加用户信息页面
@@ -265,53 +238,6 @@ public class UserController extends BaseController{
 		return "/admin/info-upd.jsp";			
 	}
 	
-	/**
-	 * 用户个人信息查询(信息审核)
-	 * @param user
-	 * @param model
-	 * @param session
-	 * @return
-	 */
-	/*@RequestMapping("/admin/toQryUser.action")
-	public String toQryUser(User user, Model model, HttpSession session){
-		String userId = user.getUserId().trim();
-		User userInfo = userService.get(userId);
-		model.addAttribute("user", userInfo);
-		model.addAttribute("grade", gradeService.find(new Grade()));
-		return "/admin/info-det.jsp";			
-	}
-	*/
-	/**
-	 * 用户个人信息查询(信息审核)
-	 * @param user
-	 * @param model
-	 * @param session
-	 * @return
-	 */
-	/*@RequestMapping("/admin/toQryUserInfo.action")
-	public String toQryUserInfo(User user, Model model, HttpSession session){
-		String userId = user.getUserId().trim();
-		User userInfo = userService.get(userId);
-		model.addAttribute("user", userInfo);
-		model.addAttribute("grade", gradeService.find(new Grade()));
-		return "/admin/info-qry.jsp";			
-	}*/
-	
-	/**
-	 * 用户个人信息查询(信息管理)
-	 * @param user
-	 * @param model
-	 * @param session
-	 * @return
-	 */
-	/*@RequestMapping("/admin/toQryMgUser.action")
-	public String toQryMgUser(User user, Model model, HttpSession session){
-		String userId = user.getUserId().trim();
-		User userInfo = userService.get(userId);
-		model.addAttribute("user", userInfo);
-		model.addAttribute("grade", gradeService.find(new Grade()));
-		return "/admin/info-qry.jsp";			
-	}*/
 	
 	@RequestMapping("/admin/updateUser.action")
 	public String updateUser(User user, Model model){

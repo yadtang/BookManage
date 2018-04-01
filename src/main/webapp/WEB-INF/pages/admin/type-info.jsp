@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<div class="title"><h2>题型详情</h2></div>
+<div class="title"><h2>分类详情</h2></div>
 <form action="${ctx}/addType.action" method="post" name="myform" id="myform">
 <div class="main">
     <p class="short-input ue-clear">
