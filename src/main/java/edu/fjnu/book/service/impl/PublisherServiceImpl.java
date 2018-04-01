@@ -10,57 +10,60 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import edu.fjnu.book.dao.BookTypeDao;
+import edu.fjnu.book.dao.PublisherDao;
 import edu.fjnu.book.domain.BookType;
+import edu.fjnu.book.domain.Publisher;
 import edu.fjnu.book.service.BookTypeService;
+import edu.fjnu.book.service.PublisherService;
 @Service
-public class BookTypeServiceImpl implements BookTypeService{
+public class PublisherServiceImpl implements PublisherService{
 	@Autowired
-	BookTypeDao bookTypeDao;
+	PublisherDao publisherDao;
 	
-	public BookType get(Serializable id) {
+	public Publisher get(Serializable id) {
 		// TODO Auto-generated method stub
-		return bookTypeDao.get(id);
+		return publisherDao.get(id);
 	}
 
-	public void insert(BookType bookType) {
+	public void insert(Publisher publisher) {
 		// TODO Auto-generated method stub
-		bookTypeDao.insert(bookType);
+		publisherDao.insert(publisher);
 	}
 
-	public void update(BookType bookType) {
+	public void update(Publisher publisher) {
 		// TODO Auto-generated method stub
-		bookTypeDao.update(bookType);
+		publisherDao.update(publisher);
 	}
 
 	public void delete(Serializable id) {
 		// TODO Auto-generated method stub
-		bookTypeDao.delete(id);
+		publisherDao.delete(id);
 	}
 
 	public void delete(Serializable[] ids) {
 		// TODO Auto-generated method stub
-		bookTypeDao.delete(ids);
+		publisherDao.delete(ids);
 	}
 
-	public BookType getStu(BookType bookType) {
+	public Publisher getStu(Publisher publisher) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public PageInfo<BookType> findByPage(BookType bookType, Integer pageNo,
+	public PageInfo<Publisher> findByPage(Publisher publisher, Integer pageNo,
 			Integer pageSize) {
 		pageNo = pageNo == null?1:pageNo;
 	    pageSize = pageSize == null?10:pageSize;
 	    PageHelper.startPage(pageNo, pageSize);
-	    List<BookType> list = bookTypeDao.find(bookType);
+	    List<Publisher> list = publisherDao.find(publisher);
 	    //用PageInfo对结果进行包装
-	    PageInfo<BookType> page = new PageInfo<BookType>(list);
+	    PageInfo<Publisher> page = new PageInfo<Publisher>(list);
 	    return page;
 	}
 
-	public List<BookType> find(BookType bookType) {
+	public List<Publisher> find(Publisher publisher) {
 		// TODO Auto-generated method stub
-		return bookTypeDao.find(bookType);
+		return publisherDao.find(publisher);
 	}
 
 }

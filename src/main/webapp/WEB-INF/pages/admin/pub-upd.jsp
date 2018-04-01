@@ -21,22 +21,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <form action="${ctx}/updCourse.action" method="post" name="myform" id="myform">
 <div class="main">
 	<p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>课程编号：</label>
-        <input type="text" name="courseId" id="courseId" maxlength="10" value="${course.courseId }" readonly="readonly"/>
+    	<label><span style="color:red">*</span>分类编号：</label>
+        <input type="text" name="id" id="id" maxlength="10" value="${publisher.id }" readonly="readonly"/>
     </p>
     <p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>课程名称：</label>
-        <input type="text" name="courseName" id="courseName" maxlength="10" value="${course.courseName }"/>
+    	<label><span style="color:red">*</span>分类名称：</label>
+        <input type="text" name="name" id="name" maxlength="10" value="${publisher.name }"/>
     </p>
 	<p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>课程状态：</label>
-        <input type="text" name="courseState" id="courseState" maxlength="10" value="${course.courseState }"/>
+    	<label><span style="color:red">*</span>分类状态：</label>
+        <input type="text" name="status" id="status" maxlength="10" value="${publisher.status }"/>
+    </p>
+	<p class="short-input ue-clear">
+    	<label><span style="color:red">*</span>备注信息：</label>
+        <input type="text" name="remark" id="remark" maxlength="10" value="${publisher.remark }"/>
     </p>
 </div>
 </form>
 <div class="btn ue-clear">
 	<a href="javascript:;" class="confirm" onclick="addType()">确定</a>
-    <a href="${ctx}/toCoursePage.action" class="clear">返回</a>
+    <a href="${ctx}/toPublisherPage.action" class="clear">返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>
@@ -58,8 +62,18 @@ $(".select-list").on("click","li",function(){
 });
 //注册
 function addType(){
-	document.myform.attributes["action"].value = "${ctx}/updCourse.action"; 
-	$("form").submit();
+	/* document.myform.attributes["action"].value = "${ctx}/admin/updateCate.action"; 
+	$("form").submit(); */
+	
+	var id = $("#id").val();
+	var name = $("#name").val();
+	var status = $("#status").val();
+	var remark = $("#remark").val();
+	$.post("${ctx}/admin/updatePub.action", { id:id, name:name,status:status, remark:remark},function(data){
+		alert(data.errorInfo);
+		document.myform.attributes["action"].value = "${ctx}/toPublisherPage.action"; 
+		$("form").submit();
+	},"json");
 }
 showRemind('input[type=text], textarea','placeholder');
 </script>

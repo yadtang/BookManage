@@ -1,0 +1,19 @@
+package edu.fjnu.book.service;
+
+import java.io.Serializable;
+
+import com.github.pagehelper.PageInfo;
+
+import edu.fjnu.book.domain.Book;
+
+public interface BookService {
+	public Book get(Serializable id);
+	public void insert(Book book);
+	public void update(Book book);
+	public void delete(Serializable id);
+	public void delete(Serializable[] ids);
+	/**查询分页信息*/
+	public Book getStu(Book book);
+	/**分页查询分类信息*/
+	public PageInfo<Book> findByPage(Book book, Integer pageNo,Integer pageSize);
+}

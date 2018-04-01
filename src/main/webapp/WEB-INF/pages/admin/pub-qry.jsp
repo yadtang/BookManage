@@ -17,18 +17,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<div class="title"><h2>新增课程</h2></div>
-<form action="${ctx}/addCourse.action" method="post" name="myform" id="myform">
+<div class="title"><h2>分类详情</h2></div>
+<form action="${ctx}/updCourse.action" method="post" name="myform" id="myform">
 <div class="main">
+	<p class="short-input ue-clear">
+    	<label><span style="color:red">*</span>分类编号：</label>
+        <input type="text" name="id" id="id" maxlength="10" value="${publisher.id }" disabled="disabled"/>
+    </p>
     <p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>名称：</label>
-        <input type="text" name="courseName" id="courseName" maxlength="10"/>
+    	<label><span style="color:red">*</span>分类名称：</label>
+        <input type="text" name="name" id="name" maxlength="10" value="${publisher.name }" disabled="disabled"/>
+    </p>
+	<p class="short-input ue-clear">
+    	<label><span style="color:red">*</span>分类状态：</label>
+        <input type="text" name="status" id="status" maxlength="10" value="${publisher.status }" disabled="disabled"/>
+    </p>
+	<p class="short-input ue-clear">
+    	<label><span style="color:red">*</span>备注信息：</label>
+        <input type="text" name="remark" id="remark" maxlength="10" value="${publisher.remark }" disabled="disabled"/>
     </p>
 </div>
 </form>
 <div class="btn ue-clear">
-	<a href="javascript:;" class="confirm" onclick="addCourse()">确定</a>
-    <a href="${ctx}/toCoursePage.action" class="clear"">返回</a>
+    <a href="${ctx}/toPublisherPage.action" class="confirm">返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>
@@ -48,19 +59,19 @@ $(".select-list").on("click","li",function(){
 	var txt = $(this).text();
 	$(".select-title").find("span").text(txt);
 });
-
 //注册
-function addCourse(){
-	document.myform.attributes["action"].value = "${ctx}/addCourse.action"; 
-	$("form").submit();
+function addType(){
+	/* document.myform.attributes["action"].value = "${ctx}/admin/updateCate.action"; 
+	$("form").submit(); */
+	
+	var id = $("#cateId").val();
+	var name = $("#cateName").val();
+	var status = $("#status").val();
+	var remark = $("#remark").val();
+	$.post("${ctx}/admin/updateCate.action", { id:id, name:name,status:status, remark:remark},function(data){
+		alert(data.errorInfo);
+	},"json");
 }
-
-/* //情况所有
-function returnList(){
-	document.myform.attributes["action"].value = "${ctx}/toTypePage.action"; 
-	$("form").submit();
-} */
-
 showRemind('input[type=text], textarea','placeholder');
 </script>
 </html>

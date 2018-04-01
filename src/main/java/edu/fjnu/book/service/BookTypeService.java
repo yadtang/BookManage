@@ -1,12 +1,14 @@
 package edu.fjnu.book.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 
 import edu.fjnu.book.domain.BookType;
 
 public interface BookTypeService {
+	public List<BookType> find(BookType bookType);
 	public BookType get(Serializable id);
 	public void insert(BookType bookType);
 	public void update(BookType bookType);

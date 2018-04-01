@@ -9,37 +9,38 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import edu.fjnu.book.dao.BookTypeDao;
+import edu.fjnu.book.dao.BookDao;
+import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.BookType;
-import edu.fjnu.book.service.BookTypeService;
+import edu.fjnu.book.service.BookService;
 @Service
-public class BookTypeServiceImpl implements BookTypeService{
+public class BookServiceImpl implements BookService{
 	@Autowired
-	BookTypeDao bookTypeDao;
+	BookDao bookDao;
 	
-	public BookType get(Serializable id) {
+	public Book get(Serializable id) {
 		// TODO Auto-generated method stub
-		return bookTypeDao.get(id);
+		return bookDao.get(id);
 	}
 
-	public void insert(BookType bookType) {
+	public void insert(Book book) {
 		// TODO Auto-generated method stub
-		bookTypeDao.insert(bookType);
+		bookDao.insert(book);
 	}
 
-	public void update(BookType bookType) {
+	public void update(Book book) {
 		// TODO Auto-generated method stub
-		bookTypeDao.update(bookType);
+		bookDao.update(book);
 	}
 
 	public void delete(Serializable id) {
 		// TODO Auto-generated method stub
-		bookTypeDao.delete(id);
+		bookDao.delete(id);
 	}
 
 	public void delete(Serializable[] ids) {
 		// TODO Auto-generated method stub
-		bookTypeDao.delete(ids);
+		bookDao.delete(ids);
 	}
 
 	public BookType getStu(BookType bookType) {
@@ -47,20 +48,20 @@ public class BookTypeServiceImpl implements BookTypeService{
 		return null;
 	}
 
-	public PageInfo<BookType> findByPage(BookType bookType, Integer pageNo,
+	public PageInfo<Book> findByPage(Book book, Integer pageNo,
 			Integer pageSize) {
 		pageNo = pageNo == null?1:pageNo;
 	    pageSize = pageSize == null?10:pageSize;
 	    PageHelper.startPage(pageNo, pageSize);
-	    List<BookType> list = bookTypeDao.find(bookType);
+	    List<Book> list = bookDao.find(book);
 	    //用PageInfo对结果进行包装
-	    PageInfo<BookType> page = new PageInfo<BookType>(list);
+	    PageInfo<Book> page = new PageInfo<Book>(list);
 	    return page;
 	}
 
-	public List<BookType> find(BookType bookType) {
+	public Book getStu(Book book) {
 		// TODO Auto-generated method stub
-		return bookTypeDao.find(bookType);
+		return null;
 	}
 
 }

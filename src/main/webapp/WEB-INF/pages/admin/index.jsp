@@ -42,16 +42,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<div class="sidebar">
             	<h2 class="sidebar-header"><p>功能导航</p></h2>
                 <ul class="nav">
-                    <li class="nav-info">
-                    	<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>分类管理</span><i class="icon"></i></a></div>
-                        <ul class="subnav">
-                        	<li><a href="javascript:;" onclick="formSubmit('${ctx}/toBookTypePage.action','mframe');this.blur();">分类管理</a></li>
-                        </ul>
-                    </li>
                     <li class="konwledge">
 						<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>图书管理</span><i class="icon"></i></a></div>
 						<ul class="subnav">
-                        	<li><a href="#" onclick="formSubmit('${ctx}/admin/getAllUser.action','mframe');this.blur();">图书管理</a></li>
+                        	<li><a href="#" onclick="formSubmit('${ctx}/toBookPage.action','mframe');this.blur();">图书管理</a></li>
                         </ul>
 					</li>
                     <li class="agency">
@@ -66,10 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </ul>
                     </li>
                     <li class="system">
-						<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>书架管理</span><i class="icon"></i></a></div>
+						<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>基础管理</span><i class="icon"></i></a></div>
 						<ul class="subnav">
-                        	<li><a href="javascript:;" onclick="formSubmit('${ctx}/toCategoryPage.action','mframe');this.blur();">分类管理</a></li>
+                        	<li><a href="javascript:;" onclick="formSubmit('${ctx}/toCategoryPage.action','mframe');this.blur();">书架分类</a></li>
+                            <li><a href="javascript:;" onclick="formSubmit('${ctx}/toBookTypePage.action','mframe');this.blur();">图书分类</a></li>
                             <li><a href="javascript:;" onclick="formSubmit('${ctx}/toCoursePage.action','mframe');this.blur();">书架管理</a></li>
+                            <li><a href="javascript:;" onclick="formSubmit('${ctx}/toPublisherPage.action','mframe');this.blur();">出版社管理</a></li>
                         </ul>
 					</li>
                 </ul>

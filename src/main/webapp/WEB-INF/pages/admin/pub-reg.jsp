@@ -17,23 +17,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<div class="title"><h2>查看年级信息</h2></div>
-<form action="${ctx}/addGrade.action" method="post" name="myform" id="myform">
+<div class="title"><h2>新增分类</h2></div>
+<form action="${ctx}/addCourse.action" method="post" name="myform" id="myform">
 <div class="main">
     <p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>年级名称：</label>
-        <input type="text" name="gradeName" id="gradeName" maxlength="10" value="${grade.gradeName}" readonly="readonly"/>
+    	<label><span style="color:red">*</span>分类名称：</label>
+        <input type="text" name="name" id="name" maxlength="20"/>
     </p>
-    
     <p class="short-input ue-clear">
-    	<label><span style="color:red">*</span>包含课程：</label>
-    	<input type="text" name="courseId" id="courseId" readonly="readonly" value="${grade.courseId}"/>
+    	<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注信息：</label>
+        <input type="text" name="remark" id="remark"/>
     </p>
-    
 </div>
 </form>
 <div class="btn ue-clear">
-    <a href="${ctx}/toGradePage.action" class="clear">返回</a>
+	<a href="javascript:;" class="confirm" onclick="addType()">确定</a>
+    <a href="${ctx}/toPublisherPage.action" class="clear">返回</a>
 </div>
 </body>
 <script type="text/javascript" src="${ctx}/js/jquery.js"></script>
@@ -55,9 +54,14 @@ $(".select-list").on("click","li",function(){
 });
 
 //注册
-function addGrade(){
-	document.myform.attributes["action"].value = "${ctx}/addGrade.action"; 
-	$("form").submit();
+function addType(){
+	var name = $("#name").val();
+	var remark = $("#remark").val();
+	$.post("${ctx}/admin/addPub.action", { name:name,remark:remark},function(data){
+		alert(data.errorInfo);
+		document.myform.attributes["action"].value = "${ctx}/toPublisherPage.action"; 
+		$("form").submit();
+	},"json");
 }
 
 /* //情况所有
