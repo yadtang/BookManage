@@ -115,6 +115,18 @@
 			<artifactId>pagehelper</artifactId>
 			<version>4.0.0</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>core</artifactId>
+		    <version>3.3.2</version>
+		</dependency>
+		<!-- 添加邮件mail -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
 
 	</dependencies>
 	
