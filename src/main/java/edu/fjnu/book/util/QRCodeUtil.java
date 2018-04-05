@@ -270,7 +270,7 @@ public class QRCodeUtil{
 	}
 	
 	public static void main(String[] args) {
-		String text = "http://www.baidu.com";
+		String text = "http://192.168.1.107:8080/Book/admin/toQryBookPage.action?id=11";
 		try {
 			QRCodeUtil.encode(text, "D:\\testUpdate\\dico.png", "D:/testUpdate/img", true);
 		} catch (Exception e) {

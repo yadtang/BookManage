@@ -33,7 +33,7 @@ public class SysconfigController extends BaseController {
 	@RequestMapping("/admin/toSysconfPage.action")
 	public String toSysconfPage(@RequestParam(value="page", defaultValue="1") int page,
 			Sysconfig sysconfig, Model model, HttpSession session){
-		PageInfo<Sysconfig> pageInfo = sysconfigService.findByPage(sysconfig, page, 10);
+		PageInfo<Sysconfig> pageInfo = sysconfigService.findByPage(sysconfig, page, 12);
 		List<Sysconfig> dataList = pageInfo.getList();
 		for(Sysconfig conf : dataList){
 			if("ADMIN_EMAIL_PWD".equals(conf.getParamName())){
@@ -49,8 +49,13 @@ public class SysconfigController extends BaseController {
 	@ResponseBody
 	public List<Sysconfig> qrySysconfigByPage(@RequestParam(value="page", defaultValue="1") int page,
 			Sysconfig sysconfig,Model model, HttpSession session){
-		PageInfo<Sysconfig> pageInfo = sysconfigService.findByPage(sysconfig, page, 10);
+		PageInfo<Sysconfig> pageInfo = sysconfigService.findByPage(sysconfig, page, 12);
 		List<Sysconfig> dataList = pageInfo.getList();
+		for(Sysconfig conf : dataList){
+			if("ADMIN_EMAIL_PWD".equals(conf.getParamName())){
+				conf.setParamValue(MD5Util.getData(conf.getParamValue()));
+			}
+		}
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("pageInfo", pageInfo);
 		return dataList;			
@@ -203,6 +208,22 @@ public class SysconfigController extends BaseController {
 		} catch (Exception e) {
 			item.setErrorNo("1");
 			item.setErrorInfo("发送失败!");
+		}
+		return item;			
+	}
+	
+	//验证参数名称是否已经存在
+	@RequestMapping("/admin/checkConfName.action")
+	@ResponseBody
+	public MsgItem checkConfName(String name, Model model){
+		MsgItem item = new MsgItem();
+		Sysconfig conf = sysconfigService.getByName(name);
+		if(conf != null){
+			item.setErrorNo("1");
+			item.setErrorInfo("参数名称已存在");
+		}else{
+			item.setErrorNo("0");
+			item.setErrorInfo("验证通过");
 		}
 		return item;			
 	}
