@@ -16,6 +16,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="evaluateid" column="evaluateid"/>
 		<result property="imageUrl" column="imageUrl"/>
 		<result property="score" column="score"/>
+		<result property="number" column="number"/>
+		<result property="times" column="times"/>
+		<result property="time" column="time"/>
 		<association property="publisher" javaType="edu.fjnu.book.domain.Publisher">
 			<id property="id" column="id"/>
 			<result property="name" column="name"/>
@@ -33,9 +36,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 新增 -->
 	<insert id="insert" parameterType="edu.fjnu.book.domain.Book">
 		insert into t_book
-		(bookname,author,press,typeid,price,content,keyword,evaluateid,imageUrl,score)
+		(bookname,author,press,typeid,price,content,keyword,evaluateid,imageUrl,score,number,times,time)
 		values
-		(#{bookname},#{author},#{publisher.id},#{bookType.typeId},#{price},#{content},#{keyword},#{evaluateid},#{imageUrl},#{score})
+		(#{bookname},#{author},#{publisher.id},#{bookType.typeId},#{price},#{content},#{keyword},#{evaluateid},#{imageUrl},#{score},#{number},#{times},#{time})
 	</insert>
 	
 	<!-- 修改 -->
@@ -71,6 +74,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 			<if test="score != null">
 				score = #{score}
+			</if>
+			<if test="number != null">
+				number = #{number}
+			</if>
+			<if test="times != null">
+				times = #{times}
+			</if>
+			<if test="time != null">
+				time = #{time}
 			</if>
 		</set>
 			where bookid=#{bookid}

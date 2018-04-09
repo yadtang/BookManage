@@ -7,6 +7,7 @@ public class Evaluate {
 	private int score;
 	private String remark;
 	private String time;
+	private User user;
 	public int getId() {
 		return id;
 	}
@@ -43,12 +44,18 @@ public class Evaluate {
 	public void setTime(String time) {
 		this.time = time;
 	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Evaluate() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Evaluate(int id, String content, String bookid, int score,
-			String remark, String time) {
+			String remark, String time, User user) {
 		super();
 		this.id = id;
 		this.content = content;
@@ -56,12 +63,12 @@ public class Evaluate {
 		this.score = score;
 		this.remark = remark;
 		this.time = time;
+		this.user = user;
 	}
 	@Override
 	public String toString() {
 		return "Evaluate [id=" + id + ", content=" + content + ", bookid="
 				+ bookid + ", score=" + score + ", remark=" + remark
-				+ ", time=" + time + "]";
+				+ ", time=" + time + ", user=" + user + "]";
 	}
-	
 }

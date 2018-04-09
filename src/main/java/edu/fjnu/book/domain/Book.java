@@ -13,6 +13,12 @@ public class Book {
 	//图片存储路径
 	private String imageUrl;
 	private String score;
+	//点赞人数
+	private int number;
+	//访问次数
+	private int times;
+	//发布时间
+	private String time;
 	public String getBookid() {
 		return bookid;
 	}
@@ -79,13 +85,31 @@ public class Book {
 	public void setScore(String score) {
 		this.score = score;
 	}
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	public int getTimes() {
+		return times;
+	}
+	public void setTimes(int times) {
+		this.times = times;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	public Book() {
 		super();
 	}
 	public Book(String bookid, String bookname, String author,
 			Publisher publisher, BookType bookType, String price,
 			String content, String keyword, String evaluateid, String imageUrl,
-			String score) {
+			String score, int number, int times, String time) {
 		super();
 		this.bookid = bookid;
 		this.bookname = bookname;
@@ -98,6 +122,9 @@ public class Book {
 		this.evaluateid = evaluateid;
 		this.imageUrl = imageUrl;
 		this.score = score;
+		this.number = number;
+		this.times = times;
+		this.time = time;
 	}
 	@Override
 	public String toString() {
@@ -106,6 +133,8 @@ public class Book {
 				+ ", bookType=" + bookType + ", price=" + price + ", content="
 				+ content + ", keyword=" + keyword + ", evaluateid="
 				+ evaluateid + ", imageUrl=" + imageUrl + ", score=" + score
+				+ ", number=" + number + ", times=" + times + ", time=" + time
 				+ "]";
 	}
+	
 }

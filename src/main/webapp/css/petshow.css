@@ -158,9 +158,11 @@ content: " ";display: block;margin-top: -7px;margin-left: -3px; }
 .am_tuya_comment_user_l { float: left; position: relative; height: 33px; line-height: 33px; font-size: 14px; color: #000;}
 .am_tuya_comment_user_l img { border-radius: 50%; width: 33px; height: 33px;vertical-align:top; margin-right: 13px;}
 .am_tuya_comment_user_l span{color: #9c9c9c;font-weight:normal;}
-.am_tuya_comment_user_r { position: relative; float: right;height: 33px; line-height: 33px; font-size: 14px; color: #9c9c9c; display: none;}
+.am_tuya_comment_user_r { position: relative; float: right;height: 33px; line-height: 33px; font-size: 14px; color: #9c9c9c; display: block;width: 60px;
+	height: 16px;
+	background: url("../img/star_gray.png");}
 .am_tuya_comment_text { padding-left: 46px; font-size: 16px; color: #222;clear:both; padding-top: 10px;}
-.am_tuya_comment:hover  .am_tuya_comment_user_r {display: block;}
+/* .am_tuya_comment:hover  .am_tuya_comment_user_r {display: block;}  */
 .am_tuya_r_info { max-width: 250px;}
 .am_tuya_r_info li { border-bottom: 1px solid #e0e0e0; line-height: 38px; height: 38px; font-size: 14px; color: #a1a1a1; -webkit-transition: all 0.4s ease;transition: all 0.4s ease;}
 .am_tuya_r_info li:hover { background: #eee; -webkit-transition: all 0.4s ease;transition: all 0.4s ease;}
@@ -492,4 +494,13 @@ background-size: 100%; }
 .am_bdfw_block:hover  .am_bdfw_block_r{ background: #e9e9e9;}
 .ztlb_nr_block { height: 270px; padding: 0; margin: 0;}
 .ztlb_nr_block_r_nr { padding-bottom: 0;}
+}
+#bg{
+	width: 60px;
+	height: 16px;
+	background: url("img/star_gray.png");
+}
+#over{
+	height:16px;
+	background:url("img/star_org.png") no-repeat;
 }

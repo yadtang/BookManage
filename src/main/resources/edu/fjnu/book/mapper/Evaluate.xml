@@ -11,14 +11,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="score" column="score"/>
 		<result property="time" column="time"/>
 		<result property="remark" column="remark"/>
+		<association property="user" javaType="edu.fjnu.book.domain.User">
+			<id property="userId" column="userid"/>
+			<result property="userName" column="username"/>
+			<result property="userPwd" column="userpwd"/>
+			<result property="hobby" column="hobby"/>
+			<result property="userType" column="usertype"/>
+			<result property="userState" column="userstate"/>
+			<result property="email" column="email"/>
+			<result property="telephone" column="telephone"/>
+			<result property="address" column="address"/>
+			<result property="remark" column="remark"/>
+		</association>
+		
 	</resultMap>
 	
 	<!-- 新增 -->
 	<insert id="insert" parameterType="edu.fjnu.book.domain.Evaluate">
 		insert into t_evaluate
-		(content,bookid,score,time,remark)
+		(content,bookid,score,time,remark,userid)
 		values
-		(#{content},#{bookid},#{score},#{time},#{remark})
+		(#{content},#{bookid},#{score},#{time},#{remark},#{user.userId})
 	</insert>
 	
 	<!-- 修改 -->
@@ -40,16 +53,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="remark != null">
 				remark = #{remark},
 			</if>
+			<if test="user != null">
+				userid = #{user.userId},
+			</if>
 		</set>
 			where id=#{id}
 	</update>
 	
 	<!-- 查询所有记录 -->
 	<select id="find" parameterType="string" resultMap="evalRM">
-		select * from t_evaluate
-		where 1=1
-		and bookid=#{bookid}
-		order by id desc
+		select * from t_evaluate e, t_user u
+		where e.userid = u.userid
+		and e.bookid=#{bookid}
+		order by e.id desc
 	</select>
 	
 	<!-- 查询一个录 -->

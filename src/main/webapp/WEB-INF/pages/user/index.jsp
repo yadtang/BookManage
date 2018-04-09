@@ -18,10 +18,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="${ctx}/css/animate.min.css">
     <script src="${ctx}/js/jquery.min.js"></script>
     <script src="${ctx}/js/amazeui.min.js"></script>
-    <script src="${ctx}/js/countUp.min.js"></script>
+    <%-- <script src="${ctx}/js/countUp.min.js"></script> --%>
     <script src="${ctx}/js/amazeui.lazyload.min.js"></script>
-
-
+	<script src="${ctx}/js/petshow.js"></script>
+	<script type="text/javascript">
+		function dealClickEvent(id){
+			$("#id").val(id);
+			document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
+			$("form").submit();
+			/* if(id != null && id != ""){
+        		$.post("${ctx}/user/bookInfo.action", { id:id },function(data){
+        			alert(data);
+        		},"json");
+			} */
+		}
+	</script>
 </head>
 <body>
 <header class="am-topbar am-topbar-inverse">
@@ -116,13 +127,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
     </div>
 </div>
+
+<form action="${ctx}/user/bookInfo.action" method="post" name="myform" id="myform">
+	<input type="hidden" id="id" name="id"> 
+</form>
+
 <div class="am-g am-imglist">
 	<c:forEach items="${dataList}" var="o">
 		<!-- 分类展示 -->
 		<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${o.name}</span>
 		<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-gallery-default">
 			<c:forEach items="${o.pageBook.book}" var="pbook">
-				<li>
+				<li onclick="dealClickEvent('${pbook.bookid}')">
 		            <div class="am-gallery-item am_list_block">
 		                <a href="###" class="am_img_bg">
 		                    <img class="am_img animated" src="${ctx}/${pbook.imageUrl}" 
@@ -132,13 +148,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                <div class="am_listimg_info">
 		                	<span class="am-icon-heart"> 132</span>
 		                	<span class="am-icon-comments"> 67</span>
-		                	<span class="am_imglist_time">15分钟前</span>
 		                </div>
 		
 		            </div>
 		            <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/logo.png" alt=""></span><span
 		                    class="am_imglist_user_font">${pbook.bookname}</span></a>
 		        </li>
+		        </a>
 			</c:forEach>
 	    </ul>
 	</c:forEach>
@@ -259,6 +275,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="am_info_line">Copyright(c)2015 <span>PetShow</span> All Rights Reserved.模板收集自 <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> -  More Templates  <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></div>
 </footer>
-<script src="${ctx}/js/petshow.js"></script>
 </body>
 </html>
