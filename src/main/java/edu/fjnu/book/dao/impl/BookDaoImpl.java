@@ -1,5 +1,6 @@
 package edu.fjnu.book.dao.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,10 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
 	public Book getStu(Book book) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public List<Book> getBookByType(Serializable id) {
+		// TODO Auto-generated method stub
+		return this.getSqlSession().selectList(this.getNs()+"getBookByType",id);
 	}
 
 }

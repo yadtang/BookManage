@@ -64,4 +64,9 @@ public class BookServiceImpl implements BookService{
 		return null;
 	}
 
+	public List<Book> getBookByType(Serializable id) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookByType(id);
+	}
+
 }

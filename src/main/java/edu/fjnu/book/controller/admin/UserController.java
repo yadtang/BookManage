@@ -76,6 +76,23 @@ public class UserController extends BaseController{
 		return "/admin/info-reg.jsp";
 	}
 	
+	@RequestMapping("/admin/checkEamil.action")
+	@ResponseBody
+	public MsgItem checkEamil(String email, Model model){
+		MsgItem msgItem = new MsgItem();
+		User register = new User();
+		register.setEmail(email);
+		User userInfo = userService.getStuByEmail(register);
+		if(userInfo!= null){
+			msgItem.setErrorNo("1");
+			msgItem.setErrorInfo("<font color='red' style='font-weight:bold'>账号已经存在</font>");
+		}else{
+			msgItem.setErrorNo("0");
+			msgItem.setErrorInfo("<font color='blue' style='font-weight:bold'>验证通过</font>");
+		}
+		return msgItem;
+	} 
+	
 	/**
 	 * ajax验证用户账号是否存在
 	 * @param userId
@@ -89,10 +106,10 @@ public class UserController extends BaseController{
 		User user = userService.get(userId);
 		if(user!=null){
 			msgItem.setErrorNo("1");
-			msgItem.setErrorInfo("账号已经存在");
+			msgItem.setErrorInfo("<font color='red' style='font-weight:bold'>账号已经存在</font>");
 		}else{
 			msgItem.setErrorNo("0");
-			msgItem.setErrorInfo("<font color='green'>验证通过</font>");
+			msgItem.setErrorInfo("<font color='blue' style='font-weight:bold'>验证通过</font>");
 		}
 		return msgItem;
 	} 

@@ -34,7 +34,7 @@ public class MailUtils {
 		// 2.创建一个Message，它相当于是邮件内容
 		Message message = new MimeMessage(session);
 
-		message.setFrom(new InternetAddress("yadtang@163.com")); // 设置发送者
+		message.setFrom(new InternetAddress(account)); // 设置发送者
 
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); // 设置发送方式与接收者
 
@@ -47,7 +47,7 @@ public class MailUtils {
 	
 	public static void main(String[] args) {
 		try {
-			sendMail("xxx@163.com","sasasa","876974423@qq.com", "sdsd");
+			sendMail("tangwm1992@163.com","TWM920625TWM","876974423@qq.com", "sdsd");
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

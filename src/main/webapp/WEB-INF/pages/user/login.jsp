@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <head>
 
         <meta charset="utf-8">
-        <title>在线考试系统</title>
+        <title>读书网</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             </div>
         </div>
-        <div align="center">没有账号？ <a href="${ctx}/toRegistPage.action" target="_self" title="模板之家">注册</a></div>
+        <div align="center">没有账号？ <a href="${ctx}/user/toRegistPage.action" target="_self" title="模板之家">注册</a></div>
 
         <!-- Javascript -->
         <script src="${ctx}/js/jquery-1.8.2.min.js"></script>
@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	function login(){
         		var userId = $("#userId").val();
         		var userPwd = $("#userPwd").val();
-        		$.post("${ctx}/checkPwd.action", { userId:userId, userPwd:userPwd },function(data){
+        		$.post("${ctx}/user/checkUserPwd.action", { userId:userId, userPwd:userPwd },function(data){
     				if(data.errorNo != "0"){
     					alert(data.errorInfo);
     				}else{

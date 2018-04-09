@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</li>
                     <li class="office curren"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>首页管理</span><i class="icon"></i></a></div>
                     	<ul class="subnav">
-                        	<li><a href="javascript:;" onclick="formSubmit('${ctx}/toPaperPage.action','mframe');this.blur();">试卷管理</a></li>
+                        	<li><a href="javascript:;" onclick="formSubmit('${ctx}/admin/toHomePagePage.action','mframe');this.blur();">首页管理</a></li>
                         </ul>
                     </li>
                     <li class="system">

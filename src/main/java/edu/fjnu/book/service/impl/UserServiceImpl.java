@@ -96,4 +96,9 @@ public class UserServiceImpl implements UserService {
 	    return page;
 	}
 
+	public User getStuByEmail(User user) {
+		// TODO Auto-generated method stub
+		return userDao.getStuByEmail(user);
+	}
+
 }

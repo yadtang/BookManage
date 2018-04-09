@@ -202,11 +202,11 @@ public class BookController extends BaseController {
 		try {
 			bookService.insert(book);
 			item.setErrorNo("0");
-			item.setErrorInfo("添加分类成功!");
+			item.setErrorInfo("添加成功!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			item.setErrorNo("1");
-			item.setErrorInfo("添加分类失败!");
+			item.setErrorInfo("添加失败!");
 		}
 		
 		return item;			

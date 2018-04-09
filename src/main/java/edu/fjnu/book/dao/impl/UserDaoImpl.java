@@ -20,4 +20,9 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 		return this.getSqlSession().selectOne(this.getNs()+"getStu",user);
 	}
 
+	public User getStuByEmail(User user) {
+		// TODO Auto-generated method stub
+		return this.getSqlSession().selectOne(this.getNs()+"getStuByEmail",user);
+	}
+
 }

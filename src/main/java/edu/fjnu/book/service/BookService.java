@@ -1,6 +1,7 @@
 package edu.fjnu.book.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 
@@ -16,4 +17,5 @@ public interface BookService {
 	public Book getStu(Book book);
 	/**分页查询分类信息*/
 	public PageInfo<Book> findByPage(Book book, Integer pageNo,Integer pageSize);
+	public List<Book> getBookByType(Serializable id);
 }

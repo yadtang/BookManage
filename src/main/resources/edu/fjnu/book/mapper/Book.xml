@@ -113,4 +113,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and b.typeid = t.typeid
 			and b.bookid=#{bookid} 
 	</select>
+	
+	<select id="getBookByType" parameterType="edu.fjnu.book.domain.Book" resultMap="bookRM">
+		select * from t_book where typeid=#{id} 
+	</select>
 </mapper>

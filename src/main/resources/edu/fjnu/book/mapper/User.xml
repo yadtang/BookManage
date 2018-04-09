@@ -93,4 +93,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where userid=#{userId}
 		and userstate=1
 	</select>
+	
+	<select id="getStuByEmail" parameterType="edu.fjnu.book.domain.User" resultMap="userRM">
+		select * from t_user
+		where email=#{email}
+	</select>
 </mapper>

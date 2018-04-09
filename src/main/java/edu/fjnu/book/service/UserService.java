@@ -23,4 +23,5 @@ public interface UserService {
 	public PageInfo<User> findByPage(User user, Integer pageNo,Integer pageSize);
 	/**分页查询待审核记录*/
 	public PageInfo<User> findPendingByPage(User user, Integer pageNo,Integer pageSize);
+	public User getStuByEmail(User user);
 }
