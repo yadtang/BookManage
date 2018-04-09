@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.book.mapper.EvaluateMapper">
+	<!-- 数据库表映射 -->
+	<resultMap id="evalRM" type="edu.fjnu.book.domain.Evaluate">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="bookid" column="bookid"/>
+		<result property="score" column="score"/>
+		<result property="time" column="time"/>
+		<result property="remark" column="remark"/>
+	</resultMap>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="edu.fjnu.book.domain.Evaluate">
+		insert into t_evaluate
+		(content,bookid,score,time,remark)
+		values
+		(#{content},#{bookid},#{score},#{time},#{remark})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="edu.fjnu.book.domain.Evaluate">
+		update t_evaluate
+		<set>
+			<if test="content != null">
+				content=#{content},
+			</if>
+			<if test="bookid != null">
+				bookid=#{bookid},
+			</if>
+			<if test="score != null">
+				score = #{score},
+			</if>
+			<if test="time != null">
+				time=#{time},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+		</set>
+			where id=#{id}
+	</update>
+	
+	<!-- 查询所有记录 -->
+	<select id="find" parameterType="string" resultMap="evalRM">
+		select * from t_evaluate
+		where 1=1
+		and bookid=#{bookid}
+		order by id desc
+	</select>
+	
+	<!-- 查询一个录 -->
+	<select id="get" parameterType="edu.fjnu.book.domain.Evaluate" resultMap="evalRM">
+		select * from t_evaluate
+		where id=#{id} 
+	</select>
+	
+	<!-- 删除一条记录 -->
+	<delete id="delete" parameterType="string">
+		delete from t_evaluate
+		where id=#{id}
+	</delete>
+</mapper>
