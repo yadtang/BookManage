@@ -118,9 +118,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="am_tuya_user_ico"><img src="${ctx}/img/logo.png" alt=""></div>
 <div class="am_tuya_user_info">
   <div class="am_tuya_user_info_name">${book.bookname}</div>
-  <div class="am_tuya_user_info_coordinate">
+  <!-- <div id="over" style="width:46.8px"></div> -->
+  <div id="bg" style="position: absolute;top: 9px;left: 400px;">
+	<div id="over" style="width:48px"></div>
+</div>
+  <span class="am_tuya_user_info_time">${book.author}</span>${book.publisher.name}
+  <%-- <div class="am_tuya_user_info_coordinate">
   	<span class="am_tuya_user_info_time">${book.author}</span>${book.publisher.name}
-  </div>
+  </div> --%>
 </div>
 </div>
 
@@ -131,7 +136,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <div class="am_tuya_more">
 <div class="am_tuya_oneword">我要在你们心中奔腾，你们怕不怕？</div>
-
+<div class="am_tuya_cai_ti" style="padding-left:30px;padding-bottom:20px;">图书简介：</div>
+<div style="padding:0 30px;text-indent: 2em;font-size: 14px;">${book.content}</div>
   <c:forEach items="${evaluate}" var="o">
   	<div class="am_tuya_comment">
 		<div class="am_tuya_comment_user">
@@ -153,18 +159,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div class="am_tuya_content_r">
 <ul class="am_tuya_r_info">
-  <li><i class="am-icon-heart"></i><span>10 人喜欢</span></li>
+  <li><i class="am-icon-heart"></i><span>${book.number } 人喜欢</span></li>
   <li><i class="am-icon-comments"></i><span>${count } 条讨论</span></li>
-  <li><i class="am-icon-eye"></i><span>126 次查看</span></li>
-  <li><i class="am-icon-share-square-o"></i><span>分享涂鸦</span></li>
-  <li><i class="am-icon-clock-o"></i><span>发布 2015.08.12</span></li>
+  <li><i class="am-icon-eye"></i><span>${book.times } 次查看</span></li>
+  <li><i class="am-icon-share-square-o"></i><span>分享图书</span></li>
+  <li><i class="am-icon-clock-o"></i><span>发布 ${book.time }</span></li>
 </ul>
 <ul class="am_tuya_tag">
-    <li><span class="am_tuya_tag_title">TAG</span></li>
-    <li><a href=""><span>汪星人</span><span>15623</span></a></li>
-    <li><a href=""><span>柯基</span><span>6251</span></a></li>
-    <li><a href=""><span>主人合影</span><span>3256</span></a></li>
-    <li><a href=""><span>棕白色</span><span>54</span></a></li>
+    <li><span class="am_tuya_tag_title">得分分布</span></li>
+    <li>
+    	<div id="bg">
+			<div id="over" style="width:60px"><span style="margin-right: -185px; margin-top: -4px;">30%</span></div>
+		</div>
+    </li>
+    <li>
+    	<div id="bg">
+			<div id="over" style="width:48px"><span style="margin-right: -197px; margin-top: -4px;">30%</span></div>
+		</div>
+    </li>
+    <li>
+    	<div id="bg">
+			<div id="over" style="width:36px"><span style="margin-right: -209px; margin-top: -4px;">30%</span></div>
+		</div>
+    </li>
+    <li>
+    	<div id="bg">
+			<div id="over" style="width:24px"><span style="margin-right: -221px; margin-top: -4px;">30%</span></div>
+		</div>
+    </li>
+    <li>
+    	<div id="bg">
+			<div id="over" style="width:12px"><span style="margin-right: -233px; margin-top: -4px;">30%</span></div>
+		</div>
+    </li>
+    
+    
+<!--     <li><div id="over" style="width:60px"><span style="margin-right: -185px; margin-top: -4px;">30%</span></div></li>
+    <li><div id="over" style="width:48px"><span style="margin-right: -185px; margin-top: -4px;">10%</span></div></li>
+    <li><div id="over" style="width:36px"><span style="margin-right: -185px; margin-top: -4px;">20%</span></div></li>
+    <li><div id="over" style="width:24px"><span style="margin-right: -185px; margin-top: -4px;">20%</span></div></li>
+    <li><div id="over" style="width:12px"><span style="margin-right: -185px; margin-top: -4px;">20%</span></div></li> -->
 </ul>
 <div class="page_hot">
             <div class="page_hot_title">人气排行</div>
@@ -259,7 +293,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <li>
     <div class="am-gallery-item am_list_block">
       <a href="###" class="am_img_bg">
-        <img class="am_img animated" src="img/loading.gif"    data-original="http://img.petshow.cc/pet_show/2015_08/6d3c22171da582f569702bad45d9a4c6.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+        <img class="am_img animated" src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想"/>
               </a>
 
     </div>
@@ -268,35 +302,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <li>
     <div class="am-gallery-item am_list_block">
       <a href="###" class="am_img_bg">
-        <img class="am_img animated" src="${ctx}/img/loading.gif"    data-original="http://img.petshow.cc/pet_show/2015_08/6d3c22171da582f569702bad45d9a4c6.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+        <img class="am_img animated" src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想"/>
               </a>
 
     </div>
-    <a class="am_imglist_user"><span class="${ctx}/am_imglist_user_ico"><img src="img/tx.jpg" alt=""></span><span class="am_imglist_user_font">路见不平Eason吼</span></a>
+    <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/tx.jpg" alt=""></span><span class="am_imglist_user_font">路见不平Eason吼</span></a>
   </li>
     <li>
     <div class="am-gallery-item am_list_block">
       <a href="###" class="am_img_bg">
-        <img class="am_img animated" src="${ctx}/img/loading.gif"    data-original="http://img.petshow.cc/pet_show/2015_08/6d3c22171da582f569702bad45d9a4c6.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+        <img class="am_img animated" src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想"/>
               </a>
 
     </div>
-    <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="img/tx.jpg" alt=""></span><span class="am_imglist_user_font">路见不平Eason吼</span></a>
+    <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/tx.jpg" alt=""></span><span class="am_imglist_user_font">路见不平Eason吼</span></a>
   </li>
     <li>
     <div class="am-gallery-item am_list_block">
       <a href="###" class="am_img_bg">
-        <img class="am_img animated" src="${ctx}/img/loading.gif"    data-original="http://img.petshow.cc/pet_show/2015_08/6d3c22171da582f569702bad45d9a4c6.jpg" alt="远方 有一个地方 那里种有我们的梦想"/>
+        <img class="am_img animated" src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想"/>
               </a>
 
     </div>
-    <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="img/tx.jpg" alt=""></span><span class="am_imglist_user_font">路见不平Eason吼</span></a>
+    <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/tx.jpg" alt=""></span><span class="am_imglist_user_font">路见不平Eason吼</span></a>
   </li>
 </ul>
 <div class="am_tuya_ckgd"><i class="am-icon-spinner am-icon-spin"></i><a href=""> 查看更多</a></div>
 </div>
-
-
 </div>
 
 
