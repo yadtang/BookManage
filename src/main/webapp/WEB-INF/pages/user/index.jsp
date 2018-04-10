@@ -148,76 +148,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 图书推荐，猜你喜欢模块 -->
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;猜你喜欢</span>
     <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-gallery-default">
-        <li>
-            <div class="am-gallery-item am_list_block">
-                <a href="###" class="am_img_bg">
-                    <img class="am_img animated" src="${ctx}/img/loading.gif"
-                         alt="远方 有一个地方 那里种有我们的梦想"/>
-                </a>
-
-                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
-                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
-
-            </div>
-            <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/logo.png" alt=""></span><span
-                    class="am_imglist_user_font">路见不平Eason吼</span></a>
-        </li>
-        <li>
-            <div class="am-gallery-item am_list_block">
-                <a href="###" class="am_img_bg">
-                    <img class="am_img animated" src="${ctx}/img/loading.gif"
-                         alt="远方 有一个地方 那里种有我们的梦想"/>
-                </a>
-
-                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
-                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
-
-            </div>
-            <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/logo.png" alt=""></span><span
-                    class="am_imglist_user_font">路见不平Eason吼</span></a>
-        </li>
-        <li>
-            <div class="am-gallery-item am_list_block">
-                <a href="###" class="am_img_bg">
-                    <img class="am_img animated" src="${ctx}/img/loading.gif"
-                         alt="远方 有一个地方 那里种有我们的梦想"/>
-                </a>
-
-                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
-                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
-
-            </div>
-            <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/logo.png" alt=""></span><span
-                    class="am_imglist_user_font">路见不平Eason吼</span></a>
-        </li>
-        <li>
-            <div class="am-gallery-item am_list_block">
-                <a href="###" class="am_img_bg">
-                    <img class="am_img animated" src="${ctx}/img/loading.gif"
-                         alt="远方 有一个地方 那里种有我们的梦想"/>
-                </a>
-
-                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
-                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
-
-            </div>
-            <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/logo.png" alt=""></span><span
-                    class="am_imglist_user_font">路见不平Eason吼</span></a>
-        </li>
-        <li>
-            <div class="am-gallery-item am_list_block">
-                <a href="###" class="am_img_bg">
-                    <img class="am_img animated" src="${ctx}/img/loading.gif"
-                         alt="远方 有一个地方 那里种有我们的梦想"/>
-                </a>
-
-                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
-                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
-
-            </div>
-            <a class="am_imglist_user"><span class="am_imglist_user_ico"><img src="${ctx}/img/logo.png" alt=""></span><span
-                    class="am_imglist_user_font">路见不平Eason吼</span></a>
-        </li>
+       	<c:forEach items="${books}" var="bk">
+       		<li>
+	            <div class="am-gallery-item am_list_block">
+	                <a href="###" class="am_img_bg">
+	                    <img class="am_img animated" src="${ctx}/${bk.imageUrl}"/>
+	                </a>
+	
+	                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
+	                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
+	
+	            </div>
+	            <a class="am_imglist_user">
+	            	<span class="am_imglist_user_ico">
+	            		<img src="${ctx}/img/logo.png" width="200" height="230">
+	            	</span>
+	            	<span class="am_imglist_user_font">${bk.bookname}</span>
+	            </a>
+	        </li>
+       	</c:forEach>
+        
+        
     </ul>
 </div>
 <footer class="am_footer">
