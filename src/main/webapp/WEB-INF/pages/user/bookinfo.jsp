@@ -49,8 +49,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 		
 		//打开分享图标
-		function openShare(){
-			$("#shareIcon").css("display","block");
+		function openShare(id){
+			$.post("${ctx}/user/createImg.action", { id:id},function(data){
+				$("#weiXinImg").attr("src","${ctx}/book/dushu.jpg"); 
+				$("#shareIcon").css("display","block");
+			},"json");
+			
 		}
 		//关闭分享图标
 		function closeShare(){
@@ -212,13 +216,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div>
   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img alt="" src="${ctx}/img/qqzone.png" width="30px" height="30px" onclick="shareToQzone(event)">
   		&nbsp;&nbsp;&nbsp;<img alt="" src="${ctx}/img/weibo.png" width="30px" height="30px" onclick="shareToSinaWB(event)">
-  		&nbsp;&nbsp;&nbsp;<img alt="" src="${ctx}/img/weixin_friend.png" width="30px" height="30px" onclick="openShare()" onmouseover="closeShare()">
+  		&nbsp;&nbsp;&nbsp;<img alt="" src="${ctx}/img/weixin_friend.png" width="30px" height="30px" onclick="openShare(${book.bookid})" onmouseover="closeShare()">
   	</div>
   </li>
   <li><i class="am-icon-clock-o"></i><span>发布 ${book.time }</span></li>
   <li id="shareIcon" style="display:none">
   	<div>
-  		<img alt="" src="${ctx}/book/dushu.jpg">
+  		<img alt="" src="" id="weiXinImg">
   	</div>
   </li>
 </ul>
@@ -226,27 +230,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <li><span class="am_tuya_tag_title">得分分布</span></li>
     <li>
     	<div id="bg">
-			<div id="over" style="width:60px"><span style="margin-right: -185px; margin-top: -4px;">30%</span></div>
+    		<!-- 5星评分 -->
+			<div id="over" style="width:60px"><span style="margin-right: -185px; margin-top: -4px;">${ scoreMap['num5'] }</span></div>
 		</div>
     </li>
     <li>
     	<div id="bg">
-			<div id="over" style="width:48px"><span style="margin-right: -197px; margin-top: -4px;">30%</span></div>
+    		<!-- 4星评分 -->
+			<div id="over" style="width:48px"><span style="margin-right: -197px; margin-top: -4px;">${ scoreMap['num4'] }</span></div>
 		</div>
     </li>
     <li>
     	<div id="bg">
-			<div id="over" style="width:36px"><span style="margin-right: -209px; margin-top: -4px;">30%</span></div>
+    		<!-- 3星评分 -->
+			<div id="over" style="width:36px"><span style="margin-right: -209px; margin-top: -4px;">${ scoreMap['num3'] }</span></div>
 		</div>
     </li>
     <li>
     	<div id="bg">
-			<div id="over" style="width:24px"><span style="margin-right: -221px; margin-top: -4px;">30%</span></div>
+    		<!-- 2星评分 -->
+			<div id="over" style="width:24px"><span style="margin-right: -221px; margin-top: -4px;">${ scoreMap['num2'] }</span></div>
 		</div>
     </li>
     <li>
     	<div id="bg">
-			<div id="over" style="width:12px"><span style="margin-right: -233px; margin-top: -4px;">30%</span></div>
+    		<!-- 1星评分 -->
+			<div id="over" style="width:12px"><span style="margin-right: -233px; margin-top: -4px;">${ scoreMap['num1'] }</span></div>
 		</div>
     </li>
     
@@ -405,7 +414,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="am_footer_don">
 <span>宠物秀</span>
 <dl>
-  <dt><img src="img/footdon.png?1" alt=""></dt>
+  <dt><img src="${ctx}/img/logo.png?1" alt=""></dt>
   <dd>一起Show我们的爱宠吧！宠物秀是图片配文字、涂鸦、COSPLAY的移动手机社区，这里有猫狗鱼龟兔子仓鼠龙猫等各种萌图。
   <a href="###" class="footdon_pg "><div class="foot_d_pg am-icon-apple ">  App store</div></a><a href="###" class="footdon_az animated"><div class="foot_d_az am-icon-android ">  Android</div></a></dd>
 </dl>

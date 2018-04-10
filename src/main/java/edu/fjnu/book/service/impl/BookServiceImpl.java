@@ -2,7 +2,6 @@ package edu.fjnu.book.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +12,8 @@ import edu.fjnu.book.dao.BookDao;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.BookType;
 import edu.fjnu.book.service.BookService;
+import edu.fjnu.book.util.QRCodeUtil;
+import edu.fjnu.book.util.TimeUtil;
 @Service
 public class BookServiceImpl implements BookService{
 	@Autowired
@@ -24,7 +25,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	public void insert(Book book) {
-		// TODO Auto-generated method stub
+		String time = TimeUtil.getTime();
+		book.setTime(time);
 		bookDao.insert(book);
 	}
 
@@ -69,4 +71,20 @@ public class BookServiceImpl implements BookService{
 		return bookDao.getBookByType(id);
 	}
 
+	public void createImg(Serializable id, String path,String url) {
+		try {
+			QRCodeUtil.encode(url, path+"\\dushu.jpg", path, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void updateTimes(Book book) {
+		Book bk = bookDao.get(book.getBookid());
+		int times = bk.getTimes();
+		times++;
+		book.setTimes(times);
+		bookDao.update(book);
+	}
 }

@@ -2,8 +2,8 @@ package edu.fjnu.book.controller.user;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -18,13 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.Evaluate;
-import edu.fjnu.book.domain.MsgItem;
-import edu.fjnu.book.domain.Sysconfig;
-import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.service.EvaluateService;
-import edu.fjnu.book.util.MailUtils;
-import edu.fjnu.book.util.QRCodeUtil;
 /**
  * 图书处理Controller层
  * @author hspcadmin
@@ -41,16 +36,21 @@ public class BookDealController extends BaseController {
 	public String bookInfo(String id, Model model, HttpSession session,ServletRequest servletRequest){
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		if(id != null && !"".equals(id.trim())){
+			Book bk = bookService.get(id);
+			bookService.updateTimes(bk);//更新访问次数
 			Book book = bookService.get(id);
 			model.addAttribute("book", book);
 			Evaluate evaluate = new Evaluate();
 			evaluate.setBookid(id);
 			List<Evaluate> eval = evaluateService.find(evaluate);
+			
 			for(Evaluate eval1 : eval){
 				eval1.setScore(eval1.getScore() * 12);
 			}
 			model.addAttribute("count", eval.size());//评论条数
 			model.addAttribute("evaluate", eval);//评论内容
+			Map<String,Object> map = evaluateService.getScoreProp(id);
+			model.addAttribute("scoreMap", map);//评分分布
 			try {
 				String addr = InetAddress.getLocalHost().getHostAddress();
 				model.addAttribute("reqUrl", "http://"+addr+":"+request.getServerPort()+request.getRequestURI()+"?id="+id);//评论内容
@@ -71,20 +71,19 @@ public class BookDealController extends BaseController {
 	 */
 	@RequestMapping("/user/createImg.action")
 	@ResponseBody
-	public MsgItem createImg(String id, Model model, ServletRequest servletRequest){
+	public Book createImg(String id, Model model, ServletRequest servletRequest){
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
-		MsgItem item = new MsgItem();
-		String contexPath= request.getSession().getServletContext().getRealPath("/")+"book\\dushu.jpg";
+		String contexPath= request.getSession().getServletContext().getRealPath("/")+"book";
 		String addr;
+		Book book = bookService.get(id);
 		try {
 			addr = InetAddress.getLocalHost().getHostAddress();
-			String url = "http://"+addr+":"+request.getServerPort()+request.getRequestURI()+"?id="+id;
-			QRCodeUtil.encode(url, contexPath, contexPath, true);
-			item.setErrorNo("0");
+			String url = "http://"+addr+":"+request.getServerPort()+"/Book/user/bookInfo.action?id="+id;
+			bookService.createImg(id, contexPath, url);
 		} catch (Exception e) {
 			e.printStackTrace();
-			item.setErrorNo("1");
 		}
-		return item;
+		
+		return book;	
 	}
 }

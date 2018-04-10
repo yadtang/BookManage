@@ -2,6 +2,7 @@ package edu.fjnu.book.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 
@@ -16,4 +17,6 @@ public interface EvaluateService {
 	public void delete(Serializable[] ids);
 	/**分页查询分类信息*/
 	public PageInfo<Evaluate> findByPage(Evaluate evaluate, Integer pageNo,Integer pageSize);
+	//计算评分分布
+	public Map<String,Object> getScoreProp(Serializable bookid);
 }

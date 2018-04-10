@@ -1,7 +1,9 @@
 package edu.fjnu.book.service.impl;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +59,46 @@ public class EvaluateServiceImpl implements EvaluateService{
 	public List<Evaluate> find(Evaluate evaluate) {
 		// TODO Auto-generated method stub
 		return evaluateDao.find(evaluate);
+	}
+
+	public Map<String, Object> getScoreProp(Serializable bookid) {
+		Evaluate evaluate = new Evaluate();
+		evaluate.setBookid((String) bookid);
+		List<Evaluate> evaluates = evaluateDao.find(evaluate);
+		Map<String,Object> map = new HashMap<String,Object>();
+		int num5 = 0;
+		int num4 = 0;
+		int num3 = 0;
+		int num2 = 0;
+		int num1 = 0;
+		int total = evaluates.size();
+		if(total == 0){//没有任何评价
+			map.put("num5", num5);
+			map.put("num4", num4);
+			map.put("num3", num3);
+			map.put("num2", num2);
+			map.put("num1", num1);
+			return map;
+		}
+		for(Evaluate eval : evaluates){
+			if(eval.getScore() == 5){
+				num5 ++;
+			}else if(eval.getScore() == 4){
+				num4 ++;
+			}else if(eval.getScore() == 3){
+				num3 ++;
+			}else if(eval.getScore() == 2){
+				num2 ++;
+			}else if(eval.getScore() == 1){
+				num1 ++;
+			}
+		}
+		map.put("num5", num5);
+		map.put("num4", num4);
+		map.put("num3", num3);
+		map.put("num2", num2);
+		map.put("num1", num1);
+		return map;
 	}
 
 }

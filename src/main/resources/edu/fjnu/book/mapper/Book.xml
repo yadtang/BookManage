@@ -66,23 +66,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="keyword!=null">
 				keyword=#{keyword},
 			</if>
-			<if test="evaluateid!=null">
+			<if test="evaluateid != null">
 				evaluateid=#{evaluateid},
 			</if>
 			<if test="imageUrl!=null">
 				imageUrl=#{imageUrl},
 			</if>
 			<if test="score != null">
-				score = #{score}
+				score = #{score},
 			</if>
 			<if test="number != null">
-				number = #{number}
+				number = #{number},
 			</if>
 			<if test="times != null">
-				times = #{times}
+				times = #{times},
 			</if>
 			<if test="time != null">
-				time = #{time}
+				time = #{time},
 			</if>
 		</set>
 			where bookid=#{bookid}

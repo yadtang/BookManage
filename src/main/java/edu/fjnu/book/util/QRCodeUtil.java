@@ -11,8 +11,6 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Hashtable;
 import java.util.Random;
 
@@ -274,7 +272,7 @@ public class QRCodeUtil{
 	public static void main(String[] args) {
 		String text = "http://10.24.1.106:8080/Book/user/bookInfo.action?id=72";
 		try {
-			QRCodeUtil.encode(text, "D:\\testUpdate\\logo.png", "D:/testUpdate/img", true);
+			QRCodeUtil.encode(text, "D:\\GitWorkSpace\\apache-tomcat-7.0.26\\webapps\\Book\\book\\dushu.jpg", "D:\\GitWorkSpace\\apache-tomcat-7.0.26\\webapps\\Book\\book", true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

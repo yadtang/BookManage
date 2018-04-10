@@ -17,6 +17,18 @@ public class TimeUtil {
         return time;
 	}
 	
+	/**
+	 * 获取年月日
+	 * @return
+	 */
+	public static String getTime(){
+		Date date = new Date();  
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");//24小时制  
+        String time = sdformat.format(date);  
+        //System.out.println(LgTime);  
+        return time;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println(getCurrentTime());
 	}
