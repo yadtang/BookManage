@@ -1,8 +1,11 @@
 package edu.fjnu.book.controller.user;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 
 import edu.fjnu.book.controller.BaseController;
+import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.HomePage;
 import edu.fjnu.book.domain.MsgItem;
 import edu.fjnu.book.domain.Sysconfig;
 import edu.fjnu.book.domain.User;
+import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.service.HomePageService;
 import edu.fjnu.book.service.SysconfigService;
 import edu.fjnu.book.service.UserService;
@@ -39,6 +44,8 @@ public class BookUserController extends BaseController {
 	SysconfigService sysconfigService;
 	@Autowired
 	HomePageService homePageService;
+	@Autowired
+	BookService bookService;
 	//跳转到登录页面
 	@RequestMapping("/user/login.action")
 	public String toLoinPage(User user, Model model, HttpSession session){
@@ -64,7 +71,24 @@ public class BookUserController extends BaseController {
 		List<HomePage> dataList = pageInfo.getList();
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("pageInfo", pageInfo);
-		if(session.getAttribute("userName")!= null){
+		//猜你喜欢
+		User u = (User) session.getAttribute("user");
+		if(u != null){
+			String mark = u.getHobby();
+			if(mark!= null && !"".equals(mark.trim())){
+				String [] ids = mark.split(",");
+				List<Integer> list = new ArrayList<Integer>();
+				for(int i=0;i<ids.length;i++){
+					list.add(Integer.valueOf(ids[i]));
+				}
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("list",list);
+				List<Book> books = new ArrayList<Book>();
+				if(mark != null && !"".equals(mark.trim())){
+					books = bookService.getBookByMark(map);
+					model.addAttribute("books", books);
+				}
+			}
 			return "/user/index.jsp";
 		}else{
 			return "forward:/user/login.action";

@@ -2,6 +2,8 @@ package edu.fjnu.book.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
 import com.github.pagehelper.PageInfo;
 
 import edu.fjnu.book.domain.Book;
@@ -21,4 +23,5 @@ public interface BookService {
 	public void createImg(Serializable id,String path,String url);
 	//更新访问次数
 	public void updateTimes(Book book);
+	public List<Book> getBookByMark(Map<String,Object>map);
 }

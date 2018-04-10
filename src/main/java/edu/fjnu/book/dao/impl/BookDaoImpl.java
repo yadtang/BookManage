@@ -2,6 +2,7 @@ package edu.fjnu.book.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,10 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
 	public List<Book> getBookByType(Serializable id) {
 		// TODO Auto-generated method stub
 		return this.getSqlSession().selectList(this.getNs()+"getBookByType",id);
+	}
+	public List<Book> getBookByMark(Map<String,Object>map) {
+		// TODO Auto-generated method stub
+		return this.getSqlSession().selectList(this.getNs()+"getBookByMark",map);
 	}
 
 }

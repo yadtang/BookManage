@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 查询某本书所有喜欢的用户 -->
 	<select id="find" parameterType="string" resultMap="loveRM">
 		select * from t_lovebook l, t_book b
-		where l.bookid = u.bookid
+		where l.bookid = b.bookid
 		and l.bookid=#{bookid}
 		order by l.id desc
 	</select>
@@ -87,8 +87,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 查询某个用户喜欢的所有图书 -->
 	<select id="getByUser" parameterType="edu.fjnu.book.domain.LoveBook" resultMap="loveRM">
-		select * from t_lovebook
-		where id=#{id} 
+		select * from t_lovebook l,t_book b
+		where l.bookid = b.bookid
+		and userid=#{userId} 
+		order by l.id desc
 	</select>
 	
 	<!-- 删除一条记录 -->

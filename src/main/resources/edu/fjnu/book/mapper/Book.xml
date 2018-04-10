@@ -129,4 +129,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBookByType" parameterType="edu.fjnu.book.domain.Book" resultMap="bookRM">
 		select * from t_book where typeid=#{id} 
 	</select>
+	
+	<select id="getBookByMark" parameterType="map" resultMap="bookRM"> 
+		select * from t_book t
+			where t.keyword in 
+			  <foreach item="item" index="index" collection="list"
+			      open="(" separator="," close=")">
+			        #{item}
+			  </foreach>
+			order by rand() limit 6
+	</select>
 </mapper>

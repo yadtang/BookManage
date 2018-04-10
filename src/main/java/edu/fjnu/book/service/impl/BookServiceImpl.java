@@ -2,6 +2,8 @@ package edu.fjnu.book.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,5 +88,10 @@ public class BookServiceImpl implements BookService{
 		times++;
 		book.setTimes(times);
 		bookDao.update(book);
+	}
+
+	public List<Book> getBookByMark(Map<String,Object>map) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookByMark(map);
 	}
 }
