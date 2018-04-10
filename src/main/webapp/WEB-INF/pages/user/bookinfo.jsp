@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>读书网</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${ctx}/js/jquery.min.js"></script>
     <script src="${ctx}/js/amazeui.min.js"></script>
     <script src="${ctx}/js/amazeui.lazyload.min.js"></script>
+    <script src="${ctx}/js/jweixin-1.2.0.js"></script>
 	<style type="text/css">
 		#bg{
 			width: 60px;
@@ -32,16 +33,60 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	</style>
 	<script type="text/javascript">
-		 $(function(){
+		$(function(){
 		  if ($(window).width() < 600 ) {
-		 $('.am_list_item_text').each(
+		 	('.am_list_item_text').each(
 		  function(){
 		     if($(this).text().length >= 26){
 		        $(this).html($(this).text().substr(0,26)+'...');
 		     }});}[]
 		
 		});
-
+		
+		var urlValue = "";
+		$(document).ready(function(){
+			urlValue = "${ctx}/user/bookInfo.action?id=${book.bookid}";
+		});
+		
+		//打开分享图标
+		function openShare(){
+			$("#shareIcon").css("display","block");
+		}
+		//关闭分享图标
+		function closeShare(){
+			$("#shareIcon").css("display","none");
+		}
+		var _title,_source,_sourceUrl,_pic,_showcount,_desc,_summary,_site,
+        _width = 600,
+        _height = 600,
+        _top = (screen.height-_height)/2,
+        _left = (screen.width-_width)/2,
+        _url = '${reqUrl}',
+        _pic = '';
+		function shareToSinaWB(event){
+	        event.preventDefault();
+	        var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136';     //真实的appkey，必选参数
+	        _shareUrl += '&url='+ encodeURIComponent(_url||document.location);     //参数url设置分享的内容链接|默认当前页location，可选参数
+	        _shareUrl += '&title=' + encodeURIComponent(_title||document.title);    //参数title设置分享的标题|默认当前页标题，可选参数
+	        _shareUrl += '&source=' + encodeURIComponent(_source||'');
+	        _shareUrl += '&sourceUrl=' + encodeURIComponent(_sourceUrl||'');
+	        _shareUrl += '&content=' + 'utf-8';   //参数content设置页面编码gb2312|utf-8，可选参数
+	        _shareUrl += '&pic=' + encodeURIComponent(_pic||'');  //参数pic设置图片链接|默认为空，可选参数
+	        window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',top='+_top+',left='+_left+',toolbar=no,menubar=no,scrollbars=no, resizable=1,location=no,status=0');
+	    }
+	    //分享到QQ空间
+	    function shareToQzone(event){
+	        event.preventDefault();
+	        var _shareUrl = 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?';
+	        _shareUrl += 'url=' + encodeURIComponent(_url||document.location);   //参数url设置分享的内容链接|默认当前页location
+	        _shareUrl += '&showcount=' + _showcount||0;      //参数showcount是否显示分享总数,显示：'1'，不显示：'0'，默认不显示
+	        _shareUrl += '&desc=' + encodeURIComponent(_desc||'分享的描述');    //参数desc设置分享的描述，可选参数
+	        _shareUrl += '&summary=' + encodeURIComponent(_summary||'分享摘要');    //参数summary设置分享摘要，可选参数
+	        _shareUrl += '&title=' + encodeURIComponent(_title||document.title);    //参数title设置分享标题，可选参数
+	        _shareUrl += '&site=' + encodeURIComponent(_site||'');   //参数site设置分享来源，可选参数
+	        _shareUrl += '&pics=' + encodeURIComponent(_pic||'');   //参数pics设置分享图片的路径，多张图片以＂|＂隔开，可选参数
+	        window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',top='+_top+',left='+_left+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
+	    }
 	</script>
 </head>
 <body>
@@ -163,7 +208,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <li><i class="am-icon-comments"></i><span>${count } 条讨论</span></li>
   <li><i class="am-icon-eye"></i><span>${book.times } 次查看</span></li>
   <li><i class="am-icon-share-square-o"></i><span>分享图书</span></li>
+  <li>
+  	<div>
+  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img alt="" src="${ctx}/img/qqzone.png" width="30px" height="30px" onclick="shareToQzone(event)">
+  		&nbsp;&nbsp;&nbsp;<img alt="" src="${ctx}/img/weibo.png" width="30px" height="30px" onclick="shareToSinaWB(event)">
+  		&nbsp;&nbsp;&nbsp;<img alt="" src="${ctx}/img/weixin_friend.png" width="30px" height="30px" onclick="openShare()" onmouseover="closeShare()">
+  	</div>
+  </li>
   <li><i class="am-icon-clock-o"></i><span>发布 ${book.time }</span></li>
+  <li id="shareIcon" style="display:none">
+  	<div>
+  		<img alt="" src="${ctx}/book/dushu.jpg">
+  	</div>
+  </li>
 </ul>
 <ul class="am_tuya_tag">
     <li><span class="am_tuya_tag_title">得分分布</span></li>

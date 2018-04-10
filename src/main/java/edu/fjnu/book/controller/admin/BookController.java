@@ -125,7 +125,7 @@ public class BookController extends BaseController {
 			if(filename != null && !"".equals(filename.trim())){
 				//原始文件名称
 		    	
-		    	//性名称
+		    	//名称
 		    	String newFileName=UUID.randomUUID().toString()+filename.substring(filename.lastIndexOf("."));
 		    	String contexPath= request.getSession().getServletContext().getRealPath("/")+"book\\"+newFileName;
 		    	System.out.println(contexPath);
