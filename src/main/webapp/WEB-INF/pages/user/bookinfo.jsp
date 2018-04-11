@@ -295,7 +295,6 @@
 					<img src="${ctx}/${book.imageUrl}" alt="" width="550" height="550">
 				</div>
 				<div class="am_tuya_more">
-					<div class="am_tuya_oneword">我要在你们心中奔腾，你们怕不怕？</div>
 					<div class="am_tuya_cai_ti" style="padding-left:30px;padding-bottom:20px;">图书简介：</div>
 					<div style="padding:0 30px;text-indent: 2em;font-size: 14px;">${book.content}</div>
 					<c:forEach items="${evaluate}" var="o">
@@ -314,7 +313,7 @@
 							</div>
 						</div>
 					</c:forEach>
-					<%-- <div style="padding:0 30px;text-indent: 2em;font-size: 14px;">${book.content}</div> --%>
+					<div class="am_news_load"><span><i  class="am-icon-spinner am-icon-spin"></i> 查看更多讨论</span></div>
 					<div class="form-group">
 					    <br/><label for="name">发表评论</label>
 					    <label style="text-indent:350px;">

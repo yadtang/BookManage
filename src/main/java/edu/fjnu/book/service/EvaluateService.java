@@ -20,5 +20,7 @@ public interface EvaluateService {
 	//计算评分分布
 	public Map<String,Object> getScoreProp(Serializable bookid);
 	/**获得图书的平均分*/
-	public int getAvgByBook(Evaluate evaluate);
+	public String getAvgByBook(Evaluate evaluate);
+	/**查询所有的评论信息*/
+	public List<Evaluate> findAll(Evaluate evaluate);
 }

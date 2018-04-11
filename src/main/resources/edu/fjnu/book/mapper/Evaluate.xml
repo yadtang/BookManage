@@ -60,8 +60,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where id=#{id}
 	</update>
 	
-	<!-- 查询所有记录 -->
+	<!-- 查询所有记录（图书详情）-->
 	<select id="find" parameterType="string" resultMap="evalRM">
+		select * from t_evaluate e, t_user u
+		where e.userid = u.userid
+		and e.bookid=#{bookid}
+		order by e.id desc limit 3
+	</select>
+	
+	<!-- 查询所有记录（图书详情）-->
+	<select id="findAll" parameterType="string" resultMap="evalRM">
 		select * from t_evaluate e, t_user u
 		where e.userid = u.userid
 		and e.bookid=#{bookid}
