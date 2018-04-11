@@ -24,4 +24,6 @@ public interface BookService {
 	//更新访问次数
 	public void updateTimes(Book book);
 	public List<Book> getBookByMark(Map<String,Object>map);
+	//获取人气排行榜
+	public List<Book> getBookRank(Book book);
 }

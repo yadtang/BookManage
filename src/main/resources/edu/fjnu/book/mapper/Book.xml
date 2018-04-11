@@ -137,6 +137,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			      open="(" separator="," close=")">
 			        #{item}
 			  </foreach>
+			and score > 4.5
 			order by rand() limit 6
+	</select>
+	
+	<!-- 人气排行榜 分类、标签、评分  -->
+	<select id="getBookRank" parameterType="edu.fjnu.book.domain.Book" resultMap="bookRM"> 
+		select * from t_book t
+			where t.typeid = #{bookType.typeId}
+			and t.keyword = #{keyword}
+			and score > 4.5
+			order by t.score desc limit 10
 	</select>
 </mapper>

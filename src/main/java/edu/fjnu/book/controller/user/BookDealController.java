@@ -40,6 +40,8 @@ public class BookDealController extends BaseController {
 			bookService.updateTimes(bk);//更新访问次数
 			Book book = bookService.get(id);
 			model.addAttribute("book", book);
+			List<Book> bookRank = bookService.getBookRank(book);//人气排行
+			model.addAttribute("bookRank", bookRank);
 			Evaluate evaluate = new Evaluate();
 			evaluate.setBookid(id);
 			List<Evaluate> eval = evaluateService.find(evaluate);

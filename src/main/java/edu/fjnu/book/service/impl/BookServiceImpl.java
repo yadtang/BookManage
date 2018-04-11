@@ -94,4 +94,9 @@ public class BookServiceImpl implements BookService{
 		// TODO Auto-generated method stub
 		return bookDao.getBookByMark(map);
 	}
+
+	public List<Book> getBookRank(Book book) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookRank(book);
+	}
 }

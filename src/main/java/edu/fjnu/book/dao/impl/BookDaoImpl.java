@@ -16,21 +16,23 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
 		this.setNs("edu.fjnu.book.mapper.BookMapper.");			//设置命名空间
 	}
 	public List<Book> findPending(Book book) {
-		// TODO Auto-generated method stub
 		return this.getSqlSession().selectList(this.getNs()+"findPending",book);
 	}
 
 	public Book getStu(Book book) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	public List<Book> getBookByType(Serializable id) {
-		// TODO Auto-generated method stub
 		return this.getSqlSession().selectList(this.getNs()+"getBookByType",id);
 	}
 	public List<Book> getBookByMark(Map<String,Object>map) {
-		// TODO Auto-generated method stub
 		return this.getSqlSession().selectList(this.getNs()+"getBookByMark",map);
+	}
+	public List<Book> getBookRank(Book book) {
+		return this.getSqlSession().selectList(this.getNs()+"getBookRank",book);
+	}
+	public List<Book> getBookByIds(Book book) {
+		return this.getSqlSession().selectList(this.getNs()+"getBookByIds",book);
 	}
 
 }
