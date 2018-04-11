@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="remark!=null">
 				remark=#{remark},
 			</if>
-			<if test="hobby!=null">
+			<if test="hobby != null">
 				hobby=#{hobby},
 			</if>
 		</set>

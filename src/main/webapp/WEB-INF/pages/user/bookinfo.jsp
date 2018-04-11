@@ -155,7 +155,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    <a href="${ctx}/user/toRegistPage.action">注册</a>
 	                </li>
 				</c:if>
-				
             </ul>
         </div>
     </div>

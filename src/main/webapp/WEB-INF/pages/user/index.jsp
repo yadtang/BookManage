@@ -24,8 +24,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript">
 		//页面加载时触发
 		$(document).ready(function(){
+			$('#myModal').on('shown.bs.modal', function (e) {
+	            // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
+				$('#myModal').each(function(i) {   
+					var $clone = $(this).clone().css('display','block').appendTo('body');
+					var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+					top = top > 0 ? top : 0;   
+					$clone.remove();   
+					$(this).find('.modal-content').css("margin-top", top);   
+				}); 
+	        });
 			showModal();
 		});
+		
 		
 		function dealClickEvent(id){
 			$("#id").val(id);
@@ -36,6 +47,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function showModal(){
 			$("#myModal").modal('show');
 		}
+		function saveMark(){
+            var id_array=new Array();  
+            $('input[name="hobby"]:checked').each(function(){  
+                id_array.push($(this).val());//向数组中添加元素  
+            });  
+            var hobby=id_array.join(',');//将数组元素连接起来以构建一个字符串  
+            var userId = "${user.userId}";
+            $.post("${ctx}/user/updUserMark.action", { userId:userId,hobby:hobby},function(data){
+            	$("#myModal").modal('hide');
+			},"json");
+		}
+		
+		$(function () {
+	        $('#saveMark').click(function () {
+	        	var id_array=new Array();  
+	            $('input[name="hobby"]:checked').each(function(){  
+	                id_array.push($(this).val());//向数组中添加元素  
+	            });  
+	            var hobby=id_array.join(',');//将数组元素连接起来以构建一个字符串  
+	            var userId = "${user.userId}";
+	            $.post("${ctx}/user/updUserMark.action", { userId:userId,hobby:hobby},function(data){
+	            	alert(data.errorInfo);
+	            	$("#myModal").modal('hide');
+				},"json");
+
+	        });
+
+	    });
+		
 	</script>
 </head>
 <body>
@@ -105,40 +145,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
 </header>
-<div>
+<div style="display:none">
 	<button onclick="showModal()">
 		开始演示模态框
 	</button>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-				</button>
-				<h4 class="modal-title" id="myModalLabel">
-					请标记你喜欢的图书标签
-				</h4>
-			</div>
-			<div class="modal-body">
-				<c:forEach items="${marks}" var="o">
-					<label>
-						<input type="checkbox" name="hobby" id="hobby" value="${o.id }"> ${o.name } &nbsp;
-					</label>
-				</c:forEach>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
-				</button>
-				<button type="button" class="btn btn-primary">
-					保存
-				</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal -->
-</div>
-
+<form action="${ctx}/user/saveMark.action" method="post" name="myform1" id="myform1">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						标记喜欢的图书标签
+					</h4>
+				</div>
+				<div class="modal-body">
+					<c:forEach items="${marks}" var="o">
+						<span>
+							<input type="checkbox" name="hobby" value="${o.id }"> ${o.name } &nbsp;
+						</span>
+					</c:forEach>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary" id="saveMark">
+						保存
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+</form>
 <div class="banner_navbg">
     <div class="am-g">
         <div class="banner_nav">
@@ -164,8 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<li onclick="dealClickEvent('${pbook.bookid}')">
 		            <div class="am-gallery-item am_list_block">
 		                <a href="###" class="am_img_bg">
-		                    <img class="am_img animated" src="${ctx}/${pbook.imageUrl}" 
-		                         alt="远方 有一个地方 那里种有我们的梦想"/>
+		                    <img class="am_img animated" src="${ctx}/${pbook.imageUrl}" />
 		                </a>
 		
 		                <div class="am_listimg_info">

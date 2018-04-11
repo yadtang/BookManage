@@ -195,4 +195,27 @@ public class BookUserController extends BaseController {
 		}
 		return "/user/index.jsp";
 	}
+	
+	@RequestMapping("/user/updUserMark.action")
+	@ResponseBody
+	public MsgItem updUserMark(String userId,String hobby,Model model, HttpSession session){
+		MsgItem item = new MsgItem();
+		User user = new User();
+		if(userId == null || "".equals(userId)){
+			user = (User) session.getAttribute("user");
+		}else{
+			user.setUserId(userId);
+		}
+		user.setHobby(hobby);
+		try {
+			userService.update(user);
+			item.setErrorNo("0");
+			item.setErrorInfo("更新成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			item.setErrorNo("0");
+			item.setErrorInfo("更新失败!");
+		}
+		return item;
+	}
 }
