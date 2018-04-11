@@ -4,5 +4,5 @@ import edu.fjnu.book.domain.Evaluate;
 
 public interface EvaluateDao extends BaseDao<Evaluate> {
 	/**获得图书的平均分*/
-	public int getAvgByBook(Evaluate evaluate);
+	public String getAvgByBook(Evaluate evaluate);
 }

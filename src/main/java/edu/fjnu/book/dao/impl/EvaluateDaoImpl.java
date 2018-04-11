@@ -10,7 +10,7 @@ public class EvaluateDaoImpl extends BaseDaoImpl<Evaluate> implements EvaluateDa
 		this.setNs("edu.fjnu.book.mapper.EvaluateMapper.");			//设置命名空间
 	}
 
-	public int getAvgByBook(Evaluate evaluate) {
+	public String getAvgByBook(Evaluate evaluate) {
 		return this.getSqlSession().selectOne(this.getNs() + "getAvgByBook",evaluate);
 	}
 }

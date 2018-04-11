@@ -122,11 +122,11 @@ public class BookServiceImpl implements BookService{
 		//1.插入评价表
 		evaluateDao.insert(evaluate);
 		//2.得到平均分
-		int avgScore = evaluateDao.getAvgByBook(evaluate);
+		String avgScore = evaluateDao.getAvgByBook(evaluate);
 		//3.将平均分插入图书表
 		Book book = new Book();
 		book.setBookid(bookid);
-		book.setScore(avgScore+"");
+		book.setScore(avgScore);
 		bookDao.update(book);
 	}
 }

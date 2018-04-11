@@ -41,6 +41,9 @@ public class BookDealController extends BaseController {
 			Book bk = bookService.get(id);
 			bookService.updateTimes(bk);//更新访问次数
 			Book book = bookService.get(id);
+			double temp = Double.parseDouble(book.getScore());
+			double finalScore = temp * 12;
+			book.setScore(finalScore+"");
 			model.addAttribute("book", book);
 			List<Book> bookRank = bookService.getBookRank(book);//人气排行
 			model.addAttribute("bookRank", bookRank);

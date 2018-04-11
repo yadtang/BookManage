@@ -140,7 +140,7 @@
 		var score = check;
 		var content = $("#content").val();
 		var userId = "${user.userId}";
-		alert(bookid+","+score+","+userId+","+content);
+		//alert(bookid+","+score+","+userId+","+content);
 		//return;
 		$.post("${ctx}/user/dealEvaluate.action", {
 			bookid:bookid,
@@ -283,7 +283,7 @@
 				<div class="am_tuya_user_info_name">${book.bookname}</div>
 				<!-- <div id="over" style="width:46.8px"></div> -->
 				<div id="bg" style="position: absolute;top: 9px;left: 400px;">
-					<div id="over" style="width:48px"></div>
+					<div id="over" style="width:${book.score}px"></div>
 				</div>
 				<span class="am_tuya_user_info_time">${book.author}</span>${book.publisher.name}
 			</div>
@@ -316,7 +316,7 @@
 					</c:forEach>
 					<%-- <div style="padding:0 30px;text-indent: 2em;font-size: 14px;">${book.content}</div> --%>
 					<div class="form-group">
-					    <br/><label for="name">文本框</label>
+					    <br/><label for="name">发表评论</label>
 					    <label style="text-indent:350px;">
 					    	<a href="javascript:click(1)"><img src="${ctx}/img/star.png" id="star1" onMouseOver="over(1)" onMouseOut="out(1)"/></a>
 							<a href="javascript:click(2)"><img src="${ctx}/img/star.png" id="star2" onMouseOver="over(2)" onMouseOut="out(2)" /></a>
