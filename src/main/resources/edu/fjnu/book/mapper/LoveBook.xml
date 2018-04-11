@@ -96,6 +96,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 删除一条记录 -->
 	<delete id="delete" parameterType="string">
 		delete from t_lovebook
-		where userid=#{id}
+		where id=#{id}
 	</delete>
+	
+	<!-- 查询某个用户喜欢的所有图书 -->
+	<select id="getByIds" parameterType="edu.fjnu.book.domain.LoveBook" resultMap="loveRM">
+		select * from t_lovebook l,t_book b
+		where l.bookid = b.bookid
+		and userid=#{userId} 
+		and l.bookid = #{book.bookid}
+	</select>
 </mapper>

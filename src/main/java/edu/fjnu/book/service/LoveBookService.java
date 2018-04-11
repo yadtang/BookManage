@@ -12,4 +12,5 @@ public interface LoveBookService {
 	public void delete(Serializable id);
 	public void delete(Serializable[] ids);
 	public List<LoveBook> getByUser(LoveBook loveBook);
+	public LoveBook getByIds(LoveBook loveBook);
 }

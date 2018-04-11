@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.Evaluate;
+import edu.fjnu.book.domain.LoveBook;
 import edu.fjnu.book.domain.MsgItem;
+import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.service.EvaluateService;
+import edu.fjnu.book.service.LoveBookService;
 /**
  * 图书处理Controller层
  * @author hspcadmin
@@ -32,7 +35,16 @@ public class BookDealController extends BaseController {
 	EvaluateService evaluateService;
 	@Autowired
 	BookService bookService;
-	//跳转到图书详情页面
+	@Autowired
+	LoveBookService loveBookService;
+	/**
+	 * 跳转到图书详情页面
+	 * @param id		图书编号
+	 * @param model
+	 * @param session
+	 * @param servletRequest
+	 * @return
+	 */
 	@RequestMapping("/user/bookInfo.action")
 	public String bookInfo(String id, Model model, HttpSession session,ServletRequest servletRequest){
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -118,6 +130,76 @@ public class BookDealController extends BaseController {
 			} catch (Exception e) {
 				item.setErrorNo("1");
 				item.setErrorInfo("发表失败!");
+				e.printStackTrace();
+			}
+			
+		}
+		return item;
+	}
+	
+	/**
+	 * 图书点赞
+	 * @param userId	用户编号
+	 * @param bookid	图书编号
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/user/setLiked.action")
+	@ResponseBody
+	public MsgItem setLiked(String userId,String bookid,Model model, HttpSession session){
+		MsgItem item = new MsgItem();
+		if(userId == null || "".equals(userId.trim())){
+			User user = new User();
+			user = (User) session.getAttribute("user");
+			userId = user.getUserId();
+		}
+		if(bookid != null){
+			LoveBook loveBook = new LoveBook();
+			LoveBook lbook = new LoveBook();
+			Book book = new Book();
+			book.setBookid(bookid);
+			loveBook.setUserId(userId);
+			loveBook.setBook(book);
+			try {
+				lbook = loveBookService.getByIds(loveBook);
+				if(lbook == null){//已经标记为喜欢
+					item.setErrorNo("2");
+				}else{
+					loveBookService.insert(loveBook);
+					item.setErrorNo("2");
+					item.setErrorInfo("点赞成功!");
+				}
+				
+			} catch (Exception e) {
+				item.setErrorNo("1");
+				item.setErrorInfo("点赞失败!");
+				e.printStackTrace();
+			}
+			
+		}
+		return item;
+	}
+	
+	/**
+	 * 取消点赞
+	 * @param id
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/user/cancelLike.action")
+	@ResponseBody
+	public MsgItem cancelLike(String id,Model model, HttpSession session){
+		MsgItem item = new MsgItem();
+		if(id != null ){
+			try {
+				loveBookService.delete(id);
+				item.setErrorNo("0");
+				item.setErrorInfo("取消成功!");
+			} catch (Exception e) {
+				item.setErrorNo("1");
+				item.setErrorInfo("取消失败!");
 				e.printStackTrace();
 			}
 			

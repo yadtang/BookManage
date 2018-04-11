@@ -158,6 +158,12 @@
 	$(document).ready(function() {
 		urlValue = "${ctx}/user/bookInfo.action?id=${book.bookid}";
 	});
+	
+	function dealClickEvent(id){
+		$("#id").val(id);
+		document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
+		$("form").submit();
+	}
 
 	//打开分享图标
 	function openShare(id) {
@@ -416,7 +422,7 @@
 							<div class="page_hot_block">
 								<dl>
 									<dt>
-										<a href="#"> <img src="${ctx}/${br.imageUrl}" alt=""></a>
+										<a href="#"> <img src="${ctx}/${br.imageUrl}" alt=""  onclick="dealClickEvent('${br.bookid}')"></a>
 									</dt>
 									<dd>
 										<i>${br.author}</i>
@@ -437,10 +443,10 @@
 		<div class="am-g am-imglist">
 			<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
 				<c:forEach items="${loveBks}" var="lbks">
-					<li onclick="dealClickEvent('${lbks.bookid}')">
+					<li>
 						<div class="am-gallery-item am_list_block">
 							<a href="###" class="am_img_bg"> 
-								<img class="am_img animated" src="${ctx}/${lbks.imageUrl}"/>
+								<img class="am_img animated" src="${ctx}/${lbks.imageUrl}"  onclick="dealClickEvent('${lbks.bookid}')"/>
 							</a>
 	
 						</div> 

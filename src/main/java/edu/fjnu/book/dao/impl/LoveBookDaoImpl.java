@@ -15,4 +15,9 @@ public class LoveBookDaoImpl extends BaseDaoImpl<LoveBook> implements LoveBookDa
 	public List<LoveBook> getByUser(LoveBook loveBook) {
 		return this.getSqlSession().selectList(this.getNs()+"getByUser",loveBook);
 	}
+
+	public LoveBook getByIds(LoveBook loveBook) {
+		// TODO Auto-generated method stub
+		return this.getSqlSession().selectOne(this.getNs()+"getByIds",loveBook);
+	}
 }

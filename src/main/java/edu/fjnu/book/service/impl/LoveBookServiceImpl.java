@@ -42,4 +42,9 @@ public class LoveBookServiceImpl implements LoveBookService{
 		return loveBookDao.getByUser(loveBook);
 	}
 
+	public LoveBook getByIds(LoveBook loveBook) {
+		// TODO Auto-generated method stub
+		return loveBookDao.getByIds(loveBook);
+	}
+
 }

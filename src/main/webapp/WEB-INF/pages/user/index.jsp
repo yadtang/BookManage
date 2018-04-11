@@ -47,15 +47,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function showModal(){
 			$("#myModal").modal('show');
 		}
-		function saveMark(){
-            var id_array=new Array();  
-            $('input[name="hobby"]:checked').each(function(){  
-                id_array.push($(this).val());//向数组中添加元素  
-            });  
-            var hobby=id_array.join(',');//将数组元素连接起来以构建一个字符串  
-            var userId = "${user.userId}";
-            $.post("${ctx}/user/updUserMark.action", { userId:userId,hobby:hobby},function(data){
-            	$("#myModal").modal('hide');
+		
+		function setLiked(id){
+			var userId = "${user.userId}";
+			var bookid = id;
+			$.post("${ctx}/user/setLiked.action", { userId:userId,bookid:bookid},function(data){
+            	alert(data.errorInfo);
+            	//$("#myModal").modal('hide');
 			},"json");
 		}
 		
@@ -193,14 +191,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${o.name}</span>
 		<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-gallery-default">
 			<c:forEach items="${o.pageBook.book}" var="pbook">
-				<li onclick="dealClickEvent('${pbook.bookid}')">
+				<li>
 		            <div class="am-gallery-item am_list_block">
 		                <a href="###" class="am_img_bg">
-		                    <img class="am_img animated" src="${ctx}/${pbook.imageUrl}" />
+		                    <img class="am_img animated" src="${ctx}/${pbook.imageUrl}"  onclick="dealClickEvent('${pbook.bookid}')"/>
 		                </a>
 		
 		                <div class="am_listimg_info">
-		                	<span class="am-icon-heart"> 132</span>
+		                	<span class="am-icon-heart" onclick="setLiked('${pbook.bookid}')"> 132</span>
 		                	<span class="am-icon-comments"> 67</span>
 		                </div>
 		
@@ -220,10 +218,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        		<li onclick="dealClickEvent('${bk.bookid}')">
 	            <div class="am-gallery-item am_list_block">
 	                <a href="###" class="am_img_bg">
-	                    <img class="am_img animated" src="${ctx}/${bk.imageUrl}"/>
+	                    <img class="am_img animated" src="${ctx}/${bk.imageUrl}"  onclick="dealClickEvent('${bk.bookid}')"/>
 	                </a>
 	
-	                <div class="am_listimg_info"><span class="am-icon-heart"> 132</span><span
+	                <div class="am_listimg_info"><span class="am-icon-heart" onclick="setLiked('${bk.bookid}')"> 132</span><span
 	                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
 	
 	            </div>

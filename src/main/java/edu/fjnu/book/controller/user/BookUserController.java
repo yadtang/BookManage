@@ -209,7 +209,7 @@ public class BookUserController extends BaseController {
 	
 	/**
 	 * 用户激活
-	 * @param user
+	 * @param user		用户
 	 * @param model
 	 * @param servletRequest
 	 * @return
@@ -228,6 +228,14 @@ public class BookUserController extends BaseController {
 		return "/user/index.jsp";
 	}
 	
+	/**
+	 * 更新用户喜欢的图书标签
+	 * @param userId	用户编号
+	 * @param hobby		标签编号（用逗号分隔开）
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/user/updUserMark.action")
 	@ResponseBody
 	public MsgItem updUserMark(String userId,String hobby,Model model, HttpSession session){

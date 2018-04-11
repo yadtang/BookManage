@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function showModal(){
 			$("#myModal").modal('show');
 		}
-		function saveMark(){
+		/* function saveMark(){
             var id_array=new Array();  
             $('input[name="hobby"]:checked').each(function(){  
                 id_array.push($(this).val());//向数组中添加元素  
@@ -57,7 +57,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $.post("${ctx}/user/updUserMark.action", { userId:userId,hobby:hobby},function(data){
             	$("#myModal").modal('hide');
 			},"json");
-		}
+		} */
+		
+		
 		
 		$(function () {
 	        $('#saveMark').click(function () {
@@ -70,10 +72,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            $.post("${ctx}/user/updUserMark.action", { userId:userId,hobby:hobby},function(data){
 	            	alert(data.errorInfo);
 	            	$("#myModal").modal('hide');
+	            	document.myform.attributes["action"].value = "${ctx}/user/indexPage.action"; 
+	    			$("form").submit();
 				},"json");
 
 	        });
-
+	        $('#closeModal').click(function () {
+	        	document.myform.attributes["action"].value = "${ctx}/user/indexPage.action"; 
+    			$("form").submit();
+	        });
 	    });
 		
 	</script>
@@ -161,7 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</c:forEach>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					<button type="button" class="btn btn-default" id="closeModal">关闭
 					</button>
 					<button type="button" class="btn btn-primary" id="saveMark">
 						保存
