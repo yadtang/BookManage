@@ -13,14 +13,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>Document</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
-    <link rel="stylesheet" href="${ctx}/css/petshow.css?6">
-    <link rel="stylesheet" href="${ctx}/css/animate.min.css">
     <link rel="stylesheet" href="${ctx}/css/bootstrap.css">
+    <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
+    <link rel="stylesheet" href="${ctx}/css/petshow.css">
+    <link rel="stylesheet" href="${ctx}/css/animate.min.css">
+    <script src="${ctx}/js/bootstrap.js"></script>
     <script src="${ctx}/js/jquery.min.js"></script>
     <script src="${ctx}/js/amazeui.min.js"></script>
     <script src="${ctx}/js/amazeui.lazyload.min.js"></script>
-    <script src="${ctx}/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		//页面加载时触发
 		$(document).ready(function(){
@@ -97,13 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse-5">
             <ul class="am-nav am-nav-pills am-topbar-nav">
                 <li class="am-active">
-                    <a href="${ctx}/user/toIndex.action">首页</a>
-                </li>
-                <li>
-                    <a href="#">榜单</a>
-                </li>
-                <li>
-                    <a href="#">图书详情</a>
+                    <a href="${ctx}/user/indexPage.action">首页</a>
                 </li>
                 <li>
                     <a href="${ctx}/user/qryLoveBook.action?userId=${user.userId}">我的图书</a>
@@ -120,10 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <a href="#">密码重置</a>
                         </li>
                         <li>
-                            <a href="#">注销</a>
-                        </li>
-                        <li>
-                            <a href="#"> 更多服务</a>
+                            <a href="${ctx}/user/exitSystem.action">注销</a>
                         </li>
                     </ul>
                 </li>

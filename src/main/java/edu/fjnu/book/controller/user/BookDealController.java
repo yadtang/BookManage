@@ -19,7 +19,6 @@ import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.Evaluate;
 import edu.fjnu.book.domain.MsgItem;
-import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.service.EvaluateService;
 /**

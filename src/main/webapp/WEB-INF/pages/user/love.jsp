@@ -50,13 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse-5">
             <ul class="am-nav am-nav-pills am-topbar-nav">
                 <li>
-                    <a href="${ctx}/user/toIndex.action">首页</a>
-                </li>
-                <li>
-                    <a href="#">榜单</a>
-                </li>
-                <li class="am-active">
-                    <a href="#">图书详情</a>
+                    <a href="${ctx}/user/indexPage.action">首页</a>
                 </li>
                 <li class="am-active">
                     <a href="${ctx}/user/qryLoveBook.action?userId=${user.userId}">我的图书</a>
@@ -73,10 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <a href="#">密码重置</a>
                         </li>
                         <li>
-                            <a href="#">注销</a>
-                        </li>
-                        <li>
-                            <a href="#"> 更多服务</a>
+                            <a href="${ctx}/user/exitSystem.action">注销</a>
                         </li>
                     </ul>
                 </li>

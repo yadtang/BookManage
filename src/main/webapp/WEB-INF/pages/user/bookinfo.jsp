@@ -241,22 +241,30 @@
 			<div class="am-collapse am-topbar-collapse"
 				id="doc-topbar-collapse-5">
 				<ul class="am-nav am-nav-pills am-topbar-nav">
-					<li><a href="${ctx}/user/toIndex.action">首页</a></li>
-					<li><a href="#">榜单</a></li>
+					<li><a href="${ctx}/user/indexPage.action">首页</a></li>
 					<li class="am-active"><a href="#">图书详情</a></li>
 					<li><a
 						href="${ctx}/user/qryLoveBook.action?userId=${user.userId}">我的图书</a>
 					</li>
-					<li class="am-dropdown" data-am-dropdown=""><a
-						class="am-dropdown-toggle" data-am-dropdown-toggle=""
-						href="javascript:;"> 个人中心<span class="am-icon-caret-down"></span>
-					</a>
-						<ul class="am-dropdown-content">
-							<li><a href="#">信息修改</a></li>
-							<li><a href="#">密码重置</a></li>
-							<li><a href="#">注销</a></li>
-							<li><a href="#"> 更多服务</a></li>
-						</ul></li>
+					<li class="am-dropdown" data-am-dropdown="">
+	                    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+	                         	个人中心<span class="am-icon-caret-down"></span>
+	                    </a>
+	                    <ul class="am-dropdown-content">
+	                        <li>
+	                            <a href="#">信息修改</a>
+	                        </li>
+	                        <li>
+	                            <a href="#">密码重置</a>
+	                        </li>
+	                        <li>
+	                            <a href="${ctx}/user/exitSystem.action">注销</a>
+	                        </li>
+	                        <li>
+	                            <a href="#"> 更多服务</a>
+	                        </li>
+	                    </ul>
+	                </li>
 					<c:if test="${userName != null}">
 						<li class="am-dropdown" data-am-dropdown=""><a
 							href="javascript:;"> 欢迎您,${userName }</a></li>

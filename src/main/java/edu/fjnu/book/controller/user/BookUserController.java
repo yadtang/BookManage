@@ -98,6 +98,38 @@ public class BookUserController extends BaseController {
 					model.addAttribute("books", books);
 				}
 			}
+			return "/user/index1.jsp";
+		}else{
+			return "forward:/user/login.action";
+		}
+	}
+	
+	@RequestMapping("/user/indexPage.action")
+	public String indexPage(User user, Model model, HttpSession session){
+		PageInfo<HomePage> pageInfo = homePageService.findByPage(new HomePage(), 1, 1000);
+		List<HomePage> dataList = pageInfo.getList();
+		model.addAttribute("dataList", dataList);
+		model.addAttribute("pageInfo", pageInfo);
+		List<Mark> marks = markService.find(new Mark());
+		model.addAttribute("marks", marks);
+		//猜你喜欢
+		User u = (User) session.getAttribute("user");
+		if(u != null){
+			String mark = u.getHobby();
+			if(mark!= null && !"".equals(mark.trim())){
+				String [] ids = mark.split(",");
+				List<Integer> list = new ArrayList<Integer>();
+				for(int i=0;i<ids.length;i++){
+					list.add(Integer.valueOf(ids[i]));
+				}
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("list",list);
+				List<Book> books = new ArrayList<Book>();
+				if(mark != null && !"".equals(mark.trim())){
+					books = bookService.getBookByMark(map);
+					model.addAttribute("books", books);
+				}
+			}
 			return "/user/index.jsp";
 		}else{
 			return "forward:/user/login.action";
@@ -209,6 +241,8 @@ public class BookUserController extends BaseController {
 		user.setHobby(hobby);
 		try {
 			userService.update(user);
+			user = userService.get(user.getUserId());
+			session.setAttribute("user", user);
 			item.setErrorNo("0");
 			item.setErrorInfo("更新成功!");
 		} catch (Exception e) {
@@ -218,4 +252,26 @@ public class BookUserController extends BaseController {
 		}
 		return item;
 	}
+	
+	/**
+	 * 前台用户注销
+	 * @param user
+	 * @param model
+	 * @param servletRequest
+	 * @return
+	 */
+	@RequestMapping("/user/exitSystem.action")
+	public String exitSystem(User user, Model model, ServletRequest servletRequest){
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		user = (User) request.getSession().getAttribute("user");
+		String username = (String) request.getSession().getAttribute("userName");
+		if(user != null ){
+			request.getSession().removeAttribute("user");
+		}
+		if(username != null){
+			request.getSession().removeAttribute("userName");
+		}
+		return "redirect:/user/login.action";	
+	}
+	
 }

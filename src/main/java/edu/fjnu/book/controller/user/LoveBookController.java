@@ -3,6 +3,7 @@ package edu.fjnu.book.controller.user;
 import java.util.List;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.Evaluate;
 import edu.fjnu.book.domain.LoveBook;
+import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.EvaluateService;
 import edu.fjnu.book.service.LoveBookService;
 /**
@@ -28,6 +30,11 @@ public class LoveBookController extends BaseController {
 	
 	@RequestMapping("/user/qryLoveBook.action")
 	public String qryLoveBook(String userId, Model model, ServletRequest servletRequest){
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		if(userId == null || "".equals(userId.trim())){
+			User user = (User) request.getSession().getAttribute("user");
+			userId = user.getUserId();
+		}
 		LoveBook loveBook = new LoveBook();
 		loveBook.setUserId(userId);
 		List<LoveBook> LoveBooks = loveBookService.getByUser(loveBook);
