@@ -226,7 +226,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;猜你喜欢</span>
     <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-gallery-default">
        	<c:forEach items="${books}" var="bk">
-       		<li>
+       		<li onclick="dealClickEvent('${bk.bookid}')">
 	            <div class="am-gallery-item am_list_block">
 	                <a href="###" class="am_img_bg">
 	                    <img class="am_img animated" src="${ctx}/${bk.imageUrl}"/>

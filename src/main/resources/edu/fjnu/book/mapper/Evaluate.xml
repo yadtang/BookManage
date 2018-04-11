@@ -79,4 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from t_evaluate
 		where id=#{id}
 	</delete>
+	
+	<select id="getAvgByBook" parameterType="edu.fjnu.book.domain.Evaluate" resultType="java.lang.Integer">
+		select avg(score)  from t_evaluate t  
+		where t.bookid=#{bookid}
+	</select>
 </mapper>

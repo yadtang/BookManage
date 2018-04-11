@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.Evaluate;
+import edu.fjnu.book.domain.MsgItem;
+import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.service.EvaluateService;
 /**
@@ -45,6 +47,9 @@ public class BookDealController extends BaseController {
 			Evaluate evaluate = new Evaluate();
 			evaluate.setBookid(id);
 			List<Evaluate> eval = evaluateService.find(evaluate);
+			
+			List<Book> loveBks = bookService.getBookByIds(book);//人气排行
+			model.addAttribute("loveBks", loveBks);
 			
 			for(Evaluate eval1 : eval){
 				eval1.setScore(eval1.getScore() * 12);
@@ -87,5 +92,34 @@ public class BookDealController extends BaseController {
 		}
 		
 		return book;	
+	}
+	
+	/**
+	 * 用户发表评论
+	 * @param userId	用户编号
+	 * @param bookid	图书编号
+	 * @param score		分数
+	 * @param content	评论内容
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/user/dealEvaluate.action")
+	@ResponseBody
+	public MsgItem checkUserPwd(String userId,String bookid,int score,String content, Model model, HttpSession session){
+		MsgItem item = new MsgItem();
+		if(userId != null && bookid != null){
+			try {
+				bookService.updateScore(userId, bookid, score, content);
+				item.setErrorNo("0");
+				item.setErrorInfo("发表成功!");
+			} catch (Exception e) {
+				item.setErrorNo("1");
+				item.setErrorInfo("发表失败!");
+				e.printStackTrace();
+			}
+			
+		}
+		return item;
 	}
 }

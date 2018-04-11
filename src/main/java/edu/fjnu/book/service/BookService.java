@@ -19,11 +19,16 @@ public interface BookService {
 	/**分页查询分类信息*/
 	public PageInfo<Book> findByPage(Book book, Integer pageNo,Integer pageSize);
 	public List<Book> getBookByType(Serializable id);
-	//生成二维码
+	/**生成二维码*/
 	public void createImg(Serializable id,String path,String url);
-	//更新访问次数
+	/**更新访问次数*/
 	public void updateTimes(Book book);
+	/**猜你喜欢（首页）*/
 	public List<Book> getBookByMark(Map<String,Object>map);
-	//获取人气排行榜
+	/**获取人气排行榜*/
 	public List<Book> getBookRank(Book book);
+	/**猜你喜欢（图书详情页）*/
+	public List<Book> getBookByIds(Book book);
+	/**更新分数*/
+	public void updateScore(String userId,String bookid,int score,String content);
 }

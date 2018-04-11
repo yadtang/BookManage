@@ -19,11 +19,13 @@
 <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
 <link rel="stylesheet" href="${ctx}/css/petshow.css?6">
 <link rel="stylesheet" href="${ctx}/css/animate.min.css">
+<link rel="stylesheet" href="${ctx}/css/bootstrap.css">
 
 <script src="${ctx}/js/jquery.min.js"></script>
 <script src="${ctx}/js/amazeui.min.js"></script>
 <script src="${ctx}/js/amazeui.lazyload.min.js"></script>
 <script src="${ctx}/js/jweixin-1.2.0.js"></script>
+<script src="${ctx}/js/bootstrap.js"></script>
 <style type="text/css">
 #bg {
 	width: 60px;
@@ -45,10 +47,113 @@
 				}
 			});
 		}
-		[]
-
 	});
 
+	var check = 0;//该变量是记录当前选择的评分
+	var time = 0;//该变量是统计用户评价的次数，这个是我的业务要求统计的（改变评分不超过三次），可以忽略
+
+	/*over()是鼠标移过事件的处理方法*/
+	function over(param){
+		if(param == 1){
+			$("#star1").attr("src","${ctx}/img/star_red.png");//第一颗星星亮起来，下面以此类推
+			$("#message").html(" 很差");//设置提示语，下面以此类推
+		}else if(param == 2){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#message").html(" 比较差");
+		}else if(param == 3){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#star3").attr("src","${ctx}/img/star_red.png");
+			$("#message").html(" 一般");
+		}else if(param == 4){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#star3").attr("src","${ctx}/img/star_red.png");
+			$("#star4").attr("src","${ctx}/img/star_red.png");
+			$("#message").html(" 良好");
+		}else if(param == 5){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#star3").attr("src","${ctx}/img/star_red.png");
+			$("#star4").attr("src","${ctx}/img/star_red.png");
+			$("#star5").attr("src","${ctx}/img/star_red.png");
+			$("#message").html(" 优秀");
+		}
+	}
+	/*out 方法是鼠标移除事件的处理方法，当鼠标移出时，恢复到我的打分情况*/
+	function out(){
+		if(check == 1){//打分是1，设置第一颗星星亮，其他星星暗，其他情况以此类推
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star.png");
+			$("#star3").attr("src","${ctx}/img/star.png");
+			$("#star4").attr("src","${ctx}/img/star.png");
+			$("#star5").attr("src","${ctx}/img/star.png");
+			$("#message").html("");
+		}else if(check == 2){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#star3").attr("src","${ctx}/img/star.png");
+			$("#star4").attr("src","${ctx}/img/star.png");
+			$("#star5").attr("src","img/star.png");
+			$("#message").html("");
+		}else if(check == 3){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#star3").attr("src","${ctx}/img/star_red.png");
+			$("#star4").attr("src","${ctx}/img/star.png");
+			$("#star5").attr("src","${ctx}/img/star.png");
+			$("#message").html("");
+		}else if(check == 4){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#star3").attr("src","${ctx}/img/star_red.png");
+			$("#star4").attr("src","${ctx}/img/star_red.png");
+			$("#star5").attr("src","${ctx}/img/star.png");
+			$("#message").html("");
+		}else if(check == 5){
+			$("#star1").attr("src","${ctx}/img/star_red.png");
+			$("#star2").attr("src","${ctx}/img/star_red.png");
+			$("#star3").attr("src","${ctx}/img/star_red.png");
+			$("#star4").attr("src","${ctx}/img/star_red.png");
+			$("#star5").attr("src","${ctx}/img/star_red.png");
+			$("#message").html("");
+		}else if(check == 0){
+			$("#star1").attr("src","${ctx}/img/star.png");
+			$("#star2").attr("src","${ctx}/img/star.png");
+			$("#star3").attr("src","${ctx}/img/star.png");
+			$("#star4").attr("src","${ctx}/img/star.png");
+			$("#star5").attr("src","${ctx}/img/star.png");
+			$("#message").html("");
+		}
+	}
+	/*click()点击事件处理，记录打分*/
+	function click(param){
+		time++;//记录打分次数
+		check = param;//记录当前打分
+		out();//设置星星数
+	}
+	
+	//发表评论
+	function makeComments(){
+		var bookid = "${book.bookid}";
+		var score = check;
+		var content = $("#content").val();
+		var userId = "${user.userId}";
+		alert(bookid+","+score+","+userId+","+content);
+		//return;
+		$.post("${ctx}/user/dealEvaluate.action", {
+			bookid:bookid,
+			score:score,
+			userId:userId,
+			content:content
+		}, function(data) {
+			$("#id").val(bookid);
+			document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
+			$("form").submit();
+		}, "json");
+	}
+	
 	var urlValue = "";
 	$(document).ready(function() {
 		urlValue = "${ctx}/user/bookInfo.action?id=${book.bookid}";
@@ -166,6 +271,9 @@
 			</div>
 		</div>
 	</header>
+	<form action="${ctx}/user/bookInfo.action" method="post" name="myform" id="myform">
+		<input type="hidden" id="id" name="id" value="${book.bookid}"> 
+	</form>
 	<div class="am_tuya">
 		<div class="am_tuya_user">
 			<div class="am_tuya_user_ico">
@@ -178,9 +286,6 @@
 					<div id="over" style="width:48px"></div>
 				</div>
 				<span class="am_tuya_user_info_time">${book.author}</span>${book.publisher.name}
-				<%-- <div class="am_tuya_user_info_coordinate">
-  	<span class="am_tuya_user_info_time">${book.author}</span>${book.publisher.name}
-  </div> --%>
 			</div>
 		</div>
 
@@ -191,8 +296,7 @@
 				</div>
 				<div class="am_tuya_more">
 					<div class="am_tuya_oneword">我要在你们心中奔腾，你们怕不怕？</div>
-					<div class="am_tuya_cai_ti"
-						style="padding-left:30px;padding-bottom:20px;">图书简介：</div>
+					<div class="am_tuya_cai_ti" style="padding-left:30px;padding-bottom:20px;">图书简介：</div>
 					<div style="padding:0 30px;text-indent: 2em;font-size: 14px;">${book.content}</div>
 					<c:forEach items="${evaluate}" var="o">
 						<div class="am_tuya_comment">
@@ -210,7 +314,22 @@
 							</div>
 						</div>
 					</c:forEach>
-
+					<%-- <div style="padding:0 30px;text-indent: 2em;font-size: 14px;">${book.content}</div> --%>
+					<div class="form-group">
+					    <br/><label for="name">文本框</label>
+					    <label style="text-indent:350px;">
+					    	<a href="javascript:click(1)"><img src="${ctx}/img/star.png" id="star1" onMouseOver="over(1)" onMouseOut="out(1)"/></a>
+							<a href="javascript:click(2)"><img src="${ctx}/img/star.png" id="star2" onMouseOver="over(2)" onMouseOut="out(2)" /></a>
+							<a href="javascript:click(3)"><img src="${ctx}/img/star.png" id="star3" onMouseOver="over(3)" onMouseOut="out(3)" /></a>
+							<a href="javascript:click(4)"><img src="${ctx}/img/star.png" id="star4" onMouseOver="over(4)" onMouseOut="out(4)"/></a>
+							<a href="javascript:click(5)"><img src="${ctx}/img/star.png" id="star5" onMouseOver="over(5)" onMouseOut="out(5)"/></a>
+					    </label>
+						<span id="message"></span><br/>
+					    <textarea class="form-control" rows="3" id="content" name="content"></textarea><br/>
+					    <button type="button" class="btn btn-primary"  data-toggle="button" onclick="makeComments()"> 立即评论</button>
+					</div>
+					
+					
 				</div>
 				<!-- <div class="am_news_load"><span><i  class="am-icon-spinner am-icon-spin"></i> 查看更多讨论</span></div> -->
 			</div>
@@ -293,10 +412,9 @@
 										<a href="#"> <img src="${ctx}/${br.imageUrl}" alt=""></a>
 									</dt>
 									<dd>
-										<i>路见不平Eason吼 ♫</i> <em>广西壮族自治区钦州市</em>
+										<i>${br.author}</i>
 										<div class="hot_block_info">
-											<div class="hot_info_l am-icon-heart">16</div>
-											<div class="hot_info_r am-icon-comments">1</div>
+											<div class="hot_info_l am-icon-heart">${br.times}</div>
 										</div>
 									</dd>
 								</dl>
@@ -310,49 +428,19 @@
 	<div class="am_tuya_cai">
 		<div class="am_tuya_cai_ti">猜你喜欢</div>
 		<div class="am-g am-imglist">
-			<ul data-am-widget="gallery"
-				class="am-gallery am-avg-sm-2
-  am-avg-md-3 am-avg-lg-4 am-gallery-default">
-				<li>
-					<div class="am-gallery-item am_list_block">
-						<a href="###" class="am_img_bg"> <img class="am_img animated"
-							src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想" />
-						</a>
-
-					</div> <a class="am_imglist_user"><span class="am_imglist_user_ico"><img
-							src="${ctx}/img/tx.jpg" alt=""></span><span
-						class="am_imglist_user_font">路见不平Eason吼</span></a>
-				</li>
-				<li>
-					<div class="am-gallery-item am_list_block">
-						<a href="###" class="am_img_bg"> <img class="am_img animated"
-							src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想" />
-						</a>
-
-					</div> <a class="am_imglist_user"><span class="am_imglist_user_ico"><img
-							src="${ctx}/img/tx.jpg" alt=""></span><span
-						class="am_imglist_user_font">路见不平Eason吼</span></a>
-				</li>
-				<li>
-					<div class="am-gallery-item am_list_block">
-						<a href="###" class="am_img_bg"> <img class="am_img animated"
-							src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想" />
-						</a>
-
-					</div> <a class="am_imglist_user"><span class="am_imglist_user_ico"><img
-							src="${ctx}/img/tx.jpg" alt=""></span><span
-						class="am_imglist_user_font">路见不平Eason吼</span></a>
-				</li>
-				<li>
-					<div class="am-gallery-item am_list_block">
-						<a href="###" class="am_img_bg"> <img class="am_img animated"
-							src="${ctx}/img/loading.gif" alt="远方 有一个地方 那里种有我们的梦想" />
-						</a>
-
-					</div> <a class="am_imglist_user"><span class="am_imglist_user_ico"><img
-							src="${ctx}/img/tx.jpg" alt=""></span><span
-						class="am_imglist_user_font">路见不平Eason吼</span></a>
-				</li>
+			<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
+				<c:forEach items="${loveBks}" var="lbks">
+					<li onclick="dealClickEvent('${lbks.bookid}')">
+						<div class="am-gallery-item am_list_block">
+							<a href="###" class="am_img_bg"> 
+								<img class="am_img animated" src="${ctx}/${lbks.imageUrl}"/>
+							</a>
+	
+						</div> 
+						<a class="am_imglist_user">
+							<span class="am_imglist_user_ico"><img src="${ctx}/img/tx.jpg" alt=""></span><span class="am_imglist_user_font">路见不平Eason吼</span></a>
+					</li>
+				</c:forEach>
 			</ul>
 			<div class="am_tuya_ckgd">
 				<i class="am-icon-spinner am-icon-spin"></i><a href=""> 查看更多</a>

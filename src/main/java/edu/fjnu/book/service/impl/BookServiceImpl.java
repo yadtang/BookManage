@@ -11,8 +11,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import edu.fjnu.book.dao.BookDao;
+import edu.fjnu.book.dao.EvaluateDao;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.BookType;
+import edu.fjnu.book.domain.Evaluate;
+import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.util.QRCodeUtil;
 import edu.fjnu.book.util.TimeUtil;
@@ -20,7 +23,8 @@ import edu.fjnu.book.util.TimeUtil;
 public class BookServiceImpl implements BookService{
 	@Autowired
 	BookDao bookDao;
-	
+	@Autowired
+	EvaluateDao evaluateDao;
 	public Book get(Serializable id) {
 		// TODO Auto-generated method stub
 		return bookDao.get(id);
@@ -98,5 +102,31 @@ public class BookServiceImpl implements BookService{
 	public List<Book> getBookRank(Book book) {
 		// TODO Auto-generated method stub
 		return bookDao.getBookRank(book);
+	}
+
+	public List<Book> getBookByIds(Book book) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookByIds(book);
+	}
+
+	public void updateScore(String userId,String bookid,int score,String content) {
+		Evaluate evaluate = new Evaluate();
+		User user = new User();
+		user.setUserId(userId);
+		evaluate.setBookid(bookid);
+		evaluate.setUser(user);
+		String time = TimeUtil.getCurrentTime();
+		evaluate.setTime(time);
+		evaluate.setScore(score);
+		evaluate.setContent(content);
+		//1.插入评价表
+		evaluateDao.insert(evaluate);
+		//2.得到平均分
+		int avgScore = evaluateDao.getAvgByBook(evaluate);
+		//3.将平均分插入图书表
+		Book book = new Book();
+		book.setBookid(bookid);
+		book.setScore(avgScore+"");
+		bookDao.update(book);
 	}
 }

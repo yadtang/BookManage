@@ -51,10 +51,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="author!=null">
 				author=#{author},
 			</if>
-			<if test="publisher.id !=null">
+			<if test="publisher !=null">
 				press=#{publisher.id},
 			</if>
-			<if test="bookType.typeId !=null">
+			<if test="bookType !=null">
 				typeid=#{bookType.typeId},
 			</if>
 			<if test="price!=null">
@@ -130,6 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from t_book where typeid=#{id} 
 	</select>
 	
+	<!-- 猜你喜欢（首页） -->
 	<select id="getBookByMark" parameterType="map" resultMap="bookRM"> 
 		select * from t_book t
 			where t.keyword in 
@@ -147,6 +148,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where t.typeid = #{bookType.typeId}
 			and t.keyword = #{keyword}
 			and score > 4.5
-			order by t.score desc limit 10
+			order by t.times , t.score desc limit 10
+	</select>
+	
+	<!-- 猜你喜欢（图书详情页） -->
+	<select id="getBookByIds" parameterType="edu.fjnu.book.domain.Book" resultMap="bookRM"> 
+		select * from t_book t
+			where t.typeid = #{bookType.typeId}
+			and t.keyword = #{keyword}
+			and score > 4.5
+			order by rand() limit 4
 	</select>
 </mapper>

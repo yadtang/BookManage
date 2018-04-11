@@ -19,4 +19,6 @@ public interface EvaluateService {
 	public PageInfo<Evaluate> findByPage(Evaluate evaluate, Integer pageNo,Integer pageSize);
 	//计算评分分布
 	public Map<String,Object> getScoreProp(Serializable bookid);
+	/**获得图书的平均分*/
+	public int getAvgByBook(Evaluate evaluate);
 }

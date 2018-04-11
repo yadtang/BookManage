@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import edu.fjnu.book.dao.EvaluateDao;
+import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.Evaluate;
 import edu.fjnu.book.service.EvaluateService;
 @Service
@@ -99,6 +100,11 @@ public class EvaluateServiceImpl implements EvaluateService{
 		map.put("num2", num2);
 		map.put("num1", num1);
 		return map;
+	}
+
+	public int getAvgByBook(Evaluate evaluate) {
+		// TODO Auto-generated method stub
+		return evaluateDao.getAvgByBook(evaluate);
 	}
 
 }
