@@ -16,21 +16,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
     <link rel="stylesheet" href="${ctx}/css/petshow.css?6">
     <link rel="stylesheet" href="${ctx}/css/animate.min.css">
+    <link rel="stylesheet" href="${ctx}/css/bootstrap.css">
     <script src="${ctx}/js/jquery.min.js"></script>
     <script src="${ctx}/js/amazeui.min.js"></script>
-    <%-- <script src="${ctx}/js/countUp.min.js"></script> --%>
     <script src="${ctx}/js/amazeui.lazyload.min.js"></script>
-	<script src="${ctx}/js/petshow.js"></script>
+    <script src="${ctx}/js/bootstrap.js"></script>
 	<script type="text/javascript">
+		//页面加载时触发
+		$(document).ready(function(){
+			showModal();
+		});
+		
 		function dealClickEvent(id){
 			$("#id").val(id);
 			document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
 			$("form").submit();
-			/* if(id != null && id != ""){
-        		$.post("${ctx}/user/bookInfo.action", { id:id },function(data){
-        			alert(data);
-        		},"json");
-			} */
+		}
+		
+		function showModal(){
+			$("#myModal").modal('show');
 		}
 	</script>
 </head>
@@ -90,10 +94,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</c:if>
 				<c:if test="${userName == null}">
 				    <li class="am-dropdown" data-am-dropdown="">
-	                    <a href="javascript:;"> 登录</a>
+	                    <a href="${ctx}/user/login.action"> 登录</a>
 	                </li>
 					<li class="am-dropdown" data-am-dropdown="">
-	                    <a href="javascript:;">注册</a>
+	                    <a href="${ctx}/user/toRegistPage.action">注册</a>
 	                </li>
 				</c:if>
 				
@@ -101,6 +105,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
 </header>
+<div>
+	<button onclick="showModal()">
+		开始演示模态框
+	</button>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					请标记你喜欢的图书标签
+				</h4>
+			</div>
+			<div class="modal-body">
+				<c:forEach items="${marks}" var="o">
+					<label>
+						<input type="checkbox" name="hobby" id="hobby" value="${o.id }"> ${o.name } &nbsp;
+					</label>
+				</c:forEach>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary">
+					保存
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
 
 <div class="banner_navbg">
     <div class="am-g">

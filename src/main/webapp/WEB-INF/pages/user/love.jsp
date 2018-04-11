@@ -87,10 +87,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</c:if>
 				<c:if test="${userName == null}">
 				    <li class="am-dropdown" data-am-dropdown="">
-	                    <a href="javascript:;"> 登录</a>
+	                    <a href="${ctx}/user/login.action"> 登录</a>
 	                </li>
 					<li class="am-dropdown" data-am-dropdown="">
-	                    <a href="javascript:;">注册</a>
+	                    <a href="${ctx}/user/toRegistPage.action">注册</a>
 	                </li>
 				</c:if>
 				

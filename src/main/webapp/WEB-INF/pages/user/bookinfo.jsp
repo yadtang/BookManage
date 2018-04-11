@@ -149,10 +149,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</c:if>
 				<c:if test="${userName == null}">
 				    <li class="am-dropdown" data-am-dropdown="">
-	                    <a href="javascript:;"> 登录</a>
+	                    <a href="${ctx}/user/login.action"> 登录</a>
 	                </li>
 					<li class="am-dropdown" data-am-dropdown="">
-	                    <a href="javascript:;">注册</a>
+	                    <a href="${ctx}/user/toRegistPage.action">注册</a>
 	                </li>
 				</c:if>
 				
@@ -207,7 +207,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="am_tuya_content_r">
 <ul class="am_tuya_r_info">
   <li><i class="am-icon-heart"></i><span>${book.number } 人喜欢</span></li>
-  <li><i class="am-icon-comments"></i><span>${count } 条讨论</span></li>
+  <li><i class="am-icon-comments"></i><span>${count } 条评论</span></li>
   <li><i class="am-icon-eye"></i><span>${book.times } 次查看</span></li>
   <li><i class="am-icon-share-square-o"></i><span>分享图书</span></li>
   <li>

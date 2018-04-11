@@ -47,7 +47,7 @@ public class MailUtils {
 	
 	public static void main(String[] args) {
 		try {
-			sendMail("tangwm1992@163.com","TWM920625TWM","876974423@qq.com", "sdsd");
+			sendMail("**********@163.com","*********","*********@qq.com", "sdsd");
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

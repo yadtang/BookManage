@@ -22,11 +22,13 @@ import com.github.pagehelper.PageInfo;
 import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.HomePage;
+import edu.fjnu.book.domain.Mark;
 import edu.fjnu.book.domain.MsgItem;
 import edu.fjnu.book.domain.Sysconfig;
 import edu.fjnu.book.domain.User;
 import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.service.HomePageService;
+import edu.fjnu.book.service.MarkService;
 import edu.fjnu.book.service.SysconfigService;
 import edu.fjnu.book.service.UserService;
 import edu.fjnu.book.util.MailUtils;
@@ -46,6 +48,9 @@ public class BookUserController extends BaseController {
 	HomePageService homePageService;
 	@Autowired
 	BookService bookService;
+	@Autowired
+	MarkService markService;
+	
 	//跳转到登录页面
 	@RequestMapping("/user/login.action")
 	public String toLoinPage(User user, Model model, HttpSession session){
@@ -55,6 +60,8 @@ public class BookUserController extends BaseController {
 	//跳转到登录页面
 	@RequestMapping("/user/toRegistPage.action")
 	public String toUserRegistPage(User user, Model model, HttpSession session){
+		List<Mark> marks = markService.find(new Mark());
+		model.addAttribute("marks", marks);
 		return "/user/regist.jsp";			
 	}
 	
@@ -71,6 +78,8 @@ public class BookUserController extends BaseController {
 		List<HomePage> dataList = pageInfo.getList();
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("pageInfo", pageInfo);
+		List<Mark> marks = markService.find(new Mark());
+		model.addAttribute("marks", marks);
 		//猜你喜欢
 		User u = (User) session.getAttribute("user");
 		if(u != null){

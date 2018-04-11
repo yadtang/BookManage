@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.book.mapper.MarkMapper">
+	<!-- 数据库表映射 -->
+	<resultMap id="markRM" type="edu.fjnu.book.domain.Mark">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="remark" column="remark"/>
+	</resultMap>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="edu.fjnu.book.domain.Mark">
+		insert into t_mark
+		(name,remark)
+		values
+		(#{name},#{remark})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="edu.fjnu.book.domain.Mark">
+		update t_mark
+		<set>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="remark!=null">
+				remark=#{remark},
+			</if>
+		</set>
+			where id=#{id}
+	</update>
+	
+	<!-- 查询所有记录 -->
+	<select id="find" parameterType="string" resultMap="markRM">
+		select * from t_mark
+		where 1=1
+		order by id
+	</select>
+	
+	<!-- 查询一个录 -->
+	<select id="get" parameterType="edu.fjnu.book.domain.Mark" resultMap="markRM">
+		select * from t_mark
+		where id=#{id} 
+	</select>
+	
+	<!-- 删除一条记录 -->
+	<delete id="delete" parameterType="string">
+		delete from t_sysconfig
+		where id=#{id}
+	</delete>
+</mapper>

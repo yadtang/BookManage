@@ -123,10 +123,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <input type="text" name="email" id="email" class="username" placeholder="邮箱"  onblur="checkEmail()"><br><span style="color: red" id="emailMsg">${emailMsg }</span><br>
             <input type="password" name="Pwd" id="Pwd" class="password" placeholder="登录密码">
             <input type="password" name="userPwd" id="userPwd" class="password" placeholder="确认密码" onblur="checkPwd()"><br/>
-            <c:forEach items="${grade}" var="grade">
-				<input type="radio" checked="checked" name="grade" value="${grade.gradeId }" 
-					class="radio" />${grade.gradeName } &nbsp;
-			</c:forEach>
+            <%-- <c:forEach items="${marks}" var="m">
+				<input type="checkbox"  name="hobby" id="hobby" value="${m.id }" />${m.name } &nbsp;
+			</c:forEach> --%>
             
             <input type="text" name="telphone" id="telphone" placeholder="联系电话">
             <input type="text" name="address" id="address" placeholder="联系地址">
@@ -135,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </form>
         <div class="connect"></div>
     </div>
-    <div align="center">我已经有一个账号， <a href="${ctx}/toLogin.action" target="_self">立即登录</a></div>
+    <div align="center">我已经有一个账号， <a href="${ctx}/user/login.action" target="_self">立即登录</a></div>
 </body>
 
 </html>
