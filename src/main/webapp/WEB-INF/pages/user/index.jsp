@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>读书网</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="${ctx}/css/bootstrap.css">
@@ -52,8 +52,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var userId = "${user.userId}";
 			var bookid = id;
 			$.post("${ctx}/user/setLiked.action", { userId:userId,bookid:bookid},function(data){
-            	alert(data.errorInfo);
+            	//alert(data.errorInfo);
             	//$("#myModal").modal('hide');
+				document.myform.attributes["action"].value = "${ctx}/user/indexPage.action"; 
+				$("form").submit();
 			},"json");
 		}
 		
@@ -100,22 +102,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="${ctx}/user/qryLoveBook.action?userId=${user.userId}">我的图书</a>
                 </li>
-                <li class="am-dropdown" data-am-dropdown="">
-                    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-                         	个人中心<span class="am-icon-caret-down"></span>
-                    </a>
-                    <ul class="am-dropdown-content">
-                        <li>
-                            <a href="#">信息修改</a>
-                        </li>
-                        <li>
-                            <a href="#">密码重置</a>
-                        </li>
-                        <li>
-                            <a href="${ctx}/user/exitSystem.action">注销</a>
-                        </li>
-                    </ul>
-                </li>
                 <c:if test="${userName != null}">
                 	<li class="am-dropdown" data-am-dropdown="">
 	                    <a href="javascript:;"> 欢迎您,${userName }</a>
@@ -129,7 +115,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    <a href="${ctx}/user/toRegistPage.action">注册</a>
 	                </li>
 				</c:if>
-				
+                <li>
+                    <a >个人中心</a>
+                </li>
+                <li>
+                    <a >密码重置</a>
+                </li>
+                <li>
+                    <a href="${ctx}/user/exitSystem.action">注销</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -215,7 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;猜你喜欢</span>
     <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-gallery-default">
        	<c:forEach items="${books}" var="bk">
-       		<li onclick="dealClickEvent('${bk.bookid}')">
+       		<li>
 	            <div class="am-gallery-item am_list_block">
 	                <a href="###" class="am_img_bg">
 	                    <img class="am_img animated" src="${ctx}/${bk.imageUrl}"  onclick="dealClickEvent('${bk.bookid}')"/>

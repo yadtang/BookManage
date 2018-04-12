@@ -164,6 +164,18 @@
 		document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
 		$("form").submit();
 	}
+	
+	function setLiked(id){
+		var userId = "${user.userId}";
+		var bookid = id;
+		$("#id").val(id);
+		$.post("${ctx}/user/setLiked.action", { userId:userId,bookid:bookid},function(data){
+        	//alert(data.errorInfo);
+        	//$("#myModal").modal('hide');
+			document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
+			$("form").submit();
+		},"json");
+	}
 
 	//打开分享图标
 	function openShare(id) {
@@ -252,35 +264,28 @@
 					<li><a
 						href="${ctx}/user/qryLoveBook.action?userId=${user.userId}">我的图书</a>
 					</li>
-					<li class="am-dropdown" data-am-dropdown="">
-	                    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-	                         	个人中心<span class="am-icon-caret-down"></span>
-	                    </a>
-	                    <ul class="am-dropdown-content">
-	                        <li>
-	                            <a href="#">信息修改</a>
-	                        </li>
-	                        <li>
-	                            <a href="#">密码重置</a>
-	                        </li>
-	                        <li>
-	                            <a href="${ctx}/user/exitSystem.action">注销</a>
-	                        </li>
-	                        <li>
-	                            <a href="#"> 更多服务</a>
-	                        </li>
-	                    </ul>
-	                </li>
-					<c:if test="${userName != null}">
-						<li class="am-dropdown" data-am-dropdown=""><a
-							href="javascript:;"> 欢迎您,${userName }</a></li>
+	                <c:if test="${userName != null}">
+	                	<li class="am-dropdown" data-am-dropdown="">
+		                    <a href="javascript:;"> 欢迎您,${userName }</a>
+		                </li>
 					</c:if>
 					<c:if test="${userName == null}">
-						<li class="am-dropdown" data-am-dropdown=""><a
-							href="${ctx}/user/login.action"> 登录</a></li>
-						<li class="am-dropdown" data-am-dropdown=""><a
-							href="${ctx}/user/toRegistPage.action">注册</a></li>
+					    <li class="am-dropdown" data-am-dropdown="">
+		                    <a href="${ctx}/user/login.action"> 登录</a>
+		                </li>
+						<li class="am-dropdown" data-am-dropdown="">
+		                    <a href="${ctx}/user/toRegistPage.action">注册</a>
+		                </li>
 					</c:if>
+	                <li>
+	                    <a >个人中心</a>
+	                </li>
+	                <li>
+	                    <a >密码重置</a>
+	                </li>
+	                <li>
+	                    <a href="${ctx}/user/exitSystem.action">注销</a>
+	                </li>
 				</ul>
 			</div>
 		</div>
@@ -427,7 +432,7 @@
 									<dd>
 										<i>${br.author}</i>
 										<div class="hot_block_info">
-											<div class="hot_info_l am-icon-heart">${br.times}</div>
+											<div class="hot_info_l am-icon-heart" onclick="setLiked('${br.bookid}')">${br.number}</div>
 										</div>
 									</dd>
 								</dl>

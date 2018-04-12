@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into t_lovebook
 		(userid,remark,bookid)
 		values
-		(#{userid},#{remark},#{book.bookid})
+		(#{userId},#{remark},#{book.bookid})
 	</insert>
 	
 	<!-- 修改 -->
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				content=#{content},
 			</if>
 			<if test="bookid != null">
-				bookid=#{bookid},
+				bookid=#{book.bookid},
 			</if>
 			<if test="score != null">
 				score = #{score},
@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="find" parameterType="string" resultMap="loveRM">
 		select * from t_lovebook l, t_book b
 		where l.bookid = b.bookid
-		and l.bookid=#{bookid}
+		and l.bookid=#{book.bookid}
 		order by l.id desc
 	</select>
 	

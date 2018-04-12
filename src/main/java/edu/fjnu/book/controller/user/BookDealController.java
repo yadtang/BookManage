@@ -163,7 +163,7 @@ public class BookDealController extends BaseController {
 			loveBook.setBook(book);
 			try {
 				lbook = loveBookService.getByIds(loveBook);
-				if(lbook == null){//已经标记为喜欢
+				if(lbook != null){//已经标记为喜欢
 					item.setErrorNo("2");
 				}else{
 					loveBookService.insert(loveBook);
