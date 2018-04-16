@@ -200,7 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    <img class="am_img animated" src="${ctx}/${pbook.book.imageUrl}" />
 	                </a>
 	                <div class="am_listimg_info">
-	                	<a onclick="cancelLove('${pbook.id}')"><span class="am-icon-heart">${pbook.book.number}</span></a>
+	                	<span class="am-icon-heart" onclick="cancelLove('${pbook.id}')">${pbook.book.number}</span>
 	                	<span class="am-icon-comments">${pbook.remark}</span>
 	                </div>
 	            </div>

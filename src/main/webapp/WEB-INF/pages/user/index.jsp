@@ -249,8 +249,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                </a>
 		
 		                <div class="am_listimg_info">
-		                	<span class="am-icon-heart" onclick="setLiked('${pbook.bookid}')"> 132</span>
-		                	<span class="am-icon-comments"> 67</span>
+		                	<span class="am-icon-heart" onclick="setLiked('${pbook.bookid}')"> ${pbook.number}</span>
+		                	<span class="am-icon-eye"> ${pbook.times}</span>
 		                </div>
 		
 		            </div>
@@ -272,8 +272,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    <img class="am_img animated" src="${ctx}/${bk.imageUrl}"  onclick="dealClickEvent('${bk.bookid}')"/>
 	                </a>
 	
-	                <div class="am_listimg_info"><span class="am-icon-heart" onclick="setLiked('${bk.bookid}')"> 132</span><span
-	                        class="am-icon-comments"> 67</span><span class="am_imglist_time">15分钟前</span></div>
+	                <div class="am_listimg_info"><span class="am-icon-heart" onclick="setLiked('${bk.bookid}')"> ${bk.number}</span><span
+	                        class="am-icon-eye"> ${bk.times}</span><span class="am_imglist_time">15分钟前</span></div>
 	
 	            </div>
 	            <a class="am_imglist_user">
