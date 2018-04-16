@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript">
 	    function dealClickEvent(id){
 			$("#id").val(id);
-			document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
+			document.myform.attributes["action"].value = "${ctx}/user/my.action"; 
 			$("form").submit();
 			/* if(id != null && id != ""){
 	    		$.post("${ctx}/user/bookInfo.action", { id:id },function(data){
@@ -33,6 +33,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		},"json");
 			} */
 		}
+	    
+	    function cancelLove(id){
+	    	$.post("${ctx}/user/cancelLike.action", { id:id},function(data){
+	    		document.myform.attributes["action"].value = "${ctx}/user/qryLoveBook.action"; 
+				$("form").submit();
+			},"json");
+	    }
 	    
 	    function pwdMsg(){
 			$("#pwdModal").modal('show');
@@ -187,12 +194,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="am-g am-imglist am_user_list_li">
     <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2am-avg-md-3 am-avg-lg-6 am-gallery-default">
     	<c:forEach items="${LoveBooks}" var="pbook">
-    		<li  onclick="dealClickEvent('${pbook.book.bookid}')">
+    		<li >
 	            <div class="am-gallery-item am_list_block">
-	                <a class="am_img_bg">
+	                <a class="am_img_bg" onclick="dealClickEvent('${pbook.book.bookid}')">
 	                    <img class="am_img animated" src="${ctx}/${pbook.book.imageUrl}" />
 	                </a>
-	                <div class="am_listimg_info"><span class="am-icon-heart">${pbook.book.number}</span>
+	                <div class="am_listimg_info">
+	                	<a onclick="cancelLove('${pbook.id}')"><span class="am-icon-heart">${pbook.book.number}</span></a>
 	                	<span class="am-icon-comments">${pbook.remark}</span>
 	                </div>
 	            </div>
