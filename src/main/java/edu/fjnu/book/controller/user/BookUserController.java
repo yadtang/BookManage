@@ -31,6 +31,7 @@ import edu.fjnu.book.service.HomePageService;
 import edu.fjnu.book.service.MarkService;
 import edu.fjnu.book.service.SysconfigService;
 import edu.fjnu.book.service.UserService;
+import edu.fjnu.book.util.MD5Util;
 import edu.fjnu.book.util.MailUtils;
 
 /**
@@ -282,4 +283,80 @@ public class BookUserController extends BaseController {
 		return "redirect:/user/login.action";	
 	}
 	
+	/**
+	 * 用户重置密码
+	 * @param user
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/user/updUserPwd.action")
+	@ResponseBody
+	public MsgItem updUserPwd(User user,Model model, HttpSession session){
+		MsgItem item = new MsgItem();
+		if(user.getUserId() == null || "".equals(user.getUserId().trim())){
+			User u = (User) session.getAttribute("user");
+			String userID = u.getUserId();
+			user.setUserId(userID);
+		}
+		User u = userService.login(user);
+		if(u == null){
+			item.setErrorNo("1");
+			item.setErrorInfo("原始密码错误!");
+			return item;
+		}
+		try {
+			String password = MD5Util.getData(user.getRemark());
+			user.setUserPwd(password);
+			userService.update(user);
+			user = userService.get(user.getUserId());
+			session.setAttribute("user", user);
+			item.setErrorNo("0");
+			item.setErrorInfo("重置成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			item.setErrorNo("2");
+			item.setErrorInfo("重置失败!");
+		}
+		return item;
+	}
+	
+	@RequestMapping("/user/userInfoPage.action")
+	public String userInfoPage(User user, Model model, HttpSession session){
+		User u = (User) session.getAttribute("user");
+		model.addAttribute("user", u);
+		return "/user/userinfo.jsp";			
+	}
+	
+	/**
+	 * 个人信息修改
+	 * @param user
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/user/updUserMsg.action")
+	@ResponseBody
+	public MsgItem updUserMsg(User user,Model model, HttpSession session){
+		//HttpServletRequest request = (HttpServletRequest) servletRequest;
+		MsgItem item = new MsgItem();
+		if(user.getUserId() == null || "".equals(user.getUserId().trim())){
+			User u = (User) session.getAttribute("user");
+			String userID = u.getUserId();
+			user.setUserId(userID);
+		}
+		try {
+			userService.update(user);
+			user = userService.get(user.getUserId());
+			session.setAttribute("user", user);
+			session.setAttribute("userName", user.getUserName());
+			item.setErrorNo("0");
+			item.setErrorInfo("更新成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			item.setErrorNo("1");
+			item.setErrorInfo("更新失败!");
+		}
+		return item;
+	}
 }

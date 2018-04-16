@@ -17,24 +17,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
     <link rel="stylesheet" href="${ctx}/css/petshow.css">
     <link rel="stylesheet" href="${ctx}/css/animate.min.css">
-    <script src="${ctx}/js/bootstrap.js"></script>
     <script src="${ctx}/js/jquery.min.js"></script>
     <script src="${ctx}/js/amazeui.min.js"></script>
+    <script src="${ctx}/js/bootstrap.js"></script>
     <script src="${ctx}/js/amazeui.lazyload.min.js"></script>
 	<script type="text/javascript">
 		//页面加载时触发
 		$(document).ready(function(){
-			$('#myModal').on('shown.bs.modal', function (e) {
-	            // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
-				$('#myModal').each(function(i) {   
-					var $clone = $(this).clone().css('display','block').appendTo('body');
-					var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
-					top = top > 0 ? top : 0;   
-					$clone.remove();   
-					$(this).find('.modal-content').css("margin-top", top);   
-				}); 
-	        });
-			showModal();
+			
 		});
 		
 		
@@ -46,6 +36,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		function showModal(){
 			$("#myModal").modal('show');
+		}
+		
+		function userMsg(){
+			$("#userModal").modal('show');
+		}
+		function pwdMsg(){
+			$("#pwdModal").modal('show');
 		}
 		
 		function setLiked(id){
@@ -72,6 +69,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            	$("#myModal").modal('hide');
 				},"json");
 
+	        });
+	        //更新密码
+	        $('#savePwd').click(function () {
+	        	var pwd = $("#pwd").val();
+	        	var password = $("#password").val();
+	        	var password1 = $("#password1").val();
+	        	if(password != password1){
+	        		alert("重置密码和确认密码不一致！");
+	        		return;
+	        	}
+	        	if(password != pwd){
+	        		alert("重置密码和原始密码不能相同！");
+	        		return;
+	        	}
+	            var userId = "${user.userId}";
+	            $.post("${ctx}/user/updUserPwd.action", { userId:userId,userPwd:pwd,remark:password1},function(data){
+	            	alert(data.errorInfo);
+	            	$("#pwdModal").modal('hide');
+				},"json");
 	        });
 
 	    });
@@ -116,10 +132,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                </li>
 				</c:if>
                 <li>
-                    <a >个人中心</a>
+                    <a href="${ctx}/user/userInfoPage.action">个人中心</a>
                 </li>
                 <li>
-                    <a >密码重置</a>
+                    <a onclick="pwdMsg()">密码重置</a>
                 </li>
                 <li>
                     <a href="${ctx}/user/exitSystem.action">注销</a>
@@ -163,6 +179,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div><!-- /.modal -->
 	</div>
 </form>
+
+	<div class="modal fade" id="pwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:350px">
+			<div class="modal-content" style="width:350px">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						密码重置
+					</h4>
+				</div>
+				<form class="form-inline" id="pwdForm" method="POST">
+					<div class="form-group">
+						<label for="name" style="text-indent: 2em;font-size: 14px;">原始密码：</label>
+						<input type="password" class="form-control" id="pwd" placeholder="请输入原始密码">
+					</div>
+					<br/>
+					<div class="form-group">
+						<label for="name" style="text-indent: 2em;font-size: 14px;">重置密码：</label>
+						<input type="password" class="form-control" id="password" placeholder="请输入重置密码">
+					</div>
+					<br/>
+					<div class="form-group">
+						<label for="name" style="text-indent: 2em;font-size: 14px;">确认密码：</label>
+						<input type="password" class="form-control" id="password1" placeholder="请输入确认密码">
+					</div>
+					<br/>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="savePwd">
+							保存
+						</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+
+
 <div class="banner_navbg">
     <div class="am-g">
         <div class="banner_nav">
@@ -234,7 +291,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <footer class="am_footer">
     <div class="am_footer_con">
         <div class="am_footer_link">
-            <span>关于宠物秀</span>
+            <span>关于图书网</span>
             <ul>
                 <li><a href="###">关于我们</a></li>
                 <li><a href="###">发展历程</a></li>
@@ -244,9 +301,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
         <div class="am_footer_don">
-            <span>宠物秀</span>
+            <span>读书网</span>
             <dl>
-                <dt><img src="${ctx}/img/footdon.png?1" alt=""></dt>
+                <dt><img src="${ctx}/img/logo.png?1" alt=""></dt>
                 <dd>一起Show我们的爱宠吧！宠物秀是图片配文字、涂鸦、COSPLAY的移动手机社区，这里有猫狗鱼龟兔子仓鼠龙猫等各种萌图。
                     <a href="###" class="footdon_pg ">
                         <div class="foot_d_pg am-icon-apple "> App store</div>

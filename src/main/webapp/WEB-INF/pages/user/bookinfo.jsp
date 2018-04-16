@@ -164,6 +164,31 @@
 		document.myform.attributes["action"].value = "${ctx}/user/bookInfo.action"; 
 		$("form").submit();
 	}
+	function pwdMsg(){
+		$("#pwdModal").modal('show');
+	}
+	$(function () {
+        //更新密码
+        $('#savePwd').click(function () {
+        	var pwd = $("#pwd").val();
+        	var password = $("#password").val();
+        	var password1 = $("#password1").val();
+        	if(password != password1){
+        		alert("重置密码和确认密码不一致！");
+        		return;
+        	}
+        	if(password != pwd){
+        		alert("重置密码和原始密码不能相同！");
+        		return;
+        	}
+            var userId = "${user.userId}";
+            $.post("${ctx}/user/updUserPwd.action", { userId:userId,userPwd:pwd,remark:password1},function(data){
+            	alert(data.errorInfo);
+            	$("#pwdModal").modal('hide');
+			},"json");
+        });
+
+    });
 	
 	function setLiked(id){
 		var userId = "${user.userId}";
@@ -278,10 +303,10 @@
 		                </li>
 					</c:if>
 	                <li>
-	                    <a >个人中心</a>
+	                    <a href="${ctx}/user/userInfoPage.action">个人中心</a>
 	                </li>
 	                <li>
-	                    <a >密码重置</a>
+	                    <a onclick="pwdMsg()">密码重置</a>
 	                </li>
 	                <li>
 	                    <a href="${ctx}/user/exitSystem.action">注销</a>
@@ -290,6 +315,47 @@
 			</div>
 		</div>
 	</header>
+
+	<!-- 密码重置 -->
+	<div class="modal fade" id="pwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:350px">
+			<div class="modal-content" style="width:350px">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						密码重置
+					</h4>
+				</div>
+				<form class="form-inline" id="pwdForm" method="POST">
+					<div class="form-group">
+						<label for="name" style="text-indent: 2em;font-size: 14px;">原始密码：</label>
+						<input type="password" class="form-control" id="pwd" placeholder="请输入原始密码">
+					</div>
+					<br/>
+					<div class="form-group">
+						<label for="name" style="text-indent: 2em;font-size: 14px;">重置密码：</label>
+						<input type="password" class="form-control" id="password" placeholder="请输入重置密码">
+					</div>
+					<br/>
+					<div class="form-group">
+						<label for="name" style="text-indent: 2em;font-size: 14px;">确认密码：</label>
+						<input type="password" class="form-control" id="password1" placeholder="请输入确认密码">
+					</div>
+					<br/>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="savePwd">
+							保存
+						</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
+	
 	<form action="${ctx}/user/bookInfo.action" method="post" name="myform" id="myform">
 		<input type="hidden" id="id" name="id" value="${book.bookid}"> 
 	</form>
