@@ -17,6 +17,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
     <link rel="stylesheet" href="${ctx}/css/petshow.css">
     <link rel="stylesheet" href="${ctx}/css/animate.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="${ctx}/css/search-form.css">
+    <style type="text/css">
+    
+    	/*placeholder字体颜色*/
+		::-webkit-input-placeholder { /* WebKit browsers */
+		    color:#ccc;
+		    font-size: 14px;
+		}
+		:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		    color:#ccc;
+		     font-size: 14px;
+		}
+		::-moz-placeholder { /* Mozilla Firefox 19+ */
+		    color:#ccc;opacity:1;
+		     font-size: 14px;
+		}
+		:-ms-input-placeholder { /* Internet Explorer 10+ */
+		    color:#ccc !important;
+		     font-size: 14px;
+		}
+    </style>
+    
     <script src="${ctx}/js/jquery.min.js"></script>
     <script src="${ctx}/js/amazeui.min.js"></script>
     <script src="${ctx}/js/bootstrap.js"></script>
@@ -91,7 +114,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        });
 
 	    });
-		
+		function searchToggle(obj, evt){
+            var container = $(obj).closest('.search-wrapper');
+
+            if(!container.hasClass('active')){
+                  container.addClass('active');
+                  evt.preventDefault();
+            }
+            else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+                  container.removeClass('active');
+                  // clear input
+                  container.find('.search-input').val('');
+                  // clear and hide result container when we press close
+                  container.find('.result-container').fadeOut(100, function(){$(this).empty();});
+            }
+        }
+
+        function submitFn(obj, evt){
+            value = $(obj).find('.search-input').val().trim();
+
+            _html = "Yup yup! Your search text sounds like this: ";
+            if(!value.length){
+                _html = "Yup yup! Add some text friend :D";
+            }
+            else{
+                _html += "<b>" + value + "</b>";
+            }
+
+            $(obj).find('.result-container').html('<span>' + _html + '</span>');
+            $(obj).find('.result-container').fadeIn(100);
+
+            evt.preventDefault();
+        }
 	</script>
 </head>
 <body>
@@ -140,10 +194,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li>
                     <a href="${ctx}/user/exitSystem.action">注销</a>
                 </li>
+                <li>
+                	<div class="bdfw_nr_title">
+						<input type="text" name="userName" style="margin-top:7px;margin-left:15px;width:200px;" placeholder="图书名称、作者">
+						<a onclick="search()"><img alt="" src="${ctx}/img/search.png" style="margin-top:10px"></a>
+					</div>
+                </li>
             </ul>
         </div>
     </div>
 </header>
+
 <div style="display:none">
 	<button onclick="showModal()">
 		开始演示模态框
@@ -218,7 +279,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal -->
 	</div>
-
 
 <div class="banner_navbg">
     <div class="am-g">
@@ -327,7 +387,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
 
     </div>
-    <div class="am_info_line">Copyright(c)2015 <span>PetShow</span> All Rights Reserved.模板收集自 <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> -  More Templates  <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></div>
 </footer>
 </body>
 </html>

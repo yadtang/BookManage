@@ -17,6 +17,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="${ctx}/css/amazeui.min.css">
     <link rel="stylesheet" href="${ctx}/css/petshow.css">
     <link rel="stylesheet" href="${ctx}/css/animate.min.css">
+    <style type="text/css">
+    
+    	/*placeholder字体颜色*/
+		::-webkit-input-placeholder { /* WebKit browsers */
+		    color:#ccc;
+		    font-size: 14px;
+		}
+		:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		    color:#ccc;
+		     font-size: 14px;
+		}
+		::-moz-placeholder { /* Mozilla Firefox 19+ */
+		    color:#ccc;opacity:1;
+		     font-size: 14px;
+		}
+		:-ms-input-placeholder { /* Internet Explorer 10+ */
+		    color:#ccc !important;
+		     font-size: 14px;
+		}
+    </style>
     <script src="${ctx}/js/jquery.min.js"></script>
     <script src="${ctx}/js/amazeui.min.js"></script>
     <script src="${ctx}/js/bootstrap.js"></script>
@@ -130,6 +150,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </li>
                 <li>
                     <a href="${ctx}/user/exitSystem.action">注销</a>
+                </li>
+                <li>
+                	<div class="bdfw_nr_title">
+						<input type="text" name="userName" style="margin-top:7px;margin-left:15px;width:200px;" placeholder="图书名称、作者">
+						<a onclick="search()"><img alt="" src="${ctx}/img/search.png" style="margin-top:10px"></a>
+					</div>
                 </li>
 				
             </ul>
@@ -278,7 +304,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
 
     </div>
-    <div class="am_info_line">Copyright(c)2015 <span>PetShow</span> All Rights Reserved.模板收集自 <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> -  More Templates  <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></div>
 </footer>
 </body>
 </html>
