@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 
 import edu.fjnu.book.controller.BaseController;
+import edu.fjnu.book.dao.BookDao;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.HomePage;
 import edu.fjnu.book.domain.Mark;
@@ -358,5 +359,26 @@ public class BookUserController extends BaseController {
 			item.setErrorInfo("更新失败!");
 		}
 		return item;
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/user/toQryBookPage.action")
+	public String toQryBookPage(String qryName, Model model, HttpSession session){
+		if(qryName !=null && !"".equals(qryName.trim())){
+			Book book = new Book();
+			book.setBookname(qryName.trim());
+			List<Book> books = bookService.getBooksByName(book);
+			model.addAttribute("books", books);
+			model.addAttribute("qryName", qryName);
+			return "/user/query.jsp";	
+		}else{
+			return null;
+		}
 	}
 }

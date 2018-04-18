@@ -98,6 +98,11 @@
 	        }
 	    });
 	}
+	
+	function doQry(){
+		$("#qryForm").action="${ctx}/user/toQryBookPage.action"; 
+		$("#qryForm").submit();
+    }
 </script>
 
 
@@ -138,10 +143,12 @@
 					<li><a onclick="pwdMsg()">密码重置</a></li>
 					<li><a href="${ctx}/user/exitSystem.action">注销</a></li>
 					<li>
-	                	<div class="bdfw_nr_title">
-							<input type="text" name="userName" style="margin-top:7px;margin-left:15px;width:200px;" placeholder="图书名称、作者">
-							<a onclick="search()"><img alt="" src="${ctx}/img/search.png" style="margin-top:10px"></a>
-						</div>
+	                	<form action="${ctx}/user/toQryBookPage.action" name="qryForm" id="qryForm" method="post">
+	                		<div class="bdfw_nr_title">
+								<input type="text" name="qryName" id="qryName" style="margin-top:7px;margin-left:15px;width:200px;height:36px;color:#AAAAAA;font-size:medium" placeholder="图书名称、作者">
+								<a onclick="doQry()"><img alt="" src="${ctx}/img/search.png" style="margin-top:10px"></a>
+							</div>
+	                	</form>
 	                </li>
 				</ul>
 			</div>

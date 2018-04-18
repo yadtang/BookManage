@@ -129,4 +129,8 @@ public class BookServiceImpl implements BookService{
 		book.setScore(avgScore);
 		bookDao.update(book);
 	}
+
+	public List<Book> getBooksByName(Book book) {
+		return bookDao.getBooksByName(book);
+	}
 }

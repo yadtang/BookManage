@@ -15,4 +15,6 @@ public interface BookDao extends BaseDao<Book>{
 	//获取人气排行榜
 	public List<Book> getBookRank(Book book);
 	public List<Book> getBookByIds(Book book);
+	/**模糊查询*/
+	public List<Book> getBooksByName(Book book);
 }

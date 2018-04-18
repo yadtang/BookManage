@@ -34,5 +34,8 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
 	public List<Book> getBookByIds(Book book) {
 		return this.getSqlSession().selectList(this.getNs()+"getBookByIds",book);
 	}
+	public List<Book> getBooksByName(Book book) {
+		return this.getSqlSession().selectList(this.getNs()+"getBooksByName",book);
+	}
 
 }

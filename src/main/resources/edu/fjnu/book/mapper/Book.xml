@@ -159,4 +159,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and score > 4.5
 			order by rand() limit 4
 	</select>
+	
+	<select id="getBooksByName" parameterType="edu.fjnu.book.domain.Book" resultMap="bookRM">
+		select * from t_book b ,t_publisher p ,t_type t
+			where b.press = p.id
+			and b.typeid = t.typeid
+			and b.bookname like '%${bookname}%'
+			or  b.author like '%${bookname}%' 
+	</select>
 </mapper>

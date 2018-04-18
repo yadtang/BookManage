@@ -218,6 +218,11 @@
 			$("form").submit();
 		},"json");
 	}
+	
+	function doQry(){
+		$("#qryForm").action="${ctx}/user/toQryBookPage.action"; 
+		$("#qryForm").submit();
+    }
 
 	//打开分享图标
 	function openShare(id) {
@@ -329,10 +334,12 @@
 	                    <a href="${ctx}/user/exitSystem.action">注销</a>
 	                </li>
 	                <li>
-	                	<div class="bdfw_nr_title">
-							<input type="text" name="userName" style="margin-top:7px;margin-left:15px;width:200px;" placeholder="图书名称、作者">
-							<a onclick="search()"><img alt="" src="${ctx}/img/search.png" style="margin-top:10px"></a>
-						</div>
+	                	<form action="${ctx}/user/toQryBookPage.action" name="qryForm" id="qryForm" method="post">
+	                		<div class="bdfw_nr_title">
+								<input type="text" name="qryName" id="qryName" style="margin-top:7px;margin-left:15px;width:200px;height:36px;color:#AAAAAA;font-size:medium" placeholder="图书名称、作者">
+								<a onclick="doQry()"><img alt="" src="${ctx}/img/search.png" style="margin-top:10px"></a>
+							</div>
+	                	</form>
 	                </li>
 				</ul>
 			</div>
@@ -560,7 +567,7 @@
 	<footer class="am_footer">
 		<div class="am_footer_con">
 			<div class="am_footer_link">
-				<span>关于宠物秀</span>
+				<span>关于读书网</span>
 				<ul>
 					<li><a href="###">关于我们</a></li>
 					<li><a href="###">发展历程</a></li>
@@ -570,7 +577,7 @@
 
 
 			<div class="am_footer_don">
-				<span>宠物秀</span>
+				<span>读书网</span>
 				<dl>
 					<dt>
 						<img src="${ctx}/img/logo.png?1" alt="">

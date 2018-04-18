@@ -31,4 +31,6 @@ public interface BookService {
 	public List<Book> getBookByIds(Book book);
 	/**更新分数*/
 	public void updateScore(String userId,String bookid,int score,String content);
+	/**首页模糊查询*/
+	public List<Book> getBooksByName(Book book);
 }
