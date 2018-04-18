@@ -20,18 +20,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="title"><h2>更新图书</h2></div>
 <form action="${ctx}/admin/updCourse.action" method="post" name="myform" id="myform">
 <div class="main">
-	<p class="short-input ue-clear">
+	<div class="short-input select ue-clear">
     	<label><span style="color:red">*</span>图书编号：</label>
         <input type="text" name="bookid" id="bookid" maxlength="10" value="${book.bookid }" readonly="readonly"/>
-    </p>
-    <p class="short-input ue-clear">
+    </div>
+    <div class="short-input select ue-clear">
     	<label><span style="color:red">*</span>图书名称：</label>
         <input type="text" name="bookname" id="bookname" maxlength="100" value="${book.bookname }"/>
-    </p>
-	<p class="short-input ue-clear">
+    </div>
+	<div class="short-input select ue-clear">
     	<label><span style="color:red">*</span>作者：</label>
         <input type="text" name="author" id="author" maxlength="10" value="${book.author }"/>
-    </p>
+    </div>
 	<div class="short-input select ue-clear">
     	<label>出版社：</label>
         <div class="select-wrap">
@@ -51,6 +51,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<c:if test="${book.bookType.typeId eq cs.typeId }">checked</c:if>/>${cs.typeName}
 		</c:forEach>
     </div>
+    <div class="short-input select ue-clear">
+    	<label>标签：</label>
+    	<c:forEach items="${marks}" var="cs">
+    		<input name="keyword1" type="radio" value="${cs.id}" 
+				<c:if test="${book.keyword eq cs.id }">checked</c:if>/>${cs.name}
+		</c:forEach>
+    </div>
+    <input type="hidden" name="keyword" id="keyword" maxlength="100" value="${book.keyword }"/>
     <input type="hidden" name="typeId" id="typeId">
     <p class="short-input ue-clear">
     	<label>价格：</label>
@@ -60,12 +68,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>简介：</label>
         <input type="text" name="content" id="content" maxlength="100" value="${book.content }"/>
     </p>
+    
     <p class="short-input ue-clear">
-    	<label>关键词：</label>
-        <input type="text" name="keyword" id="keyword" maxlength="100" value="${book.keyword }"/>
-    </p>
-    <p class="short-input ue-clear">
-    	<label>原图书封面：</label><img src="${ctx}/${book.imageUrl}"  width="150" height="150" />
+    	<label>原图书封面：</label><img src="${ctx}/${book.imageUrl}"  width="130" height="150" />
     </p>
     <p class="short-input ue-clear">
     	<label>新封面：</label>
@@ -109,6 +114,8 @@ function addType(){
 	$("#press").val(aa);
 	var typeId = $("input[name='typeid']:checked").val();
 	$("#typeId").val(typeId);
+	var keyword1 = $("input[name='keyword1']:checked").val();
+	$("#keyword").val(keyword1);
 	var form = new FormData(document.getElementById("myform"));
 	$.ajax({
         type: "POST",

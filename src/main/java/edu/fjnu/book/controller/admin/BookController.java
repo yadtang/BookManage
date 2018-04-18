@@ -21,10 +21,12 @@ import com.github.pagehelper.PageInfo;
 import edu.fjnu.book.controller.BaseController;
 import edu.fjnu.book.domain.Book;
 import edu.fjnu.book.domain.BookType;
+import edu.fjnu.book.domain.Mark;
 import edu.fjnu.book.domain.MsgItem;
 import edu.fjnu.book.domain.Publisher;
 import edu.fjnu.book.service.BookService;
 import edu.fjnu.book.service.BookTypeService;
+import edu.fjnu.book.service.MarkService;
 import edu.fjnu.book.service.PublisherService;
 /**
  * 图书分类管理
@@ -39,7 +41,8 @@ public class BookController extends BaseController {
 	BookTypeService bookTypeService;
 	@Autowired
 	PublisherService publisherService;
-	
+	@Autowired
+	MarkService markService;
 	//获取所有的图书分类信息
 	@RequestMapping("/admin/toBookPage.action")
 	public String getAllBookInfo(@RequestParam(value="page", defaultValue="1") int page,
@@ -77,7 +80,7 @@ public class BookController extends BaseController {
 	}
 	
 	/**
-	 * 跳转到分类信息修改页面
+	 * 跳转到图书信息修改页面
 	 * @param id
 	 * @param model
 	 * @param session
@@ -89,13 +92,15 @@ public class BookController extends BaseController {
 		model.addAttribute("book", book);
 		List<BookType> bookType = bookTypeService.find(new BookType());
 		List<Publisher> publisher = publisherService.find(new Publisher());
+		List<Mark> marks = markService.find(new Mark());
+		model.addAttribute("marks", marks);
 		model.addAttribute("bookType", bookType);
 		model.addAttribute("publisher", publisher);
 		return "/admin/book-upd.jsp";			
 	}
 	
 	/**
-	 * 跳转到添加分类信息页面
+	 * 跳转到添加图书信息页面
 	 * @param id
 	 * @param model
 	 * @param session
@@ -105,13 +110,15 @@ public class BookController extends BaseController {
 	public String toAddBookPage(Model model, HttpSession session){
 		List<BookType> bookType = bookTypeService.find(new BookType());
 		List<Publisher> publisher = publisherService.find(new Publisher());
+		List<Mark> marks = markService.find(new Mark());
+		model.addAttribute("marks", marks);
 		model.addAttribute("bookType", bookType);
 		model.addAttribute("publisher", publisher);
 		return "/admin/book-reg.jsp";			
 	}
 	
 	/**
-	 * 修改分类信息
+	 * 修改图书信息
 	 * @param category
 	 * @param model
 	 * @return
@@ -152,18 +159,18 @@ public class BookController extends BaseController {
 	    	book.setBookType(bookType);
 			bookService.update(book);
 			item.setErrorNo("0");
-			item.setErrorInfo("分类信息修改成功!");
+			item.setErrorInfo("图书信息修改成功!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			item.setErrorNo("1");
-			item.setErrorInfo("分类信息修改失败!");
+			item.setErrorInfo("图书信息修改失败!");
 		}
 		
 		return item;			
 	}
 	
 	/**
-	 * 添加分类信息
+	 * 添加图书信息
 	 * @param category
 	 * @param model
 	 * @return
@@ -212,7 +219,7 @@ public class BookController extends BaseController {
 		return item;			
 	}
 	/**
-	 * 删除分类信息
+	 * 删除图书信息
 	 * @param category
 	 * @param model
 	 * @return

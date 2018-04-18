@@ -19,25 +19,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <form action="${ctx}/admin/addBook.action" method="post" name="myform" id="myform" enctype="multipart/form-data">
 	<div class="main">
 		<p class="short-input ue-clear">
-	    	<label><span style="color:red">*</span>图书名称：</label>
+	    	<label>图书名称：</label>
 	        <input type="text" placeholder="图书名称" name="bookname" id="bookname" onblur="checkUserId()" value=""/>
 	        <span style="color: red" id="tipInfo">${message }</span>
 	    </p>
 	    <p class="short-input ue-clear">
-	    	<label><span style="color:red">*</span>作者：</label>
+	    	<label>作者：</label>
 	        <input type="text" placeholder="作者" name="author" id="author" maxlength="100"/>
 	    </p>
-	    
-		<%-- <select class="long-input ue-clear" id="updateProviderName" style="margin-left: 10px;width: 185px">
-		    <c:forEach items="${publisher}" var="prd">
-		        <option value="${prd.id}"
-		            如果所选是之前的值 可以自动填写！
-		            <c:if test="${prd.id==id}">selected = "selected"
-		            </c:if> >
-		            ${prd.name}
-		        </option>
-		    </c:forEach>
-		</select> --%>
 		<div class="short-input select ue-clear">
 	    	<label>出版社：</label>
 	        <div class="select-wrap">
@@ -51,18 +40,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    </div>
 	    <input type="hidden" name="press" id="press">
 	    <div class="long-input select ue-clear">
-	    	<label><span style="color:red">*</span>所属分类：</label>
+	    	<label>所属分类：</label>
 	    	<c:forEach items="${bookType}" var="cs">
 				<input name="typeid" type="radio" value="${cs.typeId}" checked="checked"/>${cs.typeName}
+			</c:forEach>
+	    </div>
+	    <div class="long-input select ue-clear">
+	    	<label>标签：</label>
+	    	<c:forEach items="${marks}" var="m">
+				<input name="keyword" type="radio" value="${m.id}" checked="checked"/>${m.name}
 			</c:forEach>
 	    </div>
 	    <p class="short-input ue-clear">
 	    	<label>价格：</label>
 	        <input type="text" id="price" name="price"/>
-	    </p>
-	    <p class="short-input ue-clear">
-	    	<label>关键词：</label>
-	        <input type="text" id="keyword" name="keyword"/>
 	    </p>
 	    <p class="short-input ue-clear">
 	    	<label>简介：</label>

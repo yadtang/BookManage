@@ -145,13 +145,13 @@ function delCategory(){
 
 	$.post("${ctx}/admin/delCate.action", { cateId:ids},function(data){
 		alert(data.errorInfo);
-		document.myform.attributes["action"].value = "${ctx}/toCategoryPage.action"; 
+		document.myform.attributes["action"].value = "${ctx}/admin/toCategoryPage.action"; 
 		$("form").submit();
 	},"json");
 }
 
 function addCategory(){
-	document.myform.attributes["action"].value = "${ctx}/toAddCategoryPage.action"; 
+	document.myform.attributes["action"].value = "${ctx}/admin/toAddCategoryPage.action"; 
 	$("form").submit();
 }
 
