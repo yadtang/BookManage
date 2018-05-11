@@ -429,7 +429,7 @@
 						</div>
 					</c:forEach>
 					<div class="am_news_load"><span><i  class="am-icon-spinner am-icon-spin"></i> 查看更多讨论</span></div>
-					<div class="form-group">
+					<div class="form-group" style="width:60%;margin-left: 271px;">
 					    <br/><label for="name">发表评论</label>
 					    <label style="text-indent:350px;">
 					    	<a href="javascript:click(1)"><img src="${ctx}/img/star.png" id="star1" onMouseOver="over(1)" onMouseOut="out(1)"/></a>
@@ -439,7 +439,7 @@
 							<a href="javascript:click(5)"><img src="${ctx}/img/star.png" id="star5" onMouseOver="over(5)" onMouseOut="out(5)"/></a>
 					    </label>
 						<span id="message"></span><br/>
-					    <textarea class="form-control" rows="3" id="content" name="content"></textarea><br/>
+					    <textarea class="form-control" rows="3" id="content" name="content" style="width:80%"></textarea><br/>
 					    <button type="button" class="btn btn-primary"  data-toggle="button" onclick="makeComments()"> 立即评论</button>
 					</div>
 					

@@ -141,7 +141,7 @@ function addUser(){
 			document.myform.attributes["action"].value = "${ctx}/admin/toHomePagePage.action"; 
 			$("form").submit();
         }
-      });
+     });
 }
 
 //情况所有
